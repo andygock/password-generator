@@ -1,0 +1,2531 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <title>Password generator</title>
+    <style type="text/css">
+        /* reference: https://cdn.rawgit.com/Chalarangelo/mini.css/v3.0.1/dist/mini-default.min.css */
+        :root {
+            --fore-color: #111;
+            --secondary-fore-color: #444;
+            --back-color: #f8f8f8;
+            --secondary-back-color: #f0f0f0;
+            --blockquote-color: #f57c00;
+            --pre-color: #1565c0;
+            --border-color: #aaa;
+            --secondary-border-color: #ddd;
+            --heading-ratio: 1.19;
+            --universal-margin: .5rem;
+            --universal-padding: .5rem;
+            --universal-border-radius: .125rem;
+            --a-link-color: #0277bd;
+            --a-visited-color: #01579b
+        }
+
+        html {
+            font-size: 16px
+        }
+
+        a,
+        b,
+        del,
+        em,
+        i,
+        ins,
+        q,
+        span,
+        strong,
+        u {
+            font-size: 1em
+        }
+
+        html,
+        * {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", Helvetica, sans-serif;
+            line-height: 1.5;
+            -webkit-text-size-adjust: 100%
+        }
+
+        * {
+            font-size: 1rem
+        }
+
+        body {
+            margin: 0;
+            color: var(--fore-color);
+            background: var(--back-color)
+        }
+
+        details {
+            display: block
+        }
+
+        summary {
+            display: list-item
+        }
+
+        abbr[title] {
+            border-bottom: none;
+            text-decoration: underline dotted
+        }
+
+        input {
+            overflow: visible
+        }
+
+        img {
+            max-width: 100%;
+            height: auto
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            line-height: 1.2;
+            margin: calc(1.5 * var(--universal-margin)) var(--universal-margin);
+            font-weight: 500
+        }
+
+        h1 small,
+        h2 small,
+        h3 small,
+        h4 small,
+        h5 small,
+        h6 small {
+            color: var(--secondary-fore-color);
+            display: block;
+            margin-top: -.25rem
+        }
+
+        h1 {
+            font-size: calc(1rem * var(--heading-ratio) * var(--heading-ratio) * var(--heading-ratio) * var(--heading-ratio))
+        }
+
+        h2 {
+            font-size: calc(1rem * var(--heading-ratio) * var(--heading-ratio) * var(--heading-ratio))
+        }
+
+        h3 {
+            font-size: calc(1rem * var(--heading-ratio) * var(--heading-ratio))
+        }
+
+        h4 {
+            font-size: calc(1rem * var(--heading-ratio))
+        }
+
+        h5 {
+            font-size: 1rem
+        }
+
+        h6 {
+            font-size: calc(1rem / var(--heading-ratio))
+        }
+
+        p {
+            margin: var(--universal-margin)
+        }
+
+        ol,
+        ul {
+            margin: var(--universal-margin);
+            padding-left: calc(2 * var(--universal-margin))
+        }
+
+        b,
+        strong {
+            font-weight: 700
+        }
+
+        hr {
+            box-sizing: content-box;
+            border: 0;
+            line-height: 1.25em;
+            margin: var(--universal-margin);
+            height: .0625rem;
+            background: linear-gradient(to right, transparent, var(--border-color) 20%, var(--border-color) 80%, transparent)
+        }
+
+        blockquote {
+            display: block;
+            position: relative;
+            font-style: italic;
+            color: var(--secondary-fore-color);
+            margin: var(--universal-margin);
+            padding: calc(3 * var(--universal-padding));
+            border: .0625rem solid var(--secondary-border-color);
+            border-left: .375rem solid var(--blockquote-color);
+            border-radius: 0 var(--universal-border-radius) var(--universal-border-radius) 0
+        }
+
+        blockquote:before {
+            position: absolute;
+            top: calc(0rem - var(--universal-padding));
+            left: 0;
+            font-family: sans-serif;
+            font-size: 3rem;
+            font-weight: 700;
+            content: "\201c";
+            color: var(--blockquote-color)
+        }
+
+        blockquote[cite]:after {
+            font-style: normal;
+            font-size: .75em;
+            font-weight: 700;
+            content: "\a—  "attr(cite);
+            white-space: pre
+        }
+
+        code,
+        kbd,
+        pre,
+        samp {
+            font-family: Menlo, Consolas, monospace;
+            font-size: .85em
+        }
+
+        code {
+            background: var(--secondary-back-color);
+            border-radius: var(--universal-border-radius);
+            padding: calc(var(--universal-padding) / 4) calc(var(--universal-padding) / 2)
+        }
+
+        kbd {
+            background: var(--fore-color);
+            color: var(--back-color);
+            border-radius: var(--universal-border-radius);
+            padding: calc(var(--universal-padding) / 4) calc(var(--universal-padding) / 2)
+        }
+
+        pre {
+            overflow: auto;
+            background: var(--secondary-back-color);
+            padding: calc(1.5 * var(--universal-padding));
+            margin: var(--universal-margin);
+            border: .0625rem solid var(--secondary-border-color);
+            border-left: .25rem solid var(--pre-color);
+            border-radius: 0 var(--universal-border-radius) var(--universal-border-radius) 0
+        }
+
+        sup,
+        sub,
+        code,
+        kbd {
+            line-height: 0;
+            position: relative;
+            vertical-align: baseline
+        }
+
+        small,
+        sup,
+        sub,
+        figcaption {
+            font-size: .75em
+        }
+
+        sup {
+            top: -.5em
+        }
+
+        sub {
+            bottom: -.25em
+        }
+
+        figure {
+            margin: var(--universal-margin)
+        }
+
+        figcaption {
+            color: var(--secondary-fore-color)
+        }
+
+        a {
+            text-decoration: none
+        }
+
+        a:link {
+            color: var(--a-link-color)
+        }
+
+        a:visited {
+            color: var(--a-visited-color)
+        }
+
+        a:hover,
+        a:focus {
+            text-decoration: underline
+        }
+
+        .container {
+            margin: 0 auto;
+            padding: 0 calc(1.5 * var(--universal-padding))
+        }
+
+        .row {
+            box-sizing: border-box;
+            display: flex;
+            flex: 0 1 auto;
+            flex-flow: row wrap
+        }
+
+        .col-sm,
+        [class^='col-sm-'],
+        [class^='col-sm-offset-'],
+        .row[class*='cols-sm-']>* {
+            box-sizing: border-box;
+            flex: 0 0 auto;
+            padding: 0 calc(var(--universal-padding) / 2)
+        }
+
+        .col-sm,
+        .row.cols-sm>* {
+            max-width: 100%;
+            flex-grow: 1;
+            flex-basis: 0
+        }
+
+        .col-sm-1,
+        .row.cols-sm-1>* {
+            max-width: 8.33333%;
+            flex-basis: 8.33333%
+        }
+
+        .col-sm-offset-0 {
+            margin-left: 0
+        }
+
+        .col-sm-2,
+        .row.cols-sm-2>* {
+            max-width: 16.66667%;
+            flex-basis: 16.66667%
+        }
+
+        .col-sm-offset-1 {
+            margin-left: 8.33333%
+        }
+
+        .col-sm-3,
+        .row.cols-sm-3>* {
+            max-width: 25%;
+            flex-basis: 25%
+        }
+
+        .col-sm-offset-2 {
+            margin-left: 16.66667%
+        }
+
+        .col-sm-4,
+        .row.cols-sm-4>* {
+            max-width: 33.33333%;
+            flex-basis: 33.33333%
+        }
+
+        .col-sm-offset-3 {
+            margin-left: 25%
+        }
+
+        .col-sm-5,
+        .row.cols-sm-5>* {
+            max-width: 41.66667%;
+            flex-basis: 41.66667%
+        }
+
+        .col-sm-offset-4 {
+            margin-left: 33.33333%
+        }
+
+        .col-sm-6,
+        .row.cols-sm-6>* {
+            max-width: 50%;
+            flex-basis: 50%
+        }
+
+        .col-sm-offset-5 {
+            margin-left: 41.66667%
+        }
+
+        .col-sm-7,
+        .row.cols-sm-7>* {
+            max-width: 58.33333%;
+            flex-basis: 58.33333%
+        }
+
+        .col-sm-offset-6 {
+            margin-left: 50%
+        }
+
+        .col-sm-8,
+        .row.cols-sm-8>* {
+            max-width: 66.66667%;
+            flex-basis: 66.66667%
+        }
+
+        .col-sm-offset-7 {
+            margin-left: 58.33333%
+        }
+
+        .col-sm-9,
+        .row.cols-sm-9>* {
+            max-width: 75%;
+            flex-basis: 75%
+        }
+
+        .col-sm-offset-8 {
+            margin-left: 66.66667%
+        }
+
+        .col-sm-10,
+        .row.cols-sm-10>* {
+            max-width: 83.33333%;
+            flex-basis: 83.33333%
+        }
+
+        .col-sm-offset-9 {
+            margin-left: 75%
+        }
+
+        .col-sm-11,
+        .row.cols-sm-11>* {
+            max-width: 91.66667%;
+            flex-basis: 91.66667%
+        }
+
+        .col-sm-offset-10 {
+            margin-left: 83.33333%
+        }
+
+        .col-sm-12,
+        .row.cols-sm-12>* {
+            max-width: 100%;
+            flex-basis: 100%
+        }
+
+        .col-sm-offset-11 {
+            margin-left: 91.66667%
+        }
+
+        .col-sm-normal {
+            order: initial
+        }
+
+        .col-sm-first {
+            order: -999
+        }
+
+        .col-sm-last {
+            order: 999
+        }
+
+        @media screen and (min-width: 768px) {
+
+            .col-md,
+            [class^='col-md-'],
+            [class^='col-md-offset-'],
+            .row[class*='cols-md-']>* {
+                box-sizing: border-box;
+                flex: 0 0 auto;
+                padding: 0 calc(var(--universal-padding) / 2)
+            }
+
+            .col-md,
+            .row.cols-md>* {
+                max-width: 100%;
+                flex-grow: 1;
+                flex-basis: 0
+            }
+
+            .col-md-1,
+            .row.cols-md-1>* {
+                max-width: 8.33333%;
+                flex-basis: 8.33333%
+            }
+
+            .col-md-offset-0 {
+                margin-left: 0
+            }
+
+            .col-md-2,
+            .row.cols-md-2>* {
+                max-width: 16.66667%;
+                flex-basis: 16.66667%
+            }
+
+            .col-md-offset-1 {
+                margin-left: 8.33333%
+            }
+
+            .col-md-3,
+            .row.cols-md-3>* {
+                max-width: 25%;
+                flex-basis: 25%
+            }
+
+            .col-md-offset-2 {
+                margin-left: 16.66667%
+            }
+
+            .col-md-4,
+            .row.cols-md-4>* {
+                max-width: 33.33333%;
+                flex-basis: 33.33333%
+            }
+
+            .col-md-offset-3 {
+                margin-left: 25%
+            }
+
+            .col-md-5,
+            .row.cols-md-5>* {
+                max-width: 41.66667%;
+                flex-basis: 41.66667%
+            }
+
+            .col-md-offset-4 {
+                margin-left: 33.33333%
+            }
+
+            .col-md-6,
+            .row.cols-md-6>* {
+                max-width: 50%;
+                flex-basis: 50%
+            }
+
+            .col-md-offset-5 {
+                margin-left: 41.66667%
+            }
+
+            .col-md-7,
+            .row.cols-md-7>* {
+                max-width: 58.33333%;
+                flex-basis: 58.33333%
+            }
+
+            .col-md-offset-6 {
+                margin-left: 50%
+            }
+
+            .col-md-8,
+            .row.cols-md-8>* {
+                max-width: 66.66667%;
+                flex-basis: 66.66667%
+            }
+
+            .col-md-offset-7 {
+                margin-left: 58.33333%
+            }
+
+            .col-md-9,
+            .row.cols-md-9>* {
+                max-width: 75%;
+                flex-basis: 75%
+            }
+
+            .col-md-offset-8 {
+                margin-left: 66.66667%
+            }
+
+            .col-md-10,
+            .row.cols-md-10>* {
+                max-width: 83.33333%;
+                flex-basis: 83.33333%
+            }
+
+            .col-md-offset-9 {
+                margin-left: 75%
+            }
+
+            .col-md-11,
+            .row.cols-md-11>* {
+                max-width: 91.66667%;
+                flex-basis: 91.66667%
+            }
+
+            .col-md-offset-10 {
+                margin-left: 83.33333%
+            }
+
+            .col-md-12,
+            .row.cols-md-12>* {
+                max-width: 100%;
+                flex-basis: 100%
+            }
+
+            .col-md-offset-11 {
+                margin-left: 91.66667%
+            }
+
+            .col-md-normal {
+                order: initial
+            }
+
+            .col-md-first {
+                order: -999
+            }
+
+            .col-md-last {
+                order: 999
+            }
+        }
+
+        @media screen and (min-width: 1280px) {
+
+            .col-lg,
+            [class^='col-lg-'],
+            [class^='col-lg-offset-'],
+            .row[class*='cols-lg-']>* {
+                box-sizing: border-box;
+                flex: 0 0 auto;
+                padding: 0 calc(var(--universal-padding) / 2)
+            }
+
+            .col-lg,
+            .row.cols-lg>* {
+                max-width: 100%;
+                flex-grow: 1;
+                flex-basis: 0
+            }
+
+            .col-lg-1,
+            .row.cols-lg-1>* {
+                max-width: 8.33333%;
+                flex-basis: 8.33333%
+            }
+
+            .col-lg-offset-0 {
+                margin-left: 0
+            }
+
+            .col-lg-2,
+            .row.cols-lg-2>* {
+                max-width: 16.66667%;
+                flex-basis: 16.66667%
+            }
+
+            .col-lg-offset-1 {
+                margin-left: 8.33333%
+            }
+
+            .col-lg-3,
+            .row.cols-lg-3>* {
+                max-width: 25%;
+                flex-basis: 25%
+            }
+
+            .col-lg-offset-2 {
+                margin-left: 16.66667%
+            }
+
+            .col-lg-4,
+            .row.cols-lg-4>* {
+                max-width: 33.33333%;
+                flex-basis: 33.33333%
+            }
+
+            .col-lg-offset-3 {
+                margin-left: 25%
+            }
+
+            .col-lg-5,
+            .row.cols-lg-5>* {
+                max-width: 41.66667%;
+                flex-basis: 41.66667%
+            }
+
+            .col-lg-offset-4 {
+                margin-left: 33.33333%
+            }
+
+            .col-lg-6,
+            .row.cols-lg-6>* {
+                max-width: 50%;
+                flex-basis: 50%
+            }
+
+            .col-lg-offset-5 {
+                margin-left: 41.66667%
+            }
+
+            .col-lg-7,
+            .row.cols-lg-7>* {
+                max-width: 58.33333%;
+                flex-basis: 58.33333%
+            }
+
+            .col-lg-offset-6 {
+                margin-left: 50%
+            }
+
+            .col-lg-8,
+            .row.cols-lg-8>* {
+                max-width: 66.66667%;
+                flex-basis: 66.66667%
+            }
+
+            .col-lg-offset-7 {
+                margin-left: 58.33333%
+            }
+
+            .col-lg-9,
+            .row.cols-lg-9>* {
+                max-width: 75%;
+                flex-basis: 75%
+            }
+
+            .col-lg-offset-8 {
+                margin-left: 66.66667%
+            }
+
+            .col-lg-10,
+            .row.cols-lg-10>* {
+                max-width: 83.33333%;
+                flex-basis: 83.33333%
+            }
+
+            .col-lg-offset-9 {
+                margin-left: 75%
+            }
+
+            .col-lg-11,
+            .row.cols-lg-11>* {
+                max-width: 91.66667%;
+                flex-basis: 91.66667%
+            }
+
+            .col-lg-offset-10 {
+                margin-left: 83.33333%
+            }
+
+            .col-lg-12,
+            .row.cols-lg-12>* {
+                max-width: 100%;
+                flex-basis: 100%
+            }
+
+            .col-lg-offset-11 {
+                margin-left: 91.66667%
+            }
+
+            .col-lg-normal {
+                order: initial
+            }
+
+            .col-lg-first {
+                order: -999
+            }
+
+            .col-lg-last {
+                order: 999
+            }
+        }
+
+        :root {
+            --card-back-color: #f8f8f8;
+            --card-fore-color: #111;
+            --card-border-color: #ddd
+        }
+
+        .card {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-self: center;
+            position: relative;
+            width: 100%;
+            background: var(--card-back-color);
+            color: var(--card-fore-color);
+            border: .0625rem solid var(--card-border-color);
+            border-radius: var(--universal-border-radius);
+            margin: var(--universal-margin);
+            overflow: hidden
+        }
+
+        @media screen and (min-width: 320px) {
+            .card {
+                max-width: 320px
+            }
+        }
+
+        .card>.section {
+            background: var(--card-back-color);
+            color: var(--card-fore-color);
+            box-sizing: border-box;
+            margin: 0;
+            border: 0;
+            border-radius: 0;
+            border-bottom: .0625rem solid var(--card-border-color);
+            padding: var(--universal-padding);
+            width: 100%
+        }
+
+        .card>.section.media {
+            height: 200px;
+            padding: 0;
+            -o-object-fit: cover;
+            object-fit: cover
+        }
+
+        .card>.section:last-child {
+            border-bottom: 0
+        }
+
+        @media screen and (min-width: 240px) {
+            .card.small {
+                max-width: 240px
+            }
+        }
+
+        @media screen and (min-width: 480px) {
+            .card.large {
+                max-width: 480px
+            }
+        }
+
+        .card.fluid {
+            max-width: 100%;
+            width: auto
+        }
+
+        .card.warning {
+            --card-back-color: #ffca28;
+            --card-border-color: #e8b825
+        }
+
+        .card.error {
+            --card-back-color: #b71c1c;
+            --card-fore-color: #f8f8f8;
+            --card-border-color: #a71a1a
+        }
+
+        .card>.section.dark {
+            --card-back-color: #e0e0e0
+        }
+
+        .card>.section.double-padded {
+            padding: calc(1.5 * var(--universal-padding))
+        }
+
+        :root {
+            --form-back-color: #f0f0f0;
+            --form-fore-color: #111;
+            --form-border-color: #ddd;
+            --input-back-color: #f8f8f8;
+            --input-fore-color: #111;
+            --input-border-color: #ddd;
+            --input-focus-color: #0288d1;
+            --input-invalid-color: #d32f2f;
+            --button-back-color: #e2e2e2;
+            --button-hover-back-color: #dcdcdc;
+            --button-fore-color: #212121;
+            --button-border-color: rgba(0, 0, 0, 0);
+            --button-hover-border-color: rgba(0, 0, 0, 0);
+            --button-group-border-color: rgba(124, 124, 124, 0.54)
+        }
+
+        form {
+            background: var(--form-back-color);
+            color: var(--form-fore-color);
+            border: .0625rem solid var(--form-border-color);
+            border-radius: var(--universal-border-radius);
+            margin: var(--universal-margin);
+            padding: calc(2 * var(--universal-padding)) var(--universal-padding)
+        }
+
+        fieldset {
+            border: .0625rem solid var(--form-border-color);
+            border-radius: var(--universal-border-radius);
+            margin: calc(var(--universal-margin) / 4);
+            padding: var(--universal-padding)
+        }
+
+        legend {
+            box-sizing: border-box;
+            display: table;
+            max-width: 100%;
+            white-space: normal;
+            font-weight: 700;
+            padding: calc(var(--universal-padding) / 2)
+        }
+
+        label {
+            padding: calc(var(--universal-padding) / 2) var(--universal-padding)
+        }
+
+        .input-group {
+            display: inline-block
+        }
+
+        .input-group.fluid {
+            display: flex;
+            align-items: center;
+            justify-content: center
+        }
+
+        .input-group.fluid>input {
+            max-width: 100%;
+            flex-grow: 1;
+            flex-basis: 0px
+        }
+
+        @media screen and (max-width: 767px) {
+            .input-group.fluid {
+                align-items: stretch;
+                flex-direction: column
+            }
+        }
+
+        .input-group.vertical {
+            display: flex;
+            align-items: stretch;
+            flex-direction: column
+        }
+
+        .input-group.vertical>input {
+            max-width: 100%;
+            flex-grow: 1;
+            flex-basis: 0px
+        }
+
+        [type="number"]::-webkit-inner-spin-button,
+        [type="number"]::-webkit-outer-spin-button {
+            height: auto
+        }
+
+        [type="search"] {
+            -webkit-appearance: textfield;
+            outline-offset: -2px
+        }
+
+        [type="search"]::-webkit-search-cancel-button,
+        [type="search"]::-webkit-search-decoration {
+            -webkit-appearance: none
+        }
+
+        input:not([type]),
+        [type="text"],
+        [type="email"],
+        [type="number"],
+        [type="search"],
+        [type="password"],
+        [type="url"],
+        [type="tel"],
+        [type="checkbox"],
+        [type="radio"],
+        textarea,
+        select {
+            box-sizing: border-box;
+            background: var(--input-back-color);
+            color: var(--input-fore-color);
+            border: .0625rem solid var(--input-border-color);
+            border-radius: var(--universal-border-radius);
+            margin: calc(var(--universal-margin) / 2);
+            padding: var(--universal-padding) calc(1.5 * var(--universal-padding))
+        }
+
+        input:not([type="button"]):not([type="submit"]):not([type="reset"]):hover,
+        input:not([type="button"]):not([type="submit"]):not([type="reset"]):focus,
+        textarea:hover,
+        textarea:focus,
+        select:hover,
+        select:focus {
+            border-color: var(--input-focus-color);
+            box-shadow: none
+        }
+
+        input:not([type="button"]):not([type="submit"]):not([type="reset"]):invalid,
+        input:not([type="button"]):not([type="submit"]):not([type="reset"]):focus:invalid,
+        textarea:invalid,
+        textarea:focus:invalid,
+        select:invalid,
+        select:focus:invalid {
+            border-color: var(--input-invalid-color);
+            box-shadow: none
+        }
+
+        input:not([type="button"]):not([type="submit"]):not([type="reset"])[readonly],
+        textarea[readonly],
+        select[readonly] {
+            background: var(--secondary-back-color)
+        }
+
+        select {
+            max-width: 100%
+        }
+
+        option {
+            overflow: hidden;
+            text-overflow: ellipsis
+        }
+
+        [type="checkbox"],
+        [type="radio"] {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            position: relative;
+            height: calc(1rem + var(--universal-padding) / 2);
+            width: calc(1rem + var(--universal-padding) / 2);
+            vertical-align: text-bottom;
+            padding: 0;
+            flex-basis: calc(1rem + var(--universal-padding) / 2) !important;
+            flex-grow: 0 !important
+        }
+
+        [type="checkbox"]:checked:before,
+        [type="radio"]:checked:before {
+            position: absolute
+        }
+
+        [type="checkbox"]:checked:before {
+            content: '\2713';
+            font-family: sans-serif;
+            font-size: calc(1rem + var(--universal-padding) / 2);
+            top: calc(0rem - var(--universal-padding));
+            left: calc(var(--universal-padding) / 4)
+        }
+
+        [type="radio"] {
+            border-radius: 100%
+        }
+
+        [type="radio"]:checked:before {
+            border-radius: 100%;
+            content: '';
+            top: calc(.0625rem + var(--universal-padding) / 2);
+            left: calc(.0625rem + var(--universal-padding) / 2);
+            background: var(--input-fore-color);
+            width: 0.5rem;
+            height: 0.5rem
+        }
+
+        :placeholder-shown {
+            color: var(--input-fore-color)
+        }
+
+        ::-ms-placeholder {
+            color: var(--input-fore-color);
+            opacity: 0.54
+        }
+
+        button::-moz-focus-inner,
+        [type="button"]::-moz-focus-inner,
+        [type="reset"]::-moz-focus-inner,
+        [type="submit"]::-moz-focus-inner {
+            border-style: none;
+            padding: 0
+        }
+
+        button,
+        html [type="button"],
+        [type="reset"],
+        [type="submit"] {
+            -webkit-appearance: button
+        }
+
+        button {
+            overflow: visible;
+            text-transform: none
+        }
+
+        button,
+        [type="button"],
+        [type="submit"],
+        [type="reset"],
+        a.button,
+        label.button,
+        .button,
+        a[role="button"],
+        label[role="button"],
+        [role="button"] {
+            display: inline-block;
+            background: var(--button-back-color);
+            color: var(--button-fore-color);
+            border: .0625rem solid var(--button-border-color);
+            border-radius: var(--universal-border-radius);
+            padding: var(--universal-padding) calc(1.5 * var(--universal-padding));
+            margin: var(--universal-margin);
+            text-decoration: none;
+            cursor: pointer;
+            transition: background 0.3s
+        }
+
+        button:hover,
+        button:focus,
+        [type="button"]:hover,
+        [type="button"]:focus,
+        [type="submit"]:hover,
+        [type="submit"]:focus,
+        [type="reset"]:hover,
+        [type="reset"]:focus,
+        a.button:hover,
+        a.button:focus,
+        label.button:hover,
+        label.button:focus,
+        .button:hover,
+        .button:focus,
+        a[role="button"]:hover,
+        a[role="button"]:focus,
+        label[role="button"]:hover,
+        label[role="button"]:focus,
+        [role="button"]:hover,
+        [role="button"]:focus {
+            background: var(--button-hover-back-color);
+            border-color: var(--button-hover-border-color)
+        }
+
+        input:disabled,
+        input[disabled],
+        textarea:disabled,
+        textarea[disabled],
+        select:disabled,
+        select[disabled],
+        button:disabled,
+        button[disabled],
+        .button:disabled,
+        .button[disabled],
+        [role="button"]:disabled,
+        [role="button"][disabled] {
+            cursor: not-allowed;
+            opacity: .75
+        }
+
+        .button-group {
+            display: flex;
+            border: .0625rem solid var(--button-group-border-color);
+            border-radius: var(--universal-border-radius);
+            margin: var(--universal-margin)
+        }
+
+        .button-group>button,
+        .button-group [type="button"],
+        .button-group>[type="submit"],
+        .button-group>[type="reset"],
+        .button-group>.button,
+        .button-group>[role="button"] {
+            margin: 0;
+            max-width: 100%;
+            flex: 1 1 auto;
+            text-align: center;
+            border: 0;
+            border-radius: 0;
+            box-shadow: none
+        }
+
+        .button-group>:not(:first-child) {
+            border-left: .0625rem solid var(--button-group-border-color)
+        }
+
+        @media screen and (max-width: 767px) {
+            .button-group {
+                flex-direction: column
+            }
+
+            .button-group>:not(:first-child) {
+                border: 0;
+                border-top: .0625rem solid var(--button-group-border-color)
+            }
+        }
+
+        button.primary,
+        [type="button"].primary,
+        [type="submit"].primary,
+        [type="reset"].primary,
+        .button.primary,
+        [role="button"].primary {
+            --button-back-color: #1976d2;
+            --button-fore-color: #f8f8f8
+        }
+
+        button.primary:hover,
+        button.primary:focus,
+        [type="button"].primary:hover,
+        [type="button"].primary:focus,
+        [type="submit"].primary:hover,
+        [type="submit"].primary:focus,
+        [type="reset"].primary:hover,
+        [type="reset"].primary:focus,
+        .button.primary:hover,
+        .button.primary:focus,
+        [role="button"].primary:hover,
+        [role="button"].primary:focus {
+            --button-hover-back-color: #1565c0
+        }
+
+        button.secondary,
+        [type="button"].secondary,
+        [type="submit"].secondary,
+        [type="reset"].secondary,
+        .button.secondary,
+        [role="button"].secondary {
+            --button-back-color: #d32f2f;
+            --button-fore-color: #f8f8f8
+        }
+
+        button.secondary:hover,
+        button.secondary:focus,
+        [type="button"].secondary:hover,
+        [type="button"].secondary:focus,
+        [type="submit"].secondary:hover,
+        [type="submit"].secondary:focus,
+        [type="reset"].secondary:hover,
+        [type="reset"].secondary:focus,
+        .button.secondary:hover,
+        .button.secondary:focus,
+        [role="button"].secondary:hover,
+        [role="button"].secondary:focus {
+            --button-hover-back-color: #c62828
+        }
+
+        button.tertiary,
+        [type="button"].tertiary,
+        [type="submit"].tertiary,
+        [type="reset"].tertiary,
+        .button.tertiary,
+        [role="button"].tertiary {
+            --button-back-color: #308732;
+            --button-fore-color: #f8f8f8
+        }
+
+        button.tertiary:hover,
+        button.tertiary:focus,
+        [type="button"].tertiary:hover,
+        [type="button"].tertiary:focus,
+        [type="submit"].tertiary:hover,
+        [type="submit"].tertiary:focus,
+        [type="reset"].tertiary:hover,
+        [type="reset"].tertiary:focus,
+        .button.tertiary:hover,
+        .button.tertiary:focus,
+        [role="button"].tertiary:hover,
+        [role="button"].tertiary:focus {
+            --button-hover-back-color: #277529
+        }
+
+        button.inverse,
+        [type="button"].inverse,
+        [type="submit"].inverse,
+        [type="reset"].inverse,
+        .button.inverse,
+        [role="button"].inverse {
+            --button-back-color: #212121;
+            --button-fore-color: #f8f8f8
+        }
+
+        button.inverse:hover,
+        button.inverse:focus,
+        [type="button"].inverse:hover,
+        [type="button"].inverse:focus,
+        [type="submit"].inverse:hover,
+        [type="submit"].inverse:focus,
+        [type="reset"].inverse:hover,
+        [type="reset"].inverse:focus,
+        .button.inverse:hover,
+        .button.inverse:focus,
+        [role="button"].inverse:hover,
+        [role="button"].inverse:focus {
+            --button-hover-back-color: #111
+        }
+
+        button.small,
+        [type="button"].small,
+        [type="submit"].small,
+        [type="reset"].small,
+        .button.small,
+        [role="button"].small {
+            padding: calc(0.5 * var(--universal-padding)) calc(0.75 * var(--universal-padding));
+            margin: var(--universal-margin)
+        }
+
+        button.large,
+        [type="button"].large,
+        [type="submit"].large,
+        [type="reset"].large,
+        .button.large,
+        [role="button"].large {
+            padding: calc(1.5 * var(--universal-padding)) calc(2 * var(--universal-padding));
+            margin: var(--universal-margin)
+        }
+
+        :root {
+            --header-back-color: #f8f8f8;
+            --header-hover-back-color: #f0f0f0;
+            --header-fore-color: #444;
+            --header-border-color: #ddd;
+            --nav-back-color: #f8f8f8;
+            --nav-hover-back-color: #f0f0f0;
+            --nav-fore-color: #444;
+            --nav-border-color: #ddd;
+            --nav-link-color: #0277bd;
+            --footer-fore-color: #444;
+            --footer-back-color: #f8f8f8;
+            --footer-border-color: #ddd;
+            --footer-link-color: #0277bd;
+            --drawer-back-color: #f8f8f8;
+            --drawer-hover-back-color: #f0f0f0;
+            --drawer-border-color: #ddd;
+            --drawer-close-color: #444
+        }
+
+        header {
+            height: 3.1875rem;
+            background: var(--header-back-color);
+            color: var(--header-fore-color);
+            border-bottom: .0625rem solid var(--header-border-color);
+            padding: calc(var(--universal-padding) / 4) 0;
+            white-space: nowrap;
+            overflow-x: auto;
+            overflow-y: hidden
+        }
+
+        header.row {
+            box-sizing: content-box
+        }
+
+        header .logo {
+            color: var(--header-fore-color);
+            font-size: 1.75rem;
+            padding: var(--universal-padding) calc(2 * var(--universal-padding));
+            text-decoration: none
+        }
+
+        header button,
+        header [type="button"],
+        header .button,
+        header [role="button"] {
+            box-sizing: border-box;
+            position: relative;
+            top: calc(0rem - var(--universal-padding) / 4);
+            height: calc(3.1875rem + var(--universal-padding) / 2);
+            background: var(--header-back-color);
+            line-height: calc(3.1875rem - var(--universal-padding) * 1.5);
+            text-align: center;
+            color: var(--header-fore-color);
+            border: 0;
+            border-radius: 0;
+            margin: 0;
+            text-transform: uppercase
+        }
+
+        header button:hover,
+        header button:focus,
+        header [type="button"]:hover,
+        header [type="button"]:focus,
+        header .button:hover,
+        header .button:focus,
+        header [role="button"]:hover,
+        header [role="button"]:focus {
+            background: var(--header-hover-back-color)
+        }
+
+        nav {
+            background: var(--nav-back-color);
+            color: var(--nav-fore-color);
+            border: .0625rem solid var(--nav-border-color);
+            border-radius: var(--universal-border-radius);
+            margin: var(--universal-margin)
+        }
+
+        nav * {
+            padding: var(--universal-padding) calc(1.5 * var(--universal-padding))
+        }
+
+        nav a,
+        nav a:visited {
+            display: block;
+            color: var(--nav-link-color);
+            border-radius: var(--universal-border-radius);
+            transition: background 0.3s
+        }
+
+        nav a:hover,
+        nav a:focus,
+        nav a:visited:hover,
+        nav a:visited:focus {
+            text-decoration: none;
+            background: var(--nav-hover-back-color)
+        }
+
+        nav .sublink-1 {
+            position: relative;
+            margin-left: calc(2 * var(--universal-padding))
+        }
+
+        nav .sublink-1:before {
+            position: absolute;
+            left: calc(var(--universal-padding) - 1 * var(--universal-padding));
+            top: -.0625rem;
+            content: '';
+            height: 100%;
+            border: .0625rem solid var(--nav-border-color);
+            border-left: 0
+        }
+
+        nav .sublink-2 {
+            position: relative;
+            margin-left: calc(4 * var(--universal-padding))
+        }
+
+        nav .sublink-2:before {
+            position: absolute;
+            left: calc(var(--universal-padding) - 3 * var(--universal-padding));
+            top: -.0625rem;
+            content: '';
+            height: 100%;
+            border: .0625rem solid var(--nav-border-color);
+            border-left: 0
+        }
+
+        footer {
+            background: var(--footer-back-color);
+            color: var(--footer-fore-color);
+            border-top: .0625rem solid var(--footer-border-color);
+            padding: calc(2 * var(--universal-padding)) var(--universal-padding);
+            font-size: .875rem
+        }
+
+        footer a,
+        footer a:visited {
+            color: var(--footer-link-color)
+        }
+
+        header.sticky {
+            position: -webkit-sticky;
+            position: sticky;
+            z-index: 1101;
+            top: 0
+        }
+
+        footer.sticky {
+            position: -webkit-sticky;
+            position: sticky;
+            z-index: 1101;
+            bottom: 0
+        }
+
+        .drawer-toggle:before {
+            display: inline-block;
+            position: relative;
+            vertical-align: bottom;
+            content: '\00a0\2261\00a0';
+            font-family: sans-serif;
+            font-size: 1.5em
+        }
+
+        @media screen and (min-width: 768px) {
+            .drawer-toggle:not(.persistent) {
+                display: none
+            }
+        }
+
+        [type="checkbox"].drawer {
+            height: 1px;
+            width: 1px;
+            margin: -1px;
+            overflow: hidden;
+            position: absolute;
+            clip: rect(0 0 0 0);
+            -webkit-clip-path: inset(100%);
+            clip-path: inset(100%)
+        }
+
+        [type="checkbox"].drawer+* {
+            display: block;
+            box-sizing: border-box;
+            position: fixed;
+            top: 0;
+            width: 320px;
+            height: 100vh;
+            overflow-y: auto;
+            background: var(--drawer-back-color);
+            border: .0625rem solid var(--drawer-border-color);
+            border-radius: 0;
+            margin: 0;
+            z-index: 1110;
+            right: -320px;
+            transition: right 0.3s
+        }
+
+        [type="checkbox"].drawer+* .drawer-close {
+            position: absolute;
+            top: var(--universal-margin);
+            right: var(--universal-margin);
+            z-index: 1111;
+            width: 2rem;
+            height: 2rem;
+            border-radius: var(--universal-border-radius);
+            padding: var(--universal-padding);
+            margin: 0;
+            cursor: pointer;
+            transition: background 0.3s
+        }
+
+        [type="checkbox"].drawer+* .drawer-close:before {
+            display: block;
+            content: '\00D7';
+            color: var(--drawer-close-color);
+            position: relative;
+            font-family: sans-serif;
+            font-size: 2rem;
+            line-height: 1;
+            text-align: center
+        }
+
+        [type="checkbox"].drawer+* .drawer-close:hover,
+        [type="checkbox"].drawer+* .drawer-close:focus {
+            background: var(--drawer-hover-back-color)
+        }
+
+        @media screen and (max-width: 320px) {
+            [type="checkbox"].drawer+* {
+                width: 100%
+            }
+        }
+
+        [type="checkbox"].drawer:checked+* {
+            right: 0
+        }
+
+        @media screen and (min-width: 768px) {
+            [type="checkbox"].drawer:not(.persistent)+* {
+                position: static;
+                height: 100%;
+                z-index: 1100
+            }
+
+            [type="checkbox"].drawer:not(.persistent)+* .drawer-close {
+                display: none
+            }
+        }
+
+        :root {
+            --table-border-color: #aaa;
+            --table-border-separator-color: #666;
+            --table-head-back-color: #e6e6e6;
+            --table-head-fore-color: #111;
+            --table-body-back-color: #f8f8f8;
+            --table-body-fore-color: #111;
+            --table-body-alt-back-color: #eee
+        }
+
+        table {
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 0;
+            display: flex;
+            flex: 0 1 auto;
+            flex-flow: row wrap;
+            padding: var(--universal-padding);
+            padding-top: 0
+        }
+
+        table caption {
+            font-size: 1.5rem;
+            margin: calc(2 * var(--universal-margin)) 0;
+            max-width: 100%;
+            flex: 0 0 100%
+        }
+
+        table thead,
+        table tbody {
+            display: flex;
+            flex-flow: row wrap;
+            border: .0625rem solid var(--table-border-color)
+        }
+
+        table thead {
+            z-index: 999;
+            border-radius: var(--universal-border-radius) var(--universal-border-radius) 0 0;
+            border-bottom: .0625rem solid var(--table-border-separator-color)
+        }
+
+        table tbody {
+            border-top: 0;
+            margin-top: calc(0 - var(--universal-margin));
+            border-radius: 0 0 var(--universal-border-radius) var(--universal-border-radius)
+        }
+
+        table tr {
+            display: flex;
+            padding: 0
+        }
+
+        table th,
+        table td {
+            padding: calc(2 * var(--universal-padding))
+        }
+
+        table th {
+            text-align: left;
+            background: var(--table-head-back-color);
+            color: var(--table-head-fore-color)
+        }
+
+        table td {
+            background: var(--table-body-back-color);
+            color: var(--table-body-fore-color);
+            border-top: .0625rem solid var(--table-border-color)
+        }
+
+        table:not(.horizontal) {
+            overflow: auto;
+            max-height: 400px
+        }
+
+        table:not(.horizontal) thead,
+        table:not(.horizontal) tbody {
+            max-width: 100%;
+            flex: 0 0 100%
+        }
+
+        table:not(.horizontal) tr {
+            flex-flow: row wrap;
+            flex: 0 0 100%
+        }
+
+        table:not(.horizontal) th,
+        table:not(.horizontal) td {
+            flex: 1 0 0%;
+            overflow: hidden;
+            text-overflow: ellipsis
+        }
+
+        table:not(.horizontal) thead {
+            position: sticky;
+            top: 0
+        }
+
+        table:not(.horizontal) tbody tr:first-child td {
+            border-top: 0
+        }
+
+        table.horizontal {
+            border: 0
+        }
+
+        table.horizontal thead,
+        table.horizontal tbody {
+            border: 0;
+            flex: .2 0 0;
+            flex-flow: row nowrap
+        }
+
+        table.horizontal tbody {
+            overflow: auto;
+            justify-content: space-between;
+            flex: .8 0 0;
+            margin-left: 0;
+            padding-bottom: calc(var(--universal-padding) / 4)
+        }
+
+        table.horizontal tr {
+            flex-direction: column;
+            flex: 1 0 auto
+        }
+
+        table.horizontal th,
+        table.horizontal td {
+            width: auto;
+            border: 0;
+            border-bottom: .0625rem solid var(--table-border-color)
+        }
+
+        table.horizontal th:not(:first-child),
+        table.horizontal td:not(:first-child) {
+            border-top: 0
+        }
+
+        table.horizontal th {
+            text-align: right;
+            border-left: .0625rem solid var(--table-border-color);
+            border-right: .0625rem solid var(--table-border-separator-color)
+        }
+
+        table.horizontal thead tr:first-child {
+            padding-left: 0
+        }
+
+        table.horizontal th:first-child,
+        table.horizontal td:first-child {
+            border-top: .0625rem solid var(--table-border-color)
+        }
+
+        table.horizontal tbody tr:last-child td {
+            border-right: .0625rem solid var(--table-border-color)
+        }
+
+        table.horizontal tbody tr:last-child td:first-child {
+            border-top-right-radius: 0.25rem
+        }
+
+        table.horizontal tbody tr:last-child td:last-child {
+            border-bottom-right-radius: 0.25rem
+        }
+
+        table.horizontal thead tr:first-child th:first-child {
+            border-top-left-radius: 0.25rem
+        }
+
+        table.horizontal thead tr:first-child th:last-child {
+            border-bottom-left-radius: 0.25rem
+        }
+
+        @media screen and (max-width: 767px) {
+
+            table,
+            table.horizontal {
+                border-collapse: collapse;
+                border: 0;
+                width: 100%;
+                display: table
+            }
+
+            table thead,
+            table th,
+            table.horizontal thead,
+            table.horizontal th {
+                border: 0;
+                height: 1px;
+                width: 1px;
+                margin: -1px;
+                overflow: hidden;
+                padding: 0;
+                position: absolute;
+                clip: rect(0 0 0 0);
+                -webkit-clip-path: inset(100%);
+                clip-path: inset(100%)
+            }
+
+            table tbody,
+            table.horizontal tbody {
+                border: 0;
+                display: table-row-group
+            }
+
+            table tr,
+            table.horizontal tr {
+                display: block;
+                border: .0625rem solid var(--table-border-color);
+                border-radius: var(--universal-border-radius);
+                background: #fafafa;
+                padding: var(--universal-padding);
+                margin: var(--universal-margin);
+                margin-bottom: calc(2 * var(--universal-margin))
+            }
+
+            table th,
+            table td,
+            table.horizontal th,
+            table.horizontal td {
+                width: auto
+            }
+
+            table td,
+            table.horizontal td {
+                display: block;
+                border: 0;
+                text-align: right
+            }
+
+            table td:before,
+            table.horizontal td:before {
+                content: attr(data-label);
+                float: left;
+                font-weight: 600
+            }
+
+            table th:first-child,
+            table td:first-child,
+            table.horizontal th:first-child,
+            table.horizontal td:first-child {
+                border-top: 0
+            }
+
+            table tbody tr:last-child td,
+            table.horizontal tbody tr:last-child td {
+                border-right: 0
+            }
+        }
+
+        :root {
+            --table-body-alt-back-color: #eee
+        }
+
+        table.striped tr:nth-of-type(2n)>td {
+            background: var(--table-body-alt-back-color)
+        }
+
+        @media screen and (max-width: 768px) {
+            table.striped tr:nth-of-type(2n) {
+                background: var(--table-body-alt-back-color)
+            }
+        }
+
+        :root {
+            --table-body-hover-back-color: #90caf9
+        }
+
+        table.hoverable tr:hover,
+        table.hoverable tr:hover>td,
+        table.hoverable tr:focus,
+        table.hoverable tr:focus>td {
+            background: var(--table-body-hover-back-color)
+        }
+
+        @media screen and (max-width: 768px) {
+
+            table.hoverable tr:hover,
+            table.hoverable tr:hover>td,
+            table.hoverable tr:focus,
+            table.hoverable tr:focus>td {
+                background: var(--table-body-hover-back-color)
+            }
+        }
+
+        :root {
+            --mark-back-color: #0277bd;
+            --mark-fore-color: #fafafa
+        }
+
+        mark {
+            background: var(--mark-back-color);
+            color: var(--mark-fore-color);
+            font-size: .95em;
+            line-height: 1em;
+            border-radius: var(--universal-border-radius);
+            padding: calc(var(--universal-padding) / 4) calc(var(--universal-padding) / 2)
+        }
+
+        mark.inline-block {
+            display: inline-block;
+            font-size: 1em;
+            line-height: 1.5;
+            padding: calc(var(--universal-padding) / 2) var(--universal-padding)
+        }
+
+        :root {
+            --toast-back-color: #424242;
+            --toast-fore-color: #fafafa
+        }
+
+        .toast {
+            position: fixed;
+            bottom: calc(var(--universal-margin) * 3);
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1111;
+            color: var(--toast-fore-color);
+            background: var(--toast-back-color);
+            border-radius: calc(var(--universal-border-radius) * 16);
+            padding: var(--universal-padding) calc(var(--universal-padding) * 3)
+        }
+
+        :root {
+            --tooltip-back-color: #212121;
+            --tooltip-fore-color: #fafafa
+        }
+
+        .tooltip {
+            position: relative;
+            display: inline-block
+        }
+
+        .tooltip:before,
+        .tooltip:after {
+            position: absolute;
+            opacity: 0;
+            clip: rect(0 0 0 0);
+            -webkit-clip-path: inset(100%);
+            clip-path: inset(100%);
+            transition: all 0.3s;
+            z-index: 1010;
+            left: 50%
+        }
+
+        .tooltip:not(.bottom):before,
+        .tooltip:not(.bottom):after {
+            bottom: 75%
+        }
+
+        .tooltip.bottom:before,
+        .tooltip.bottom:after {
+            top: 75%
+        }
+
+        .tooltip:hover:before,
+        .tooltip:hover:after,
+        .tooltip:focus:before,
+        .tooltip:focus:after {
+            opacity: 1;
+            clip: auto;
+            -webkit-clip-path: inset(0%);
+            clip-path: inset(0%)
+        }
+
+        .tooltip:before {
+            content: '';
+            background: transparent;
+            border: var(--universal-margin) solid transparent;
+            left: calc(50% - var(--universal-margin))
+        }
+
+        .tooltip:not(.bottom):before {
+            border-top-color: #212121
+        }
+
+        .tooltip.bottom:before {
+            border-bottom-color: #212121
+        }
+
+        .tooltip:after {
+            content: attr(aria-label);
+            color: var(--tooltip-fore-color);
+            background: var(--tooltip-back-color);
+            border-radius: var(--universal-border-radius);
+            padding: var(--universal-padding);
+            white-space: nowrap;
+            transform: translateX(-50%)
+        }
+
+        .tooltip:not(.bottom):after {
+            margin-bottom: calc(2 * var(--universal-margin))
+        }
+
+        .tooltip.bottom:after {
+            margin-top: calc(2 * var(--universal-margin))
+        }
+
+        :root {
+            --modal-overlay-color: rgba(0, 0, 0, 0.45);
+            --modal-close-color: #444;
+            --modal-close-hover-color: #f0f0f0
+        }
+
+        [type="checkbox"].modal {
+            height: 1px;
+            width: 1px;
+            margin: -1px;
+            overflow: hidden;
+            position: absolute;
+            clip: rect(0 0 0 0);
+            -webkit-clip-path: inset(100%);
+            clip-path: inset(100%)
+        }
+
+        [type="checkbox"].modal+div {
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: none;
+            width: 100vw;
+            height: 100vh;
+            background: var(--modal-overlay-color)
+        }
+
+        [type="checkbox"].modal+div .card {
+            margin: 0 auto;
+            max-height: 50vh;
+            overflow: auto
+        }
+
+        [type="checkbox"].modal+div .card .modal-close {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 1.75rem;
+            height: 1.75rem;
+            border-radius: var(--universal-border-radius);
+            padding: var(--universal-padding);
+            margin: 0;
+            cursor: pointer;
+            transition: background 0.3s
+        }
+
+        [type="checkbox"].modal+div .card .modal-close:before {
+            display: block;
+            content: '\00D7';
+            color: var(--modal-close-color);
+            position: relative;
+            font-family: sans-serif;
+            font-size: 1.75rem;
+            line-height: 1;
+            text-align: center
+        }
+
+        [type="checkbox"].modal+div .card .modal-close:hover,
+        [type="checkbox"].modal+div .card .modal-close:focus {
+            background: var(--modal-close-hover-color)
+        }
+
+        [type="checkbox"].modal:checked+div {
+            display: flex;
+            flex: 0 1 auto;
+            z-index: 1200
+        }
+
+        [type="checkbox"].modal:checked+div .card .modal-close {
+            z-index: 1211
+        }
+
+        :root {
+            --collapse-label-back-color: #e8e8e8;
+            --collapse-label-fore-color: #212121;
+            --collapse-label-hover-back-color: #f0f0f0;
+            --collapse-selected-label-back-color: #ececec;
+            --collapse-border-color: #ddd;
+            --collapse-content-back-color: #fafafa;
+            --collapse-selected-label-border-color: #0277bd
+        }
+
+        .collapse {
+            width: calc(100% - 2 * var(--universal-margin));
+            opacity: 1;
+            display: flex;
+            flex-direction: column;
+            margin: var(--universal-margin);
+            border-radius: var(--universal-border-radius)
+        }
+
+        .collapse>[type="radio"],
+        .collapse>[type="checkbox"] {
+            height: 1px;
+            width: 1px;
+            margin: -1px;
+            overflow: hidden;
+            position: absolute;
+            clip: rect(0 0 0 0);
+            -webkit-clip-path: inset(100%);
+            clip-path: inset(100%)
+        }
+
+        .collapse>label {
+            flex-grow: 1;
+            display: inline-block;
+            height: 1.5rem;
+            cursor: pointer;
+            transition: background 0.3s;
+            color: var(--collapse-label-fore-color);
+            background: var(--collapse-label-back-color);
+            border: .0625rem solid var(--collapse-border-color);
+            padding: calc(1.5 * var(--universal-padding))
+        }
+
+        .collapse>label:hover,
+        .collapse>label:focus {
+            background: var(--collapse-label-hover-back-color)
+        }
+
+        .collapse>label+div {
+            flex-basis: auto;
+            height: 1px;
+            width: 1px;
+            margin: -1px;
+            overflow: hidden;
+            position: absolute;
+            clip: rect(0 0 0 0);
+            -webkit-clip-path: inset(100%);
+            clip-path: inset(100%);
+            transition: max-height 0.3s;
+            max-height: 1px
+        }
+
+        .collapse>:checked+label {
+            background: var(--collapse-selected-label-back-color);
+            border-bottom-color: var(--collapse-selected-label-border-color)
+        }
+
+        .collapse>:checked+label+div {
+            box-sizing: border-box;
+            position: relative;
+            width: 100%;
+            height: auto;
+            overflow: auto;
+            margin: 0;
+            background: var(--collapse-content-back-color);
+            border: .0625rem solid var(--collapse-border-color);
+            border-top: 0;
+            padding: var(--universal-padding);
+            clip: auto;
+            -webkit-clip-path: inset(0%);
+            clip-path: inset(0%);
+            max-height: 400px
+        }
+
+        .collapse>label:not(:first-of-type) {
+            border-top: 0
+        }
+
+        .collapse>label:first-of-type {
+            border-radius: var(--universal-border-radius) var(--universal-border-radius) 0 0
+        }
+
+        .collapse>label:last-of-type:not(:first-of-type) {
+            border-radius: 0 0 var(--universal-border-radius) var(--universal-border-radius)
+        }
+
+        .collapse>label:last-of-type:first-of-type {
+            border-radius: var(--universal-border-radius)
+        }
+
+        .collapse>:checked:last-of-type:not(:first-of-type)+label {
+            border-radius: 0
+        }
+
+        .collapse>:checked:last-of-type+label+div {
+            border-radius: 0 0 var(--universal-border-radius) var(--universal-border-radius)
+        }
+
+        mark.secondary {
+            --mark-back-color: #d32f2f
+        }
+
+        mark.tertiary {
+            --mark-back-color: #308732
+        }
+
+        mark.tag {
+            padding: calc(var(--universal-padding)/2) var(--universal-padding);
+            border-radius: 1em
+        }
+
+        :root {
+            --progress-back-color: #ddd;
+            --progress-fore-color: #555
+        }
+
+        progress {
+            display: block;
+            vertical-align: baseline;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            height: .75rem;
+            width: calc(100% - 2 * var(--universal-margin));
+            margin: var(--universal-margin);
+            border: 0;
+            border-radius: calc(2 * var(--universal-border-radius));
+            background: var(--progress-back-color);
+            color: var(--progress-fore-color)
+        }
+
+        progress::-webkit-progress-value {
+            background: var(--progress-fore-color);
+            border-top-left-radius: calc(2 * var(--universal-border-radius));
+            border-bottom-left-radius: calc(2 * var(--universal-border-radius))
+        }
+
+        progress::-webkit-progress-bar {
+            background: var(--progress-back-color)
+        }
+
+        progress::-moz-progress-bar {
+            background: var(--progress-fore-color);
+            border-top-left-radius: calc(2 * var(--universal-border-radius));
+            border-bottom-left-radius: calc(2 * var(--universal-border-radius))
+        }
+
+        progress[value="1000"]::-webkit-progress-value {
+            border-radius: calc(2 * var(--universal-border-radius))
+        }
+
+        progress[value="1000"]::-moz-progress-bar {
+            border-radius: calc(2 * var(--universal-border-radius))
+        }
+
+        progress.inline {
+            display: inline-block;
+            vertical-align: middle;
+            width: 60%
+        }
+
+        :root {
+            --spinner-back-color: #ddd;
+            --spinner-fore-color: #555
+        }
+
+        @keyframes spinner-donut-anim {
+            0% {
+                transform: rotate(0deg)
+            }
+
+            100% {
+                transform: rotate(360deg)
+            }
+        }
+
+        .spinner {
+            display: inline-block;
+            margin: var(--universal-margin);
+            border: .25rem solid var(--spinner-back-color);
+            border-left: .25rem solid var(--spinner-fore-color);
+            border-radius: 50%;
+            width: 1.25rem;
+            height: 1.25rem;
+            animation: spinner-donut-anim 1.2s linear infinite
+        }
+
+        progress.primary {
+            --progress-fore-color: #1976d2
+        }
+
+        progress.secondary {
+            --progress-fore-color: #d32f2f
+        }
+
+        progress.tertiary {
+            --progress-fore-color: #308732
+        }
+
+        .spinner.primary {
+            --spinner-fore-color: #1976d2
+        }
+
+        .spinner.secondary {
+            --spinner-fore-color: #d32f2f
+        }
+
+        .spinner.tertiary {
+            --spinner-fore-color: #308732
+        }
+
+        span[class^='icon-'] {
+            display: inline-block;
+            height: 1em;
+            width: 1em;
+            vertical-align: -0.125em;
+            background-size: contain;
+            margin: 0 calc(var(--universal-margin) / 4)
+        }
+
+        span[class^='icon-'].secondary {
+            -webkit-filter: invert(25%);
+            filter: invert(25%)
+        }
+
+        span[class^='icon-'].inverse {
+            -webkit-filter: invert(100%);
+            filter: invert(100%)
+        }
+
+        span.icon-alert {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23111' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'%3E%3C/circle%3E%3Cline x1='12' y1='8' x2='12' y2='12'%3E%3C/line%3E%3Cline x1='12' y1='16' x2='12' y2='16'%3E%3C/line%3E%3C/svg%3E")
+        }
+
+        span.icon-bookmark {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23111' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z'%3E%3C/path%3E%3C/svg%3E")
+        }
+
+        span.icon-calendar {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23111' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='18' rx='2' ry='2'%3E%3C/rect%3E%3Cline x1='16' y1='2' x2='16' y2='6'%3E%3C/line%3E%3Cline x1='8' y1='2' x2='8' y2='6'%3E%3C/line%3E%3Cline x1='3' y1='10' x2='21' y2='10'%3E%3C/line%3E%3C/svg%3E")
+        }
+
+        span.icon-credit {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23111' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='1' y='4' width='22' height='16' rx='2' ry='2'%3E%3C/rect%3E%3Cline x1='1' y1='10' x2='23' y2='10'%3E%3C/line%3E%3C/svg%3E")
+        }
+
+        span.icon-edit {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23111' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 14.66V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5.34'%3E%3C/path%3E%3Cpolygon points='18 2 22 6 12 16 8 16 8 12 18 2'%3E%3C/polygon%3E%3C/svg%3E")
+        }
+
+        span.icon-link {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23111' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6'%3E%3C/path%3E%3Cpolyline points='15 3 21 3 21 9'%3E%3C/polyline%3E%3Cline x1='10' y1='14' x2='21' y2='3'%3E%3C/line%3E%3C/svg%3E")
+        }
+
+        span.icon-help {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23111' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3'%3E%3C/path%3E%3Ccircle cx='12' cy='12' r='10'%3E%3C/circle%3E%3Cline x1='12' y1='17' x2='12' y2='17'%3E%3C/line%3E%3C/svg%3E")
+        }
+
+        span.icon-home {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23111' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z'%3E%3C/path%3E%3Cpolyline points='9 22 9 12 15 12 15 22'%3E%3C/polyline%3E%3C/svg%3E")
+        }
+
+        span.icon-info {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23111' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'%3E%3C/circle%3E%3Cline x1='12' y1='16' x2='12' y2='12'%3E%3C/line%3E%3Cline x1='12' y1='8' x2='12' y2='8'%3E%3C/line%3E%3C/svg%3E")
+        }
+
+        span.icon-lock {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23111' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='11' width='18' height='11' rx='2' ry='2'%3E%3C/rect%3E%3Cpath d='M7 11V7a5 5 0 0 1 10 0v4'%3E%3C/path%3E%3C/svg%3E")
+        }
+
+        span.icon-mail {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23111' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z'%3E%3C/path%3E%3Cpolyline points='22,6 12,13 2,6'%3E%3C/polyline%3E%3C/svg%3E")
+        }
+
+        span.icon-location {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23111' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z'%3E%3C/path%3E%3Ccircle cx='12' cy='10' r='3'%3E%3C/circle%3E%3C/svg%3E")
+        }
+
+        span.icon-phone {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23111' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z'%3E%3C/path%3E%3C/svg%3E")
+        }
+
+        span.icon-rss {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23111' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 11a9 9 0 0 1 9 9'%3E%3C/path%3E%3Cpath d='M4 4a16 16 0 0 1 16 16'%3E%3C/path%3E%3Ccircle cx='5' cy='19' r='1'%3E%3C/circle%3E%3C/svg%3E")
+        }
+
+        span.icon-search {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23111' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'%3E%3C/circle%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'%3E%3C/line%3E%3C/svg%3E")
+        }
+
+        span.icon-settings {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23111' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='3'%3E%3C/circle%3E%3Cpath d='M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z'%3E%3C/path%3E%3C/svg%3E")
+        }
+
+        span.icon-share {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23111' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='18' cy='5' r='3'%3E%3C/circle%3E%3Ccircle cx='6' cy='12' r='3'%3E%3C/circle%3E%3Ccircle cx='18' cy='19' r='3'%3E%3C/circle%3E%3Cline x1='8.59' y1='13.51' x2='15.42' y2='17.49'%3E%3C/line%3E%3Cline x1='15.41' y1='6.51' x2='8.59' y2='10.49'%3E%3C/line%3E%3C/svg%3E")
+        }
+
+        span.icon-cart {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23111' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='9' cy='21' r='1'%3E%3C/circle%3E%3Ccircle cx='20' cy='21' r='1'%3E%3C/circle%3E%3Cpath d='M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6'%3E%3C/path%3E%3C/svg%3E")
+        }
+
+        span.icon-upload {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23111' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4'%3E%3C/path%3E%3Cpolyline points='17 8 12 3 7 8'%3E%3C/polyline%3E%3Cline x1='12' y1='3' x2='12' y2='15'%3E%3C/line%3E%3C/svg%3E")
+        }
+
+        span.icon-user {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23111' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2'%3E%3C/path%3E%3Ccircle cx='12' cy='7' r='4'%3E%3C/circle%3E%3C/svg%3E")
+        }
+
+        :root {
+            --generic-border-color: rgba(0, 0, 0, 0.3);
+            --generic-box-shadow: 0 .25rem .25rem 0 rgba(0, 0, 0, 0.125), 0 .125rem .125rem -.125rem rgba(0, 0, 0, 0.25)
+        }
+
+        .hidden {
+            display: none !important
+        }
+
+        .visually-hidden {
+            position: absolute !important;
+            width: 1px !important;
+            height: 1px !important;
+            margin: -1px !important;
+            border: 0 !important;
+            padding: 0 !important;
+            clip: rect(0 0 0 0) !important;
+            -webkit-clip-path: inset(100%) !important;
+            clip-path: inset(100%) !important;
+            overflow: hidden !important
+        }
+
+        .bordered {
+            border: .0625rem solid var(--generic-border-color) !important
+        }
+
+        .rounded {
+            border-radius: var(--universal-border-radius) !important
+        }
+
+        .circular {
+            border-radius: 50% !important
+        }
+
+        .shadowed {
+            box-shadow: var(--generic-box-shadow) !important
+        }
+
+        .responsive-margin {
+            margin: calc(var(--universal-margin) / 4) !important
+        }
+
+        @media screen and (min-width: 768px) {
+            .responsive-margin {
+                margin: calc(var(--universal-margin) / 2) !important
+            }
+        }
+
+        @media screen and (min-width: 1280px) {
+            .responsive-margin {
+                margin: var(--universal-margin) !important
+            }
+        }
+
+        .responsive-padding {
+            padding: calc(var(--universal-padding) / 4) !important
+        }
+
+        @media screen and (min-width: 768px) {
+            .responsive-padding {
+                padding: calc(var(--universal-padding) / 2) !important
+            }
+        }
+
+        @media screen and (min-width: 1280px) {
+            .responsive-padding {
+                padding: var(--universal-padding) !important
+            }
+        }
+
+        @media screen and (max-width: 767px) {
+            .hidden-sm {
+                display: none !important
+            }
+        }
+
+        @media screen and (min-width: 768px) and (max-width: 1279px) {
+            .hidden-md {
+                display: none !important
+            }
+        }
+
+        @media screen and (min-width: 1280px) {
+            .hidden-lg {
+                display: none !important
+            }
+        }
+
+        @media screen and (max-width: 767px) {
+            .visually-hidden-sm {
+                position: absolute !important;
+                width: 1px !important;
+                height: 1px !important;
+                margin: -1px !important;
+                border: 0 !important;
+                padding: 0 !important;
+                clip: rect(0 0 0 0) !important;
+                -webkit-clip-path: inset(100%) !important;
+                clip-path: inset(100%) !important;
+                overflow: hidden !important
+            }
+        }
+
+        @media screen and (min-width: 768px) and (max-width: 1279px) {
+            .visually-hidden-md {
+                position: absolute !important;
+                width: 1px !important;
+                height: 1px !important;
+                margin: -1px !important;
+                border: 0 !important;
+                padding: 0 !important;
+                clip: rect(0 0 0 0) !important;
+                -webkit-clip-path: inset(100%) !important;
+                clip-path: inset(100%) !important;
+                overflow: hidden !important
+            }
+        }
+
+        @media screen and (min-width: 1280px) {
+            .visually-hidden-lg {
+                position: absolute !important;
+                width: 1px !important;
+                height: 1px !important;
+                margin: -1px !important;
+                border: 0 !important;
+                padding: 0 !important;
+                clip: rect(0 0 0 0) !important;
+                -webkit-clip-path: inset(100%) !important;
+                clip-path: inset(100%) !important;
+                overflow: hidden !important
+            }
+        }
+    </style>
+</head>
+
+<body onLoad="generate();">
+    <h2>Password generator</h2>
+    <p>Generates secure-enough random passphrases. Source code <a href="https://github.com/andygock/password-generator">available
+            on GitHub project</a> page.</p>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4">
+
+                <div>
+                    <input type="number" id="numberOfWords" name="numberOfWords" min="1" max="20" value="6">
+                    <label for="numberOfWords">Number of words per passphrase</label>
+                </div>
+
+                <div>
+                    <input type="number" id="numberOfPassphrases" name="numberOfPassphrases" min="1" max="20" value="20">
+                    <label for="numberOfPassphrases">Number of passphrases</label>
+                </div>
+
+                <div>
+                    <input type="radio" id="eff-long" name="wordlist" value="eff-long" checked>
+                    <label for="eff-long">EFF long word list</label>
+                </div>
+
+                <div>
+                    <input type="radio" id="eff-short-1" name="wordlist" value="eff-short-1">
+                    <label for="eff-short-1">EFF short word list v1</label>
+                </div>
+
+                <div>
+                    <input type="radio" id="eff-short-2" name="wordlist" value="eff-short-2">
+                    <label for="eff-short-2">EFF short word list v2</label>
+                </div>
+
+                <input type="submit" value="Generate" onClick="generate();">
+            </div>
+            <div class="col-sm-8">
+                <pre id="output"></pre>
+                <div id="message"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var list_eff_long =
+            'abacus|abdomen|abdominal|abide|abiding|ability|ablaze|able|abnormal|abrasion|abrasive|abreast|abridge|abroad|abruptly|absence|absentee|absently|absinthe|absolute|absolve|abstain|abstract|absurd|accent|acclaim|acclimate|accompany|account|accuracy|accurate|accustom|acetone|achiness|aching|acid|acorn|acquaint|acquire|acre|acrobat|acronym|acting|action|activate|activator|active|activism|activist|activity|actress|acts|acutely|acuteness|aeration|aerobics|aerosol|aerospace|afar|affair|affected|affecting|affection|affidavit|affiliate|affirm|affix|afflicted|affluent|afford|affront|aflame|afloat|aflutter|afoot|afraid|afterglow|afterlife|aftermath|aftermost|afternoon|aged|ageless|agency|agenda|agent|aggregate|aghast|agile|agility|aging|agnostic|agonize|agonizing|agony|agreeable|agreeably|agreed|agreeing|agreement|aground|ahead|ahoy|aide|aids|aim|ajar|alabaster|alarm|albatross|album|alfalfa|algebra|algorithm|alias|alibi|alienable|alienate|aliens|alike|alive|alkaline|alkalize|almanac|almighty|almost|aloe|aloft|aloha|alone|alongside|aloof|alphabet|alright|although|altitude|alto|aluminum|alumni|always|amaretto|amaze|amazingly|amber|ambiance|ambiguity|ambiguous|ambition|ambitious|ambulance|ambush|amendable|amendment|amends|amenity|amiable|amicably|amid|amigo|amino|amiss|ammonia|ammonium|amnesty|amniotic|among|amount|amperage|ample|amplifier|amplify|amply|amuck|amulet|amusable|amused|amusement|amuser|amusing|anaconda|anaerobic|anagram|anatomist|anatomy|anchor|anchovy|ancient|android|anemia|anemic|aneurism|anew|angelfish|angelic|anger|angled|angler|angles|angling|angrily|angriness|anguished|angular|animal|animate|animating|animation|animator|anime|animosity|ankle|annex|annotate|announcer|annoying|annually|annuity|anointer|another|answering|antacid|antarctic|anteater|antelope|antennae|anthem|anthill|anthology|antibody|antics|antidote|antihero|antiquely|antiques|antiquity|antirust|antitoxic|antitrust|antiviral|antivirus|antler|antonym|antsy|anvil|anybody|anyhow|anymore|anyone|anyplace|anything|anytime|anyway|anywhere|aorta|apache|apostle|appealing|appear|appease|appeasing|appendage|appendix|appetite|appetizer|applaud|applause|apple|appliance|applicant|applied|apply|appointee|appraisal|appraiser|apprehend|approach|approval|approve|apricot|april|apron|aptitude|aptly|aqua|aqueduct|arbitrary|arbitrate|ardently|area|arena|arguable|arguably|argue|arise|armadillo|armband|armchair|armed|armful|armhole|arming|armless|armoire|armored|armory|armrest|army|aroma|arose|around|arousal|arrange|array|arrest|arrival|arrive|arrogance|arrogant|arson|art|ascend|ascension|ascent|ascertain|ashamed|ashen|ashes|ashy|aside|askew|asleep|asparagus|aspect|aspirate|aspire|aspirin|astonish|astound|astride|astrology|astronaut|astronomy|astute|atlantic|atlas|atom|atonable|atop|atrium|atrocious|atrophy|attach|attain|attempt|attendant|attendee|attention|attentive|attest|attic|attire|attitude|attractor|attribute|atypical|auction|audacious|audacity|audible|audibly|audience|audio|audition|augmented|august|authentic|author|autism|autistic|autograph|automaker|automated|automatic|autopilot|available|avalanche|avatar|avenge|avenging|avenue|average|aversion|avert|aviation|aviator|avid|avoid|await|awaken|award|aware|awhile|awkward|awning|awoke|awry|axis|babble|babbling|babied|baboon|backache|backboard|backboned|backdrop|backed|backer|backfield|backfire|backhand|backing|backlands|backlash|backless|backlight|backlit|backlog|backpack|backpedal|backrest|backroom|backshift|backside|backslid|backspace|backspin|backstab|backstage|backtalk|backtrack|backup|backward|backwash|backwater|backyard|bacon|bacteria|bacterium|badass|badge|badland|badly|badness|baffle|baffling|bagel|bagful|baggage|bagged|baggie|bagginess|bagging|baggy|bagpipe|baguette|baked|bakery|bakeshop|baking|balance|balancing|balcony|balmy|balsamic|bamboo|banana|banish|banister|banjo|bankable|bankbook|banked|banker|banking|banknote|bankroll|banner|bannister|banshee|banter|barbecue|barbed|barbell|barber|barcode|barge|bargraph|barista|baritone|barley|barmaid|barman|barn|barometer|barrack|barracuda|barrel|barrette|barricade|barrier|barstool|bartender|barterer|bash|basically|basics|basil|basin|basis|basket|batboy|batch|bath|baton|bats|battalion|battered|battering|battery|batting|battle|bauble|bazooka|blabber|bladder|blade|blah|blame|blaming|blanching|blandness|blank|blaspheme|blasphemy|blast|blatancy|blatantly|blazer|blazing|bleach|bleak|bleep|blemish|blend|bless|blighted|blimp|bling|blinked|blinker|blinking|blinks|blip|blissful|blitz|blizzard|bloated|bloating|blob|blog|bloomers|blooming|blooper|blot|blouse|blubber|bluff|bluish|blunderer|blunt|blurb|blurred|blurry|blurt|blush|blustery|boaster|boastful|boasting|boat|bobbed|bobbing|bobble|bobcat|bobsled|bobtail|bodacious|body|bogged|boggle|bogus|boil|bok|bolster|bolt|bonanza|bonded|bonding|bondless|boned|bonehead|boneless|bonelike|boney|bonfire|bonnet|bonsai|bonus|bony|boogeyman|boogieman|book|boondocks|booted|booth|bootie|booting|bootlace|bootleg|boots|boozy|borax|boring|borough|borrower|borrowing|boss|botanical|botanist|botany|botch|both|bottle|bottling|bottom|bounce|bouncing|bouncy|bounding|boundless|bountiful|bovine|boxcar|boxer|boxing|boxlike|boxy|breach|breath|breeches|breeching|breeder|breeding|breeze|breezy|brethren|brewery|brewing|briar|bribe|brick|bride|bridged|brigade|bright|brilliant|brim|bring|brink|brisket|briskly|briskness|bristle|brittle|broadband|broadcast|broaden|broadly|broadness|broadside|broadways|broiler|broiling|broken|broker|bronchial|bronco|bronze|bronzing|brook|broom|brought|browbeat|brownnose|browse|browsing|bruising|brunch|brunette|brunt|brush|brussels|brute|brutishly|bubble|bubbling|bubbly|buccaneer|bucked|bucket|buckle|buckshot|buckskin|bucktooth|buckwheat|buddhism|buddhist|budding|buddy|budget|buffalo|buffed|buffer|buffing|buffoon|buggy|bulb|bulge|bulginess|bulgur|bulk|bulldog|bulldozer|bullfight|bullfrog|bullhorn|bullion|bullish|bullpen|bullring|bullseye|bullwhip|bully|bunch|bundle|bungee|bunion|bunkbed|bunkhouse|bunkmate|bunny|bunt|busboy|bush|busily|busload|bust|busybody|buzz|cabana|cabbage|cabbie|cabdriver|cable|caboose|cache|cackle|cacti|cactus|caddie|caddy|cadet|cadillac|cadmium|cage|cahoots|cake|calamari|calamity|calcium|calculate|calculus|caliber|calibrate|calm|caloric|calorie|calzone|camcorder|cameo|camera|camisole|camper|campfire|camping|campsite|campus|canal|canary|cancel|candied|candle|candy|cane|canine|canister|cannabis|canned|canning|cannon|cannot|canola|canon|canopener|canopy|canteen|canyon|capable|capably|capacity|cape|capillary|capital|capitol|capped|capricorn|capsize|capsule|caption|captivate|captive|captivity|capture|caramel|carat|caravan|carbon|cardboard|carded|cardiac|cardigan|cardinal|cardstock|carefully|caregiver|careless|caress|caretaker|cargo|caring|carless|carload|carmaker|carnage|carnation|carnival|carnivore|carol|carpenter|carpentry|carpool|carport|carried|carrot|carrousel|carry|cartel|cartload|carton|cartoon|cartridge|cartwheel|carve|carving|carwash|cascade|case|cash|casing|casino|casket|cassette|casually|casualty|catacomb|catalog|catalyst|catalyze|catapult|cataract|catatonic|catcall|catchable|catcher|catching|catchy|caterer|catering|catfight|catfish|cathedral|cathouse|catlike|catnap|catnip|catsup|cattail|cattishly|cattle|catty|catwalk|caucasian|caucus|causal|causation|cause|causing|cauterize|caution|cautious|cavalier|cavalry|caviar|cavity|cedar|celery|celestial|celibacy|celibate|celtic|cement|census|ceramics|ceremony|certainly|certainty|certified|certify|cesarean|cesspool|chafe|chaffing|chain|chair|chalice|challenge|chamber|chamomile|champion|chance|change|channel|chant|chaos|chaperone|chaplain|chapped|chaps|chapter|character|charbroil|charcoal|charger|charging|chariot|charity|charm|charred|charter|charting|chase|chasing|chaste|chastise|chastity|chatroom|chatter|chatting|chatty|cheating|cheddar|cheek|cheer|cheese|cheesy|chef|chemicals|chemist|chemo|cherisher|cherub|chess|chest|chevron|chevy|chewable|chewer|chewing|chewy|chief|chihuahua|childcare|childhood|childish|childless|childlike|chili|chill|chimp|chip|chirping|chirpy|chitchat|chivalry|chive|chloride|chlorine|choice|chokehold|choking|chomp|chooser|choosing|choosy|chop|chosen|chowder|chowtime|chrome|chubby|chuck|chug|chummy|chump|chunk|churn|chute|cider|cilantro|cinch|cinema|cinnamon|circle|circling|circular|circulate|circus|citable|citadel|citation|citizen|citric|citrus|city|civic|civil|clad|claim|clambake|clammy|clamor|clamp|clamshell|clang|clanking|clapped|clapper|clapping|clarify|clarinet|clarity|clash|clasp|class|clatter|clause|clavicle|claw|clay|clean|clear|cleat|cleaver|cleft|clench|clergyman|clerical|clerk|clever|clicker|client|climate|climatic|cling|clinic|clinking|clip|clique|cloak|clobber|clock|clone|cloning|closable|closure|clothes|clothing|cloud|clover|clubbed|clubbing|clubhouse|clump|clumsily|clumsy|clunky|clustered|clutch|clutter|coach|coagulant|coastal|coaster|coasting|coastland|coastline|coat|coauthor|cobalt|cobbler|cobweb|cocoa|coconut|cod|coeditor|coerce|coexist|coffee|cofounder|cognition|cognitive|cogwheel|coherence|coherent|cohesive|coil|coke|cola|cold|coleslaw|coliseum|collage|collapse|collar|collected|collector|collide|collie|collision|colonial|colonist|colonize|colony|colossal|colt|coma|come|comfort|comfy|comic|coming|comma|commence|commend|comment|commerce|commode|commodity|commodore|common|commotion|commute|commuting|compacted|compacter|compactly|compactor|companion|company|compare|compel|compile|comply|component|composed|composer|composite|compost|composure|compound|compress|comprised|computer|computing|comrade|concave|conceal|conceded|concept|concerned|concert|conch|concierge|concise|conclude|concrete|concur|condense|condiment|condition|condone|conducive|conductor|conduit|cone|confess|confetti|confidant|confident|confider|confiding|configure|confined|confining|confirm|conflict|conform|confound|confront|confused|confusing|confusion|congenial|congested|congrats|congress|conical|conjoined|conjure|conjuror|connected|connector|consensus|consent|console|consoling|consonant|constable|constant|constrain|constrict|construct|consult|consumer|consuming|contact|container|contempt|contend|contented|contently|contents|contest|context|contort|contour|contrite|control|contusion|convene|convent|copartner|cope|copied|copier|copilot|coping|copious|copper|copy|coral|cork|cornball|cornbread|corncob|cornea|corned|corner|cornfield|cornflake|cornhusk|cornmeal|cornstalk|corny|coronary|coroner|corporal|corporate|corral|correct|corridor|corrode|corroding|corrosive|corsage|corset|cortex|cosigner|cosmetics|cosmic|cosmos|cosponsor|cost|cottage|cotton|couch|cough|could|countable|countdown|counting|countless|country|county|courier|covenant|cover|coveted|coveting|coyness|cozily|coziness|cozy|crabbing|crabgrass|crablike|crabmeat|cradle|cradling|crafter|craftily|craftsman|craftwork|crafty|cramp|cranberry|crane|cranial|cranium|crank|crate|crave|craving|crawfish|crawlers|crawling|crayfish|crayon|crazed|crazily|craziness|crazy|creamed|creamer|creamlike|crease|creasing|creatable|create|creation|creative|creature|credible|credibly|credit|creed|creme|creole|crepe|crept|crescent|crested|cresting|crestless|crevice|crewless|crewman|crewmate|crib|cricket|cried|crier|crimp|crimson|cringe|cringing|crinkle|crinkly|crisped|crisping|crisply|crispness|crispy|criteria|critter|croak|crock|crook|croon|crop|cross|crouch|crouton|crowbar|crowd|crown|crucial|crudely|crudeness|cruelly|cruelness|cruelty|crumb|crummiest|crummy|crumpet|crumpled|cruncher|crunching|crunchy|crusader|crushable|crushed|crusher|crushing|crust|crux|crying|cryptic|crystal|cubbyhole|cube|cubical|cubicle|cucumber|cuddle|cuddly|cufflink|culinary|culminate|culpable|culprit|cultivate|cultural|culture|cupbearer|cupcake|cupid|cupped|cupping|curable|curator|curdle|cure|curfew|curing|curled|curler|curliness|curling|curly|curry|curse|cursive|cursor|curtain|curtly|curtsy|curvature|curve|curvy|cushy|cusp|cussed|custard|custodian|custody|customary|customer|customize|customs|cut|cycle|cyclic|cycling|cyclist|cylinder|cymbal|cytoplasm|cytoplast|dab|dad|daffodil|dagger|daily|daintily|dainty|dairy|daisy|dallying|dance|dancing|dandelion|dander|dandruff|dandy|danger|dangle|dangling|daredevil|dares|daringly|darkened|darkening|darkish|darkness|darkroom|darling|darn|dart|darwinism|dash|dastardly|data|datebook|dating|daughter|daunting|dawdler|dawn|daybed|daybreak|daycare|daydream|daylight|daylong|dayroom|daytime|dazzler|dazzling|deacon|deafening|deafness|dealer|dealing|dealmaker|dealt|dean|debatable|debate|debating|debit|debrief|debtless|debtor|debug|debunk|decade|decaf|decal|decathlon|decay|deceased|deceit|deceiver|deceiving|december|decency|decent|deception|deceptive|decibel|decidable|decimal|decimeter|decipher|deck|declared|decline|decode|decompose|decorated|decorator|decoy|decrease|decree|dedicate|dedicator|deduce|deduct|deed|deem|deepen|deeply|deepness|deface|defacing|defame|default|defeat|defection|defective|defendant|defender|defense|defensive|deferral|deferred|defiance|defiant|defile|defiling|define|definite|deflate|deflation|deflator|deflected|deflector|defog|deforest|defraud|defrost|deftly|defuse|defy|degraded|degrading|degrease|degree|dehydrate|deity|dejected|delay|delegate|delegator|delete|deletion|delicacy|delicate|delicious|delighted|delirious|delirium|deliverer|delivery|delouse|delta|deluge|delusion|deluxe|demanding|demeaning|demeanor|demise|democracy|democrat|demote|demotion|demystify|denatured|deniable|denial|denim|denote|dense|density|dental|dentist|denture|deny|deodorant|deodorize|departed|departure|depict|deplete|depletion|deplored|deploy|deport|depose|depraved|depravity|deprecate|depress|deprive|depth|deputize|deputy|derail|deranged|derby|derived|desecrate|deserve|deserving|designate|designed|designer|designing|deskbound|desktop|deskwork|desolate|despair|despise|despite|destiny|destitute|destruct|detached|detail|detection|detective|detector|detention|detergent|detest|detonate|detonator|detoxify|detract|deuce|devalue|deviancy|deviant|deviate|deviation|deviator|device|devious|devotedly|devotee|devotion|devourer|devouring|devoutly|dexterity|dexterous|diabetes|diabetic|diabolic|diagnoses|diagnosis|diagram|dial|diameter|diaper|diaphragm|diary|dice|dicing|dictate|dictation|dictator|difficult|diffused|diffuser|diffusion|diffusive|dig|dilation|diligence|diligent|dill|dilute|dime|diminish|dimly|dimmed|dimmer|dimness|dimple|diner|dingbat|dinghy|dinginess|dingo|dingy|dining|dinner|diocese|dioxide|diploma|dipped|dipper|dipping|directed|direction|directive|directly|directory|direness|dirtiness|disabled|disagree|disallow|disarm|disarray|disaster|disband|disbelief|disburse|discard|discern|discharge|disclose|discolor|discount|discourse|discover|discuss|disdain|disengage|disfigure|disgrace|dish|disinfect|disjoin|disk|dislike|disliking|dislocate|dislodge|disloyal|dismantle|dismay|dismiss|dismount|disobey|disorder|disown|disparate|disparity|dispatch|dispense|dispersal|dispersed|disperser|displace|display|displease|disposal|dispose|disprove|dispute|disregard|disrupt|dissuade|distance|distant|distaste|distill|distinct|distort|distract|distress|district|distrust|ditch|ditto|ditzy|dividable|divided|dividend|dividers|dividing|divinely|diving|divinity|divisible|divisibly|division|divisive|divorcee|dizziness|dizzy|doable|docile|dock|doctrine|document|dodge|dodgy|doily|doing|dole|dollar|dollhouse|dollop|dolly|dolphin|domain|domelike|domestic|dominion|dominoes|donated|donation|donator|donor|donut|doodle|doorbell|doorframe|doorknob|doorman|doormat|doornail|doorpost|doorstep|doorstop|doorway|doozy|dork|dormitory|dorsal|dosage|dose|dotted|doubling|douche|dove|down|dowry|doze|drab|dragging|dragonfly|dragonish|dragster|drainable|drainage|drained|drainer|drainpipe|dramatic|dramatize|drank|drapery|drastic|draw|dreaded|dreadful|dreadlock|dreamboat|dreamily|dreamland|dreamless|dreamlike|dreamt|dreamy|drearily|dreary|drench|dress|drew|dribble|dried|drier|drift|driller|drilling|drinkable|drinking|dripping|drippy|drivable|driven|driver|driveway|driving|drizzle|drizzly|drone|drool|droop|drop-down|dropbox|dropkick|droplet|dropout|dropper|drove|drown|drowsily|drudge|drum|dry|dubbed|dubiously|duchess|duckbill|ducking|duckling|ducktail|ducky|duct|dude|duffel|dugout|duh|duke|duller|dullness|duly|dumping|dumpling|dumpster|duo|dupe|duplex|duplicate|duplicity|durable|durably|duration|duress|during|dusk|dust|dutiful|duty|duvet|dwarf|dweeb|dwelled|dweller|dwelling|dwindle|dwindling|dynamic|dynamite|dynasty|dyslexia|dyslexic|each|eagle|earache|eardrum|earflap|earful|earlobe|early|earmark|earmuff|earphone|earpiece|earplugs|earring|earshot|earthen|earthlike|earthling|earthly|earthworm|earthy|earwig|easeful|easel|easiest|easily|easiness|easing|eastbound|eastcoast|easter|eastward|eatable|eaten|eatery|eating|eats|ebay|ebony|ebook|ecard|eccentric|echo|eclair|eclipse|ecologist|ecology|economic|economist|economy|ecosphere|ecosystem|edge|edginess|edging|edgy|edition|editor|educated|education|educator|eel|effective|effects|efficient|effort|eggbeater|egging|eggnog|eggplant|eggshell|egomaniac|egotism|egotistic|either|eject|elaborate|elastic|elated|elbow|eldercare|elderly|eldest|electable|election|elective|elephant|elevate|elevating|elevation|elevator|eleven|elf|eligible|eligibly|eliminate|elite|elitism|elixir|elk|ellipse|elliptic|elm|elongated|elope|eloquence|eloquent|elsewhere|elude|elusive|elves|email|embargo|embark|embassy|embattled|embellish|ember|embezzle|emblaze|emblem|embody|embolism|emboss|embroider|emcee|emerald|emergency|emission|emit|emote|emoticon|emotion|empathic|empathy|emperor|emphases|emphasis|emphasize|emphatic|empirical|employed|employee|employer|emporium|empower|emptier|emptiness|empty|emu|enable|enactment|enamel|enchanted|enchilada|encircle|enclose|enclosure|encode|encore|encounter|encourage|encroach|encrust|encrypt|endanger|endeared|endearing|ended|ending|endless|endnote|endocrine|endorphin|endorse|endowment|endpoint|endurable|endurance|enduring|energetic|energize|energy|enforced|enforcer|engaged|engaging|engine|engorge|engraved|engraver|engraving|engross|engulf|enhance|enigmatic|enjoyable|enjoyably|enjoyer|enjoying|enjoyment|enlarged|enlarging|enlighten|enlisted|enquirer|enrage|enrich|enroll|enslave|ensnare|ensure|entail|entangled|entering|entertain|enticing|entire|entitle|entity|entomb|entourage|entrap|entree|entrench|entrust|entryway|entwine|enunciate|envelope|enviable|enviably|envious|envision|envoy|envy|enzyme|epic|epidemic|epidermal|epidermis|epidural|epilepsy|epileptic|epilogue|epiphany|episode|equal|equate|equation|equator|equinox|equipment|equity|equivocal|eradicate|erasable|erased|eraser|erasure|ergonomic|errand|errant|erratic|error|erupt|escalate|escalator|escapable|escapade|escapist|escargot|eskimo|esophagus|espionage|espresso|esquire|essay|essence|essential|establish|estate|esteemed|estimate|estimator|estranged|estrogen|etching|eternal|eternity|ethanol|ether|ethically|ethics|euphemism|evacuate|evacuee|evade|evaluate|evaluator|evaporate|evasion|evasive|even|everglade|evergreen|everybody|everyday|everyone|evict|evidence|evident|evil|evoke|evolution|evolve|exact|exalted|example|excavate|excavator|exceeding|exception|excess|exchange|excitable|exciting|exclaim|exclude|excluding|exclusion|exclusive|excretion|excretory|excursion|excusable|excusably|excuse|exemplary|exemplify|exemption|exerciser|exert|exes|exfoliate|exhale|exhaust|exhume|exile|existing|exit|exodus|exonerate|exorcism|exorcist|expand|expanse|expansion|expansive|expectant|expedited|expediter|expel|expend|expenses|expensive|expert|expire|expiring|explain|expletive|explicit|explode|exploit|explore|exploring|exponent|exporter|exposable|expose|exposure|express|expulsion|exquisite|extended|extending|extent|extenuate|exterior|external|extinct|extortion|extradite|extras|extrovert|extrude|extruding|exuberant|fable|fabric|fabulous|facebook|facecloth|facedown|faceless|facelift|faceplate|faceted|facial|facility|facing|facsimile|faction|factoid|factor|factsheet|factual|faculty|fade|fading|failing|falcon|fall|false|falsify|fame|familiar|family|famine|famished|fanatic|fancied|fanciness|fancy|fanfare|fang|fanning|fantasize|fantastic|fantasy|fascism|fastball|faster|fasting|fastness|faucet|favorable|favorably|favored|favoring|favorite|fax|feast|federal|fedora|feeble|feed|feel|feisty|feline|felt-tip|feminine|feminism|feminist|feminize|femur|fence|fencing|fender|ferment|fernlike|ferocious|ferocity|ferret|ferris|ferry|fervor|fester|festival|festive|festivity|fetal|fetch|fever|fiber|fiction|fiddle|fiddling|fidelity|fidgeting|fidgety|fifteen|fifth|fiftieth|fifty|figment|figure|figurine|filing|filled|filler|filling|film|filter|filth|filtrate|finale|finalist|finalize|finally|finance|financial|finch|fineness|finer|finicky|finished|finisher|finishing|finite|finless|finlike|fiscally|fit|five|flaccid|flagman|flagpole|flagship|flagstick|flagstone|flail|flakily|flaky|flame|flammable|flanked|flanking|flannels|flap|flaring|flashback|flashbulb|flashcard|flashily|flashing|flashy|flask|flatbed|flatfoot|flatly|flatness|flatten|flattered|flatterer|flattery|flattop|flatware|flatworm|flavored|flavorful|flavoring|flaxseed|fled|fleshed|fleshy|flick|flier|flight|flinch|fling|flint|flip|flirt|float|flock|flogging|flop|floral|florist|floss|flounder|flyable|flyaway|flyer|flying|flyover|flypaper|foam|foe|fog|foil|folic|folk|follicle|follow|fondling|fondly|fondness|fondue|font|food|fool|footage|football|footbath|footboard|footer|footgear|foothill|foothold|footing|footless|footman|footnote|footpad|footpath|footprint|footrest|footsie|footsore|footwear|footwork|fossil|foster|founder|founding|fountain|fox|foyer|fraction|fracture|fragile|fragility|fragment|fragrance|fragrant|frail|frame|framing|frantic|fraternal|frayed|fraying|frays|freckled|freckles|freebase|freebee|freebie|freedom|freefall|freehand|freeing|freeload|freely|freemason|freeness|freestyle|freeware|freeway|freewill|freezable|freezing|freight|french|frenzied|frenzy|frequency|frequent|fresh|fretful|fretted|friction|friday|fridge|fried|friend|frighten|frightful|frigidity|frigidly|frill|fringe|frisbee|frisk|fritter|frivolous|frolic|from|front|frostbite|frosted|frostily|frosting|frostlike|frosty|froth|frown|frozen|fructose|frugality|frugally|fruit|frustrate|frying|gab|gaffe|gag|gainfully|gaining|gains|gala|gallantly|galleria|gallery|galley|gallon|gallows|gallstone|galore|galvanize|gambling|game|gaming|gamma|gander|gangly|gangrene|gangway|gap|garage|garbage|garden|gargle|garland|garlic|garment|garnet|garnish|garter|gas|gatherer|gathering|gating|gauging|gauntlet|gauze|gave|gawk|gazing|gear|gecko|geek|geiger|gem|gender|generic|generous|genetics|genre|gentile|gentleman|gently|gents|geography|geologic|geologist|geology|geometric|geometry|geranium|gerbil|geriatric|germicide|germinate|germless|germproof|gestate|gestation|gesture|getaway|getting|getup|giant|gibberish|giblet|giddily|giddiness|giddy|gift|gigabyte|gigahertz|gigantic|giggle|giggling|giggly|gigolo|gilled|gills|gimmick|girdle|giveaway|given|giver|giving|gizmo|gizzard|glacial|glacier|glade|gladiator|gladly|glamorous|glamour|glance|glancing|glandular|glare|glaring|glass|glaucoma|glazing|gleaming|gleeful|glider|gliding|glimmer|glimpse|glisten|glitch|glitter|glitzy|gloater|gloating|gloomily|gloomy|glorified|glorifier|glorify|glorious|glory|gloss|glove|glowing|glowworm|glucose|glue|gluten|glutinous|glutton|gnarly|gnat|goal|goatskin|goes|goggles|going|goldfish|goldmine|goldsmith|golf|goliath|gonad|gondola|gone|gong|good|gooey|goofball|goofiness|goofy|google|goon|gopher|gore|gorged|gorgeous|gory|gosling|gossip|gothic|gotten|gout|gown|grab|graceful|graceless|gracious|gradation|graded|grader|gradient|grading|gradually|graduate|graffiti|grafted|grafting|grain|granddad|grandkid|grandly|grandma|grandpa|grandson|granite|granny|granola|grant|granular|grape|graph|grapple|grappling|grasp|grass|gratified|gratify|grating|gratitude|gratuity|gravel|graveness|graves|graveyard|gravitate|gravity|gravy|gray|grazing|greasily|greedily|greedless|greedy|green|greeter|greeting|grew|greyhound|grid|grief|grievance|grieving|grievous|grill|grimace|grimacing|grime|griminess|grimy|grinch|grinning|grip|gristle|grit|groggily|groggy|groin|groom|groove|grooving|groovy|grope|ground|grouped|grout|grove|grower|growing|growl|grub|grudge|grudging|grueling|gruffly|grumble|grumbling|grumbly|grumpily|grunge|grunt|guacamole|guidable|guidance|guide|guiding|guileless|guise|gulf|gullible|gully|gulp|gumball|gumdrop|gumminess|gumming|gummy|gurgle|gurgling|guru|gush|gusto|gusty|gutless|guts|gutter|guy|guzzler|gyration|habitable|habitant|habitat|habitual|hacked|hacker|hacking|hacksaw|had|haggler|haiku|half|halogen|halt|halved|halves|hamburger|hamlet|hammock|hamper|hamster|hamstring|handbag|handball|handbook|handbrake|handcart|handclap|handclasp|handcraft|handcuff|handed|handful|handgrip|handgun|handheld|handiness|handiwork|handlebar|handled|handler|handling|handmade|handoff|handpick|handprint|handrail|handsaw|handset|handsfree|handshake|handstand|handwash|handwork|handwoven|handwrite|handyman|hangnail|hangout|hangover|hangup|hankering|hankie|hanky|haphazard|happening|happier|happiest|happily|happiness|happy|harbor|hardcopy|hardcore|hardcover|harddisk|hardened|hardener|hardening|hardhat|hardhead|hardiness|hardly|hardness|hardship|hardware|hardwired|hardwood|hardy|harmful|harmless|harmonica|harmonics|harmonize|harmony|harness|harpist|harsh|harvest|hash|hassle|haste|hastily|hastiness|hasty|hatbox|hatchback|hatchery|hatchet|hatching|hatchling|hate|hatless|hatred|haunt|haven|hazard|hazelnut|hazily|haziness|hazing|hazy|headache|headband|headboard|headcount|headdress|headed|header|headfirst|headgear|heading|headlamp|headless|headlock|headphone|headpiece|headrest|headroom|headscarf|headset|headsman|headstand|headstone|headway|headwear|heap|heat|heave|heavily|heaviness|heaving|hedge|hedging|heftiness|hefty|helium|helmet|helper|helpful|helping|helpless|helpline|hemlock|hemstitch|hence|henchman|henna|herald|herbal|herbicide|herbs|heritage|hermit|heroics|heroism|herring|herself|hertz|hesitancy|hesitant|hesitate|hexagon|hexagram|hubcap|huddle|huddling|huff|hug|hula|hulk|hull|human|humble|humbling|humbly|humid|humiliate|humility|humming|hummus|humongous|humorist|humorless|humorous|humpback|humped|humvee|hunchback|hundredth|hunger|hungrily|hungry|hunk|hunter|hunting|huntress|huntsman|hurdle|hurled|hurler|hurling|hurray|hurricane|hurried|hurry|hurt|husband|hush|husked|huskiness|hut|hybrid|hydrant|hydrated|hydration|hydrogen|hydroxide|hyperlink|hypertext|hyphen|hypnoses|hypnosis|hypnotic|hypnotism|hypnotist|hypnotize|hypocrisy|hypocrite|ibuprofen|ice|iciness|icing|icky|icon|icy|idealism|idealist|idealize|ideally|idealness|identical|identify|identity|ideology|idiocy|idiom|idly|igloo|ignition|ignore|iguana|illicitly|illusion|illusive|image|imaginary|imagines|imaging|imbecile|imitate|imitation|immature|immerse|immersion|imminent|immobile|immodest|immorally|immortal|immovable|immovably|immunity|immunize|impaired|impale|impart|impatient|impeach|impeding|impending|imperfect|imperial|impish|implant|implement|implicate|implicit|implode|implosion|implosive|imply|impolite|important|importer|impose|imposing|impotence|impotency|impotent|impound|imprecise|imprint|imprison|impromptu|improper|improve|improving|improvise|imprudent|impulse|impulsive|impure|impurity|iodine|iodize|ion|ipad|iphone|ipod|irate|irk|iron|irregular|irrigate|irritable|irritably|irritant|irritate|islamic|islamist|isolated|isolating|isolation|isotope|issue|issuing|italicize|italics|item|itinerary|itunes|ivory|ivy|jab|jackal|jacket|jackknife|jackpot|jailbird|jailbreak|jailer|jailhouse|jalapeno|jam|janitor|january|jargon|jarring|jasmine|jaundice|jaunt|java|jawed|jawless|jawline|jaws|jaybird|jaywalker|jazz|jeep|jeeringly|jellied|jelly|jersey|jester|jet|jiffy|jigsaw|jimmy|jingle|jingling|jinx|jitters|jittery|job|jockey|jockstrap|jogger|jogging|john|joining|jokester|jokingly|jolliness|jolly|jolt|jot|jovial|joyfully|joylessly|joyous|joyride|joystick|jubilance|jubilant|judge|judgingly|judicial|judiciary|judo|juggle|juggling|jugular|juice|juiciness|juicy|jujitsu|jukebox|july|jumble|jumbo|jump|junction|juncture|june|junior|juniper|junkie|junkman|junkyard|jurist|juror|jury|justice|justifier|justify|justly|justness|juvenile|kabob|kangaroo|karaoke|karate|karma|kebab|keenly|keenness|keep|keg|kelp|kennel|kept|kerchief|kerosene|kettle|kick|kiln|kilobyte|kilogram|kilometer|kilowatt|kilt|kimono|kindle|kindling|kindly|kindness|kindred|kinetic|kinfolk|king|kinship|kinsman|kinswoman|kissable|kisser|kissing|kitchen|kite|kitten|kitty|kiwi|kleenex|knapsack|knee|knelt|knickers|knoll|koala|kooky|kosher|krypton|kudos|kung|labored|laborer|laboring|laborious|labrador|ladder|ladies|ladle|ladybug|ladylike|lagged|lagging|lagoon|lair|lake|lance|landed|landfall|landfill|landing|landlady|landless|landline|landlord|landmark|landmass|landmine|landowner|landscape|landside|landslide|language|lankiness|lanky|lantern|lapdog|lapel|lapped|lapping|laptop|lard|large|lark|lash|lasso|last|latch|late|lather|latitude|latrine|latter|latticed|launch|launder|laundry|laurel|lavender|lavish|laxative|lazily|laziness|lazy|lecturer|left|legacy|legal|legend|legged|leggings|legible|legibly|legislate|lego|legroom|legume|legwarmer|legwork|lemon|lend|length|lens|lent|leotard|lesser|letdown|lethargic|lethargy|letter|lettuce|level|leverage|levers|levitate|levitator|liability|liable|liberty|librarian|library|licking|licorice|lid|life|lifter|lifting|liftoff|ligament|likely|likeness|likewise|liking|lilac|lilly|lily|limb|limeade|limelight|limes|limit|limping|limpness|line|lingo|linguini|linguist|lining|linked|linoleum|linseed|lint|lion|lip|liquefy|liqueur|liquid|lisp|list|litigate|litigator|litmus|litter|little|livable|lived|lively|liver|livestock|lividly|living|lizard|lubricant|lubricate|lucid|luckily|luckiness|luckless|lucrative|ludicrous|lugged|lukewarm|lullaby|lumber|luminance|luminous|lumpiness|lumping|lumpish|lunacy|lunar|lunchbox|luncheon|lunchroom|lunchtime|lung|lurch|lure|luridness|lurk|lushly|lushness|luster|lustfully|lustily|lustiness|lustrous|lusty|luxurious|luxury|lying|lyrically|lyricism|lyricist|lyrics|macarena|macaroni|macaw|mace|machine|machinist|magazine|magenta|maggot|magical|magician|magma|magnesium|magnetic|magnetism|magnetize|magnifier|magnify|magnitude|magnolia|mahogany|maimed|majestic|majesty|majorette|majority|makeover|maker|makeshift|making|malformed|malt|mama|mammal|mammary|mammogram|manager|managing|manatee|mandarin|mandate|mandatory|mandolin|manger|mangle|mango|mangy|manhandle|manhole|manhood|manhunt|manicotti|manicure|manifesto|manila|mankind|manlike|manliness|manly|manmade|manned|mannish|manor|manpower|mantis|mantra|manual|many|map|marathon|marauding|marbled|marbles|marbling|march|mardi|margarine|margarita|margin|marigold|marina|marine|marital|maritime|marlin|marmalade|maroon|married|marrow|marry|marshland|marshy|marsupial|marvelous|marxism|mascot|masculine|mashed|mashing|massager|masses|massive|mastiff|matador|matchbook|matchbox|matcher|matching|matchless|material|maternal|maternity|math|mating|matriarch|matrimony|matrix|matron|matted|matter|maturely|maturing|maturity|mauve|maverick|maximize|maximum|maybe|mayday|mayflower|moaner|moaning|mobile|mobility|mobilize|mobster|mocha|mocker|mockup|modified|modify|modular|modulator|module|moisten|moistness|moisture|molar|molasses|mold|molecular|molecule|molehill|mollusk|mom|monastery|monday|monetary|monetize|moneybags|moneyless|moneywise|mongoose|mongrel|monitor|monkhood|monogamy|monogram|monologue|monopoly|monorail|monotone|monotype|monoxide|monsieur|monsoon|monstrous|monthly|monument|moocher|moodiness|moody|mooing|moonbeam|mooned|moonlight|moonlike|moonlit|moonrise|moonscape|moonshine|moonstone|moonwalk|mop|morale|morality|morally|morbidity|morbidly|morphine|morphing|morse|mortality|mortally|mortician|mortified|mortify|mortuary|mosaic|mossy|most|mothball|mothproof|motion|motivate|motivator|motive|motocross|motor|motto|mountable|mountain|mounted|mounting|mourner|mournful|mouse|mousiness|moustache|mousy|mouth|movable|move|movie|moving|mower|mowing|much|muck|mud|mug|mulberry|mulch|mule|mulled|mullets|multiple|multiply|multitask|multitude|mumble|mumbling|mumbo|mummified|mummify|mummy|mumps|munchkin|mundane|municipal|muppet|mural|murkiness|murky|murmuring|muscular|museum|mushily|mushiness|mushroom|mushy|music|musket|muskiness|musky|mustang|mustard|muster|mustiness|musty|mutable|mutate|mutation|mute|mutilated|mutilator|mutiny|mutt|mutual|muzzle|myself|myspace|mystified|mystify|myth|nacho|nag|nail|name|naming|nanny|nanometer|nape|napkin|napped|napping|nappy|narrow|nastily|nastiness|national|native|nativity|natural|nature|naturist|nautical|navigate|navigator|navy|nearby|nearest|nearly|nearness|neatly|neatness|nebula|nebulizer|nectar|negate|negation|negative|neglector|negligee|negligent|negotiate|nemeses|nemesis|neon|nephew|nerd|nervous|nervy|nest|net|neurology|neuron|neurosis|neurotic|neuter|neutron|never|next|nibble|nickname|nicotine|niece|nifty|nimble|nimbly|nineteen|ninetieth|ninja|nintendo|ninth|nuclear|nuclei|nucleus|nugget|nullify|number|numbing|numbly|numbness|numeral|numerate|numerator|numeric|numerous|nuptials|nursery|nursing|nurture|nutcase|nutlike|nutmeg|nutrient|nutshell|nuttiness|nutty|nuzzle|nylon|oaf|oak|oasis|oat|obedience|obedient|obituary|object|obligate|obliged|oblivion|oblivious|oblong|obnoxious|oboe|obscure|obscurity|observant|observer|observing|obsessed|obsession|obsessive|obsolete|obstacle|obstinate|obstruct|obtain|obtrusive|obtuse|obvious|occultist|occupancy|occupant|occupier|occupy|ocean|ocelot|octagon|octane|october|octopus|ogle|oil|oink|ointment|okay|old|olive|olympics|omega|omen|ominous|omission|omit|omnivore|onboard|oncoming|ongoing|onion|online|onlooker|only|onscreen|onset|onshore|onslaught|onstage|onto|onward|onyx|oops|ooze|oozy|opacity|opal|open|operable|operate|operating|operation|operative|operator|opium|opossum|opponent|oppose|opposing|opposite|oppressed|oppressor|opt|opulently|osmosis|other|otter|ouch|ought|ounce|outage|outback|outbid|outboard|outbound|outbreak|outburst|outcast|outclass|outcome|outdated|outdoors|outer|outfield|outfit|outflank|outgoing|outgrow|outhouse|outing|outlast|outlet|outline|outlook|outlying|outmatch|outmost|outnumber|outplayed|outpost|outpour|output|outrage|outrank|outreach|outright|outscore|outsell|outshine|outshoot|outsider|outskirts|outsmart|outsource|outspoken|outtakes|outthink|outward|outweigh|outwit|oval|ovary|oven|overact|overall|overarch|overbid|overbill|overbite|overblown|overboard|overbook|overbuilt|overcast|overcoat|overcome|overcook|overcrowd|overdraft|overdrawn|overdress|overdrive|overdue|overeager|overeater|overexert|overfed|overfeed|overfill|overflow|overfull|overgrown|overhand|overhang|overhaul|overhead|overhear|overheat|overhung|overjoyed|overkill|overlabor|overlaid|overlap|overlay|overload|overlook|overlord|overlying|overnight|overpass|overpay|overplant|overplay|overpower|overprice|overrate|overreach|overreact|override|overripe|overrule|overrun|overshoot|overshot|oversight|oversized|oversleep|oversold|overspend|overstate|overstay|overstep|overstock|overstuff|oversweet|overtake|overthrow|overtime|overtly|overtone|overture|overturn|overuse|overvalue|overview|overwrite|owl|oxford|oxidant|oxidation|oxidize|oxidizing|oxygen|oxymoron|oyster|ozone|paced|pacemaker|pacific|pacifier|pacifism|pacifist|pacify|padded|padding|paddle|paddling|padlock|pagan|pager|paging|pajamas|palace|palatable|palm|palpable|palpitate|paltry|pampered|pamperer|pampers|pamphlet|panama|pancake|pancreas|panda|pandemic|pang|panhandle|panic|panning|panorama|panoramic|panther|pantomime|pantry|pants|pantyhose|paparazzi|papaya|paper|paprika|papyrus|parabola|parachute|parade|paradox|paragraph|parakeet|paralegal|paralyses|paralysis|paralyze|paramedic|parameter|paramount|parasail|parasite|parasitic|parcel|parched|parchment|pardon|parish|parka|parking|parkway|parlor|parmesan|parole|parrot|parsley|parsnip|partake|parted|parting|partition|partly|partner|partridge|party|passable|passably|passage|passcode|passenger|passerby|passing|passion|passive|passivism|passover|passport|password|pasta|pasted|pastel|pastime|pastor|pastrami|pasture|pasty|patchwork|patchy|paternal|paternity|path|patience|patient|patio|patriarch|patriot|patrol|patronage|patronize|pauper|pavement|paver|pavestone|pavilion|paving|pawing|payable|payback|paycheck|payday|payee|payer|paying|payment|payphone|payroll|pebble|pebbly|pecan|pectin|peculiar|peddling|pediatric|pedicure|pedigree|pedometer|pegboard|pelican|pellet|pelt|pelvis|penalize|penalty|pencil|pendant|pending|penholder|penknife|pennant|penniless|penny|penpal|pension|pentagon|pentagram|pep|perceive|percent|perch|percolate|perennial|perfected|perfectly|perfume|periscope|perish|perjurer|perjury|perkiness|perky|perm|peroxide|perpetual|perplexed|persecute|persevere|persuaded|persuader|pesky|peso|pessimism|pessimist|pester|pesticide|petal|petite|petition|petri|petroleum|petted|petticoat|pettiness|petty|petunia|phantom|phobia|phoenix|phonebook|phoney|phonics|phoniness|phony|phosphate|photo|phrase|phrasing|placard|placate|placidly|plank|planner|plant|plasma|plaster|plastic|plated|platform|plating|platinum|platonic|platter|platypus|plausible|plausibly|playable|playback|player|playful|playgroup|playhouse|playing|playlist|playmaker|playmate|playoff|playpen|playroom|playset|plaything|playtime|plaza|pleading|pleat|pledge|plentiful|plenty|plethora|plexiglas|pliable|plod|plop|plot|plow|ploy|pluck|plug|plunder|plunging|plural|plus|plutonium|plywood|poach|pod|poem|poet|pogo|pointed|pointer|pointing|pointless|pointy|poise|poison|poker|poking|polar|police|policy|polio|polish|politely|polka|polo|polyester|polygon|polygraph|polymer|poncho|pond|pony|popcorn|pope|poplar|popper|poppy|popsicle|populace|popular|populate|porcupine|pork|porous|porridge|portable|portal|portfolio|porthole|portion|portly|portside|poser|posh|posing|possible|possibly|possum|postage|postal|postbox|postcard|posted|poster|posting|postnasal|posture|postwar|pouch|pounce|pouncing|pound|pouring|pout|powdered|powdering|powdery|power|powwow|pox|praising|prance|prancing|pranker|prankish|prankster|prayer|praying|preacher|preaching|preachy|preamble|precinct|precise|precision|precook|precut|predator|predefine|predict|preface|prefix|preflight|preformed|pregame|pregnancy|pregnant|preheated|prelaunch|prelaw|prelude|premiere|premises|premium|prenatal|preoccupy|preorder|prepaid|prepay|preplan|preppy|preschool|prescribe|preseason|preset|preshow|president|presoak|press|presume|presuming|preteen|pretended|pretender|pretense|pretext|pretty|pretzel|prevail|prevalent|prevent|preview|previous|prewar|prewashed|prideful|pried|primal|primarily|primary|primate|primer|primp|princess|print|prior|prism|prison|prissy|pristine|privacy|private|privatize|prize|proactive|probable|probably|probation|probe|probing|probiotic|problem|procedure|process|proclaim|procreate|procurer|prodigal|prodigy|produce|product|profane|profanity|professed|professor|profile|profound|profusely|progeny|prognosis|program|progress|projector|prologue|prolonged|promenade|prominent|promoter|promotion|prompter|promptly|prone|prong|pronounce|pronto|proofing|proofread|proofs|propeller|properly|property|proponent|proposal|propose|props|prorate|protector|protegee|proton|prototype|protozoan|protract|protrude|proud|provable|proved|proven|provided|provider|providing|province|proving|provoke|provoking|provolone|prowess|prowler|prowling|proximity|proxy|prozac|prude|prudishly|prune|pruning|pry|psychic|public|publisher|pucker|pueblo|pug|pull|pulmonary|pulp|pulsate|pulse|pulverize|puma|pumice|pummel|punch|punctual|punctuate|punctured|pungent|punisher|punk|pupil|puppet|puppy|purchase|pureblood|purebred|purely|pureness|purgatory|purge|purging|purifier|purify|purist|puritan|purity|purple|purplish|purposely|purr|purse|pursuable|pursuant|pursuit|purveyor|pushcart|pushchair|pusher|pushiness|pushing|pushover|pushpin|pushup|pushy|putdown|putt|puzzle|puzzling|pyramid|pyromania|python|quack|quadrant|quail|quaintly|quake|quaking|qualified|qualifier|qualify|quality|qualm|quantum|quarrel|quarry|quartered|quarterly|quarters|quartet|quench|query|quicken|quickly|quickness|quicksand|quickstep|quiet|quill|quilt|quintet|quintuple|quirk|quit|quiver|quizzical|quotable|quotation|quote|rabid|race|racing|racism|rack|racoon|radar|radial|radiance|radiantly|radiated|radiation|radiator|radio|radish|raffle|raft|rage|ragged|raging|ragweed|raider|railcar|railing|railroad|railway|raisin|rake|raking|rally|ramble|rambling|ramp|ramrod|ranch|rancidity|random|ranged|ranger|ranging|ranked|ranking|ransack|ranting|rants|rare|rarity|rascal|rash|rasping|ravage|raven|ravine|raving|ravioli|ravishing|reabsorb|reach|reacquire|reaction|reactive|reactor|reaffirm|ream|reanalyze|reappear|reapply|reappoint|reapprove|rearrange|rearview|reason|reassign|reassure|reattach|reawake|rebalance|rebate|rebel|rebirth|reboot|reborn|rebound|rebuff|rebuild|rebuilt|reburial|rebuttal|recall|recant|recapture|recast|recede|recent|recess|recharger|recipient|recital|recite|reckless|reclaim|recliner|reclining|recluse|reclusive|recognize|recoil|recollect|recolor|reconcile|reconfirm|reconvene|recopy|record|recount|recoup|recovery|recreate|rectal|rectangle|rectified|rectify|recycled|recycler|recycling|reemerge|reenact|reenter|reentry|reexamine|referable|referee|reference|refill|refinance|refined|refinery|refining|refinish|reflected|reflector|reflex|reflux|refocus|refold|reforest|reformat|reformed|reformer|reformist|refract|refrain|refreeze|refresh|refried|refueling|refund|refurbish|refurnish|refusal|refuse|refusing|refutable|refute|regain|regalia|regally|reggae|regime|region|register|registrar|registry|regress|regretful|regroup|regular|regulate|regulator|rehab|reheat|rehire|rehydrate|reimburse|reissue|reiterate|rejoice|rejoicing|rejoin|rekindle|relapse|relapsing|relatable|related|relation|relative|relax|relay|relearn|release|relenting|reliable|reliably|reliance|reliant|relic|relieve|relieving|relight|relish|relive|reload|relocate|relock|reluctant|rely|remake|remark|remarry|rematch|remedial|remedy|remember|reminder|remindful|remission|remix|remnant|remodeler|remold|remorse|remote|removable|removal|removed|remover|removing|rename|renderer|rendering|rendition|renegade|renewable|renewably|renewal|renewed|renounce|renovate|renovator|rentable|rental|rented|renter|reoccupy|reoccur|reopen|reorder|repackage|repacking|repaint|repair|repave|repaying|repayment|repeal|repeated|repeater|repent|rephrase|replace|replay|replica|reply|reporter|repose|repossess|repost|repressed|reprimand|reprint|reprise|reproach|reprocess|reproduce|reprogram|reps|reptile|reptilian|repugnant|repulsion|repulsive|repurpose|reputable|reputably|request|require|requisite|reroute|rerun|resale|resample|rescuer|reseal|research|reselect|reseller|resemble|resend|resent|reset|reshape|reshoot|reshuffle|residence|residency|resident|residual|residue|resigned|resilient|resistant|resisting|resize|resolute|resolved|resonant|resonate|resort|resource|respect|resubmit|result|resume|resupply|resurface|resurrect|retail|retainer|retaining|retake|retaliate|retention|rethink|retinal|retired|retiree|retiring|retold|retool|retorted|retouch|retrace|retract|retrain|retread|retreat|retrial|retrieval|retriever|retry|return|retying|retype|reunion|reunite|reusable|reuse|reveal|reveler|revenge|revenue|reverb|revered|reverence|reverend|reversal|reverse|reversing|reversion|revert|revisable|revise|revision|revisit|revivable|revival|reviver|reviving|revocable|revoke|revolt|revolver|revolving|reward|rewash|rewind|rewire|reword|rework|rewrap|rewrite|rhyme|ribbon|ribcage|rice|riches|richly|richness|rickety|ricotta|riddance|ridden|ride|riding|rifling|rift|rigging|rigid|rigor|rimless|rimmed|rind|rink|rinse|rinsing|riot|ripcord|ripeness|ripening|ripping|ripple|rippling|riptide|rise|rising|risk|risotto|ritalin|ritzy|rival|riverbank|riverbed|riverboat|riverside|riveter|riveting|roamer|roaming|roast|robbing|robe|robin|robotics|robust|rockband|rocker|rocket|rockfish|rockiness|rocking|rocklike|rockslide|rockstar|rocky|rogue|roman|romp|rope|roping|roster|rosy|rotten|rotting|rotunda|roulette|rounding|roundish|roundness|roundup|roundworm|routine|routing|rover|roving|royal|rubbed|rubber|rubbing|rubble|rubdown|ruby|ruckus|rudder|rug|ruined|rule|rumble|rumbling|rummage|rumor|runaround|rundown|runner|running|runny|runt|runway|rupture|rural|ruse|rush|rust|rut|sabbath|sabotage|sacrament|sacred|sacrifice|sadden|saddlebag|saddled|saddling|sadly|sadness|safari|safeguard|safehouse|safely|safeness|saffron|saga|sage|sagging|saggy|said|saint|sake|salad|salami|salaried|salary|saline|salon|saloon|salsa|salt|salutary|salute|salvage|salvaging|salvation|same|sample|sampling|sanction|sanctity|sanctuary|sandal|sandbag|sandbank|sandbar|sandblast|sandbox|sanded|sandfish|sanding|sandlot|sandpaper|sandpit|sandstone|sandstorm|sandworm|sandy|sanitary|sanitizer|sank|santa|sapling|sappiness|sappy|sarcasm|sarcastic|sardine|sash|sasquatch|sassy|satchel|satiable|satin|satirical|satisfied|satisfy|saturate|saturday|sauciness|saucy|sauna|savage|savanna|saved|savings|savior|savor|saxophone|say|scabbed|scabby|scalded|scalding|scale|scaling|scallion|scallop|scalping|scam|scandal|scanner|scanning|scant|scapegoat|scarce|scarcity|scarecrow|scared|scarf|scarily|scariness|scarring|scary|scavenger|scenic|schedule|schematic|scheme|scheming|schilling|schnapps|scholar|science|scientist|scion|scoff|scolding|scone|scoop|scooter|scope|scorch|scorebook|scorecard|scored|scoreless|scorer|scoring|scorn|scorpion|scotch|scoundrel|scoured|scouring|scouting|scouts|scowling|scrabble|scraggly|scrambled|scrambler|scrap|scratch|scrawny|screen|scribble|scribe|scribing|scrimmage|script|scroll|scrooge|scrounger|scrubbed|scrubber|scruffy|scrunch|scrutiny|scuba|scuff|sculptor|sculpture|scurvy|scuttle|secluded|secluding|seclusion|second|secrecy|secret|sectional|sector|secular|securely|security|sedan|sedate|sedation|sedative|sediment|seduce|seducing|segment|seismic|seizing|seldom|selected|selection|selective|selector|self|seltzer|semantic|semester|semicolon|semifinal|seminar|semisoft|semisweet|senate|senator|send|senior|senorita|sensation|sensitive|sensitize|sensually|sensuous|sepia|september|septic|septum|sequel|sequence|sequester|series|sermon|serotonin|serpent|serrated|serve|service|serving|sesame|sessions|setback|setting|settle|settling|setup|sevenfold|seventeen|seventh|seventy|severity|shabby|shack|shaded|shadily|shadiness|shading|shadow|shady|shaft|shakable|shakily|shakiness|shaking|shaky|shale|shallot|shallow|shame|shampoo|shamrock|shank|shanty|shape|shaping|share|sharpener|sharper|sharpie|sharply|sharpness|shawl|sheath|shed|sheep|sheet|shelf|shell|shelter|shelve|shelving|sherry|shield|shifter|shifting|shiftless|shifty|shimmer|shimmy|shindig|shine|shingle|shininess|shining|shiny|ship|shirt|shivering|shock|shone|shoplift|shopper|shopping|shoptalk|shore|shortage|shortcake|shortcut|shorten|shorter|shorthand|shortlist|shortly|shortness|shorts|shortwave|shorty|shout|shove|showbiz|showcase|showdown|shower|showgirl|showing|showman|shown|showoff|showpiece|showplace|showroom|showy|shrank|shrapnel|shredder|shredding|shrewdly|shriek|shrill|shrimp|shrine|shrink|shrivel|shrouded|shrubbery|shrubs|shrug|shrunk|shucking|shudder|shuffle|shuffling|shun|shush|shut|shy|siamese|siberian|sibling|siding|sierra|siesta|sift|sighing|silenced|silencer|silent|silica|silicon|silk|silliness|silly|silo|silt|silver|similarly|simile|simmering|simple|simplify|simply|sincere|sincerity|singer|singing|single|singular|sinister|sinless|sinner|sinuous|sip|siren|sister|sitcom|sitter|sitting|situated|situation|sixfold|sixteen|sixth|sixties|sixtieth|sixtyfold|sizable|sizably|size|sizing|sizzle|sizzling|skater|skating|skedaddle|skeletal|skeleton|skeptic|sketch|skewed|skewer|skid|skied|skier|skies|skiing|skilled|skillet|skillful|skimmed|skimmer|skimming|skimpily|skincare|skinhead|skinless|skinning|skinny|skintight|skipper|skipping|skirmish|skirt|skittle|skydiver|skylight|skyline|skype|skyrocket|skyward|slab|slacked|slacker|slacking|slackness|slacks|slain|slam|slander|slang|slapping|slapstick|slashed|slashing|slate|slather|slaw|sled|sleek|sleep|sleet|sleeve|slept|sliceable|sliced|slicer|slicing|slick|slider|slideshow|sliding|slighted|slighting|slightly|slimness|slimy|slinging|slingshot|slinky|slip|slit|sliver|slobbery|slogan|sloped|sloping|sloppily|sloppy|slot|slouching|slouchy|sludge|slug|slum|slurp|slush|sly|small|smartly|smartness|smasher|smashing|smashup|smell|smelting|smile|smilingly|smirk|smite|smith|smitten|smock|smog|smoked|smokeless|smokiness|smoking|smoky|smolder|smooth|smother|smudge|smudgy|smuggler|smuggling|smugly|smugness|snack|snagged|snaking|snap|snare|snarl|snazzy|sneak|sneer|sneeze|sneezing|snide|sniff|snippet|snipping|snitch|snooper|snooze|snore|snoring|snorkel|snort|snout|snowbird|snowboard|snowbound|snowcap|snowdrift|snowdrop|snowfall|snowfield|snowflake|snowiness|snowless|snowman|snowplow|snowshoe|snowstorm|snowsuit|snowy|snub|snuff|snuggle|snugly|snugness|speak|spearfish|spearhead|spearman|spearmint|species|specimen|specked|speckled|specks|spectacle|spectator|spectrum|speculate|speech|speed|spellbind|speller|spelling|spendable|spender|spending|spent|spew|sphere|spherical|sphinx|spider|spied|spiffy|spill|spilt|spinach|spinal|spindle|spinner|spinning|spinout|spinster|spiny|spiral|spirited|spiritism|spirits|spiritual|splashed|splashing|splashy|splatter|spleen|splendid|splendor|splice|splicing|splinter|splotchy|splurge|spoilage|spoiled|spoiler|spoiling|spoils|spoken|spokesman|sponge|spongy|sponsor|spoof|spookily|spooky|spool|spoon|spore|sporting|sports|sporty|spotless|spotlight|spotted|spotter|spotting|spotty|spousal|spouse|spout|sprain|sprang|sprawl|spray|spree|sprig|spring|sprinkled|sprinkler|sprint|sprite|sprout|spruce|sprung|spry|spud|spur|sputter|spyglass|squabble|squad|squall|squander|squash|squatted|squatter|squatting|squeak|squealer|squealing|squeamish|squeegee|squeeze|squeezing|squid|squiggle|squiggly|squint|squire|squirt|squishier|squishy|stability|stabilize|stable|stack|stadium|staff|stage|staging|stagnant|stagnate|stainable|stained|staining|stainless|stalemate|staleness|stalling|stallion|stamina|stammer|stamp|stand|stank|staple|stapling|starboard|starch|stardom|stardust|starfish|stargazer|staring|stark|starless|starlet|starlight|starlit|starring|starry|starship|starter|starting|startle|startling|startup|starved|starving|stash|state|static|statistic|statue|stature|status|statute|statutory|staunch|stays|steadfast|steadier|steadily|steadying|steam|steed|steep|steerable|steering|steersman|stegosaur|stellar|stem|stench|stencil|step|stereo|sterile|sterility|sterilize|sterling|sternness|sternum|stew|stick|stiffen|stiffly|stiffness|stifle|stifling|stillness|stilt|stimulant|stimulate|stimuli|stimulus|stinger|stingily|stinging|stingray|stingy|stinking|stinky|stipend|stipulate|stir|stitch|stock|stoic|stoke|stole|stomp|stonewall|stoneware|stonework|stoning|stony|stood|stooge|stool|stoop|stoplight|stoppable|stoppage|stopped|stopper|stopping|stopwatch|storable|storage|storeroom|storewide|storm|stout|stove|stowaway|stowing|straddle|straggler|strained|strainer|straining|strangely|stranger|strangle|strategic|strategy|stratus|straw|stray|streak|stream|street|strength|strenuous|strep|stress|stretch|strewn|stricken|strict|stride|strife|strike|striking|strive|striving|strobe|strode|stroller|strongbox|strongly|strongman|struck|structure|strudel|struggle|strum|strung|strut|stubbed|stubble|stubbly|stubborn|stucco|stuck|student|studied|studio|study|stuffed|stuffing|stuffy|stumble|stumbling|stump|stung|stunned|stunner|stunning|stunt|stupor|sturdily|sturdy|styling|stylishly|stylist|stylized|stylus|suave|subarctic|subatomic|subdivide|subdued|subduing|subfloor|subgroup|subheader|subject|sublease|sublet|sublevel|sublime|submarine|submerge|submersed|submitter|subpanel|subpar|subplot|subprime|subscribe|subscript|subsector|subside|subsiding|subsidize|subsidy|subsoil|subsonic|substance|subsystem|subtext|subtitle|subtly|subtotal|subtract|subtype|suburb|subway|subwoofer|subzero|succulent|such|suction|sudden|sudoku|suds|sufferer|suffering|suffice|suffix|suffocate|suffrage|sugar|suggest|suing|suitable|suitably|suitcase|suitor|sulfate|sulfide|sulfite|sulfur|sulk|sullen|sulphate|sulphuric|sultry|superbowl|superglue|superhero|superior|superjet|superman|supermom|supernova|supervise|supper|supplier|supply|support|supremacy|supreme|surcharge|surely|sureness|surface|surfacing|surfboard|surfer|surgery|surgical|surging|surname|surpass|surplus|surprise|surreal|surrender|surrogate|surround|survey|survival|survive|surviving|survivor|sushi|suspect|suspend|suspense|sustained|sustainer|swab|swaddling|swagger|swampland|swan|swapping|swarm|sway|swear|sweat|sweep|swell|swept|swerve|swifter|swiftly|swiftness|swimmable|swimmer|swimming|swimsuit|swimwear|swinger|swinging|swipe|swirl|switch|swivel|swizzle|swooned|swoop|swoosh|swore|sworn|swung|sycamore|sympathy|symphonic|symphony|symptom|synapse|syndrome|synergy|synopses|synopsis|synthesis|synthetic|syrup|system|t-shirt|tabasco|tabby|tableful|tables|tablet|tableware|tabloid|tackiness|tacking|tackle|tackling|tacky|taco|tactful|tactical|tactics|tactile|tactless|tadpole|taekwondo|tag|tainted|take|taking|talcum|talisman|tall|talon|tamale|tameness|tamer|tamper|tank|tanned|tannery|tanning|tantrum|tapeless|tapered|tapering|tapestry|tapioca|tapping|taps|tarantula|target|tarmac|tarnish|tarot|tartar|tartly|tartness|task|tassel|taste|tastiness|tasting|tasty|tattered|tattle|tattling|tattoo|taunt|tavern|thank|that|thaw|theater|theatrics|thee|theft|theme|theology|theorize|thermal|thermos|thesaurus|these|thesis|thespian|thicken|thicket|thickness|thieving|thievish|thigh|thimble|thing|think|thinly|thinner|thinness|thinning|thirstily|thirsting|thirsty|thirteen|thirty|thong|thorn|those|thousand|thrash|thread|threaten|threefold|thrift|thrill|thrive|thriving|throat|throbbing|throng|throttle|throwaway|throwback|thrower|throwing|thud|thumb|thumping|thursday|thus|thwarting|thyself|tiara|tibia|tidal|tidbit|tidiness|tidings|tidy|tiger|tighten|tightly|tightness|tightrope|tightwad|tigress|tile|tiling|till|tilt|timid|timing|timothy|tinderbox|tinfoil|tingle|tingling|tingly|tinker|tinkling|tinsel|tinsmith|tint|tinwork|tiny|tipoff|tipped|tipper|tipping|tiptoeing|tiptop|tiring|tissue|trace|tracing|track|traction|tractor|trade|trading|tradition|traffic|tragedy|trailing|trailside|train|traitor|trance|tranquil|transfer|transform|translate|transpire|transport|transpose|trapdoor|trapeze|trapezoid|trapped|trapper|trapping|traps|trash|travel|traverse|travesty|tray|treachery|treading|treadmill|treason|treat|treble|tree|trekker|tremble|trembling|tremor|trench|trend|trespass|triage|trial|triangle|tribesman|tribunal|tribune|tributary|tribute|triceps|trickery|trickily|tricking|trickle|trickster|tricky|tricolor|tricycle|trident|tried|trifle|trifocals|trillion|trilogy|trimester|trimmer|trimming|trimness|trinity|trio|tripod|tripping|triumph|trivial|trodden|trolling|trombone|trophy|tropical|tropics|trouble|troubling|trough|trousers|trout|trowel|truce|truck|truffle|trump|trunks|trustable|trustee|trustful|trusting|trustless|truth|try|tubby|tubeless|tubular|tucking|tuesday|tug|tuition|tulip|tumble|tumbling|tummy|turban|turbine|turbofan|turbojet|turbulent|turf|turkey|turmoil|turret|turtle|tusk|tutor|tutu|tux|tweak|tweed|tweet|tweezers|twelve|twentieth|twenty|twerp|twice|twiddle|twiddling|twig|twilight|twine|twins|twirl|twistable|twisted|twister|twisting|twisty|twitch|twitter|tycoon|tying|tyke|udder|ultimate|ultimatum|ultra|umbilical|umbrella|umpire|unabashed|unable|unadorned|unadvised|unafraid|unaired|unaligned|unaltered|unarmored|unashamed|unaudited|unawake|unaware|unbaked|unbalance|unbeaten|unbend|unbent|unbiased|unbitten|unblended|unblessed|unblock|unbolted|unbounded|unboxed|unbraided|unbridle|unbroken|unbuckled|unbundle|unburned|unbutton|uncanny|uncapped|uncaring|uncertain|unchain|unchanged|uncharted|uncheck|uncivil|unclad|unclaimed|unclamped|unclasp|uncle|unclip|uncloak|unclog|unclothed|uncoated|uncoiled|uncolored|uncombed|uncommon|uncooked|uncork|uncorrupt|uncounted|uncouple|uncouth|uncover|uncross|uncrown|uncrushed|uncured|uncurious|uncurled|uncut|undamaged|undated|undaunted|undead|undecided|undefined|underage|underarm|undercoat|undercook|undercut|underdog|underdone|underfed|underfeed|underfoot|undergo|undergrad|underhand|underline|underling|undermine|undermost|underpaid|underpass|underpay|underrate|undertake|undertone|undertook|undertow|underuse|underwear|underwent|underwire|undesired|undiluted|undivided|undocked|undoing|undone|undrafted|undress|undrilled|undusted|undying|unearned|unearth|unease|uneasily|uneasy|uneatable|uneaten|unedited|unelected|unending|unengaged|unenvied|unequal|unethical|uneven|unexpired|unexposed|unfailing|unfair|unfasten|unfazed|unfeeling|unfiled|unfilled|unfitted|unfitting|unfixable|unfixed|unflawed|unfocused|unfold|unfounded|unframed|unfreeze|unfrosted|unfrozen|unfunded|unglazed|ungloved|unglue|ungodly|ungraded|ungreased|unguarded|unguided|unhappily|unhappy|unharmed|unhealthy|unheard|unhearing|unheated|unhelpful|unhidden|unhinge|unhitched|unholy|unhook|unicorn|unicycle|unified|unifier|uniformed|uniformly|unify|unimpeded|uninjured|uninstall|uninsured|uninvited|union|uniquely|unisexual|unison|unissued|unit|universal|universe|unjustly|unkempt|unkind|unknotted|unknowing|unknown|unlaced|unlatch|unlawful|unleaded|unlearned|unleash|unless|unleveled|unlighted|unlikable|unlimited|unlined|unlinked|unlisted|unlit|unlivable|unloaded|unloader|unlocked|unlocking|unlovable|unloved|unlovely|unloving|unluckily|unlucky|unmade|unmanaged|unmanned|unmapped|unmarked|unmasked|unmasking|unmatched|unmindful|unmixable|unmixed|unmolded|unmoral|unmovable|unmoved|unmoving|unnamable|unnamed|unnatural|unneeded|unnerve|unnerving|unnoticed|unopened|unopposed|unpack|unpadded|unpaid|unpainted|unpaired|unpaved|unpeeled|unpicked|unpiloted|unpinned|unplanned|unplanted|unpleased|unpledged|unplowed|unplug|unpopular|unproven|unquote|unranked|unrated|unraveled|unreached|unread|unreal|unreeling|unrefined|unrelated|unrented|unrest|unretired|unrevised|unrigged|unripe|unrivaled|unroasted|unrobed|unroll|unruffled|unruly|unrushed|unsaddle|unsafe|unsaid|unsalted|unsaved|unsavory|unscathed|unscented|unscrew|unsealed|unseated|unsecured|unseeing|unseemly|unseen|unselect|unselfish|unsent|unsettled|unshackle|unshaken|unshaved|unshaven|unsheathe|unshipped|unsightly|unsigned|unskilled|unsliced|unsmooth|unsnap|unsocial|unsoiled|unsold|unsolved|unsorted|unspoiled|unspoken|unstable|unstaffed|unstamped|unsteady|unsterile|unstirred|unstitch|unstopped|unstuck|unstuffed|unstylish|unsubtle|unsubtly|unsuited|unsure|unsworn|untagged|untainted|untaken|untamed|untangled|untapped|untaxed|unthawed|unthread|untidy|untie|until|untimed|untimely|untitled|untoasted|untold|untouched|untracked|untrained|untreated|untried|untrimmed|untrue|untruth|unturned|untwist|untying|unusable|unused|unusual|unvalued|unvaried|unvarying|unveiled|unveiling|unvented|unviable|unvisited|unvocal|unwanted|unwarlike|unwary|unwashed|unwatched|unweave|unwed|unwelcome|unwell|unwieldy|unwilling|unwind|unwired|unwitting|unwomanly|unworldly|unworn|unworried|unworthy|unwound|unwoven|unwrapped|unwritten|unzip|upbeat|upchuck|upcoming|upcountry|update|upfront|upgrade|upheaval|upheld|uphill|uphold|uplifted|uplifting|upload|upon|upper|upright|uprising|upriver|uproar|uproot|upscale|upside|upstage|upstairs|upstart|upstate|upstream|upstroke|upswing|uptake|uptight|uptown|upturned|upward|upwind|uranium|urban|urchin|urethane|urgency|urgent|urging|urologist|urology|usable|usage|useable|used|uselessly|user|usher|usual|utensil|utility|utilize|utmost|utopia|utter|vacancy|vacant|vacate|vacation|vagabond|vagrancy|vagrantly|vaguely|vagueness|valiant|valid|valium|valley|valuables|value|vanilla|vanish|vanity|vanquish|vantage|vaporizer|variable|variably|varied|variety|various|varmint|varnish|varsity|varying|vascular|vaseline|vastly|vastness|veal|vegan|veggie|vehicular|velcro|velocity|velvet|vendetta|vending|vendor|veneering|vengeful|venomous|ventricle|venture|venue|venus|verbalize|verbally|verbose|verdict|verify|verse|version|versus|vertebrae|vertical|vertigo|very|vessel|vest|veteran|veto|vexingly|viability|viable|vibes|vice|vicinity|victory|video|viewable|viewer|viewing|viewless|viewpoint|vigorous|village|villain|vindicate|vineyard|vintage|violate|violation|violator|violet|violin|viper|viral|virtual|virtuous|virus|visa|viscosity|viscous|viselike|visible|visibly|vision|visiting|visitor|visor|vista|vitality|vitalize|vitally|vitamins|vivacious|vividly|vividness|vixen|vocalist|vocalize|vocally|vocation|voice|voicing|void|volatile|volley|voltage|volumes|voter|voting|voucher|vowed|vowel|voyage|wackiness|wad|wafer|waffle|waged|wager|wages|waggle|wagon|wake|waking|walk|walmart|walnut|walrus|waltz|wand|wannabe|wanted|wanting|wasabi|washable|washbasin|washboard|washbowl|washcloth|washday|washed|washer|washhouse|washing|washout|washroom|washstand|washtub|wasp|wasting|watch|water|waviness|waving|wavy|whacking|whacky|wham|wharf|wheat|whenever|whiff|whimsical|whinny|whiny|whisking|whoever|whole|whomever|whoopee|whooping|whoops|why|wick|widely|widen|widget|widow|width|wieldable|wielder|wife|wifi|wikipedia|wildcard|wildcat|wilder|wildfire|wildfowl|wildland|wildlife|wildly|wildness|willed|willfully|willing|willow|willpower|wilt|wimp|wince|wincing|wind|wing|winking|winner|winnings|winter|wipe|wired|wireless|wiring|wiry|wisdom|wise|wish|wisplike|wispy|wistful|wizard|wobble|wobbling|wobbly|wok|wolf|wolverine|womanhood|womankind|womanless|womanlike|womanly|womb|woof|wooing|wool|woozy|word|work|worried|worrier|worrisome|worry|worsening|worshiper|worst|wound|woven|wow|wrangle|wrath|wreath|wreckage|wrecker|wrecking|wrench|wriggle|wriggly|wrinkle|wrinkly|wrist|writing|written|wrongdoer|wronged|wrongful|wrongly|wrongness|wrought|xbox|xerox|yahoo|yam|yanking|yapping|yard|yarn|yeah|yearbook|yearling|yearly|yearning|yeast|yelling|yelp|yen|yesterday|yiddish|yield|yin|yippee|yo-yo|yodel|yoga|yogurt|yonder|yoyo|yummy|zap|zealous|zebra|zen|zeppelin|zero|zestfully|zesty|zigzagged|zipfile|zipping|zippy|zips|zit|zodiac|zombie|zone|zoning|zookeeper|zoologist|zoology|zoom';
+
+        var list_eff_short =
+            'acid|acorn|acre|acts|afar|affix|aged|agent|agile|aging|agony|ahead|aide|aids|aim|ajar|alarm|alias|alibi|alien|alike|alive|aloe|aloft|aloha|alone|amend|amino|ample|amuse|angel|anger|angle|ankle|apple|april|apron|aqua|area|arena|argue|arise|armed|armor|army|aroma|array|arson|art|ashen|ashes|atlas|atom|attic|audio|avert|avoid|awake|award|awoke|axis|bacon|badge|bagel|baggy|baked|baker|balmy|banjo|barge|barn|bash|basil|bask|batch|bath|baton|bats|blade|blank|blast|blaze|bleak|blend|bless|blimp|blink|bloat|blob|blog|blot|blunt|blurt|blush|boast|boat|body|boil|bok|bolt|boned|boney|bonus|bony|book|booth|boots|boss|botch|both|boxer|breed|bribe|brick|bride|brim|bring|brink|brisk|broad|broil|broke|brook|broom|brush|buck|bud|buggy|bulge|bulk|bully|bunch|bunny|bunt|bush|bust|busy|buzz|cable|cache|cadet|cage|cake|calm|cameo|canal|candy|cane|canon|cape|card|cargo|carol|carry|carve|case|cash|cause|cedar|chain|chair|chant|chaos|charm|chase|cheek|cheer|chef|chess|chest|chew|chief|chili|chill|chip|chomp|chop|chow|chuck|chump|chunk|churn|chute|cider|cinch|city|civic|civil|clad|claim|clamp|clap|clash|clasp|class|claw|clay|clean|clear|cleat|cleft|clerk|click|cling|clink|clip|cloak|clock|clone|cloth|cloud|clump|coach|coast|coat|cod|coil|coke|cola|cold|colt|coma|come|comic|comma|cone|cope|copy|coral|cork|cost|cot|couch|cough|cover|cozy|craft|cramp|crane|crank|crate|crave|crawl|crazy|creme|crepe|crept|crib|cried|crisp|crook|crop|cross|crowd|crown|crumb|crush|crust|cub|cult|cupid|cure|curl|curry|curse|curve|curvy|cushy|cut|cycle|dab|dad|daily|dairy|daisy|dance|dandy|darn|dart|dash|data|date|dawn|deaf|deal|dean|debit|debt|debug|decaf|decal|decay|deck|decor|decoy|deed|delay|denim|dense|dent|depth|derby|desk|dial|diary|dice|dig|dill|dime|dimly|diner|dingy|disco|dish|disk|ditch|ditzy|dizzy|dock|dodge|doing|doll|dome|donor|donut|dose|dot|dove|down|dowry|doze|drab|drama|drank|draw|dress|dried|drift|drill|drive|drone|droop|drove|drown|drum|dry|duck|duct|dude|dug|duke|duo|dusk|dust|duty|dwarf|dwell|eagle|early|earth|easel|east|eaten|eats|ebay|ebony|ebook|echo|edge|eel|eject|elbow|elder|elf|elk|elm|elope|elude|elves|email|emit|empty|emu|enter|entry|envoy|equal|erase|error|erupt|essay|etch|evade|even|evict|evil|evoke|exact|exit|fable|faced|fact|fade|fall|false|fancy|fang|fax|feast|feed|femur|fence|fend|ferry|fetal|fetch|fever|fiber|fifth|fifty|film|filth|final|finch|fit|five|flag|flaky|flame|flap|flask|fled|flick|fling|flint|flip|flirt|float|flock|flop|floss|flyer|foam|foe|fog|foil|folic|folk|food|fool|found|fox|foyer|frail|frame|fray|fresh|fried|frill|frisk|from|front|frost|froth|frown|froze|fruit|gag|gains|gala|game|gap|gas|gave|gear|gecko|geek|gem|genre|gift|gig|gills|given|giver|glad|glass|glide|gloss|glove|glow|glue|goal|going|golf|gong|good|gooey|goofy|gore|gown|grab|grain|grant|grape|graph|grasp|grass|grave|gravy|gray|green|greet|grew|grid|grief|grill|grip|grit|groom|grope|growl|grub|grunt|guide|gulf|gulp|gummy|guru|gush|gut|guy|habit|half|halo|halt|happy|harm|hash|hasty|hatch|hate|haven|hazel|hazy|heap|heat|heave|hedge|hefty|help|herbs|hers|hub|hug|hula|hull|human|humid|hump|hung|hunk|hunt|hurry|hurt|hush|hut|ice|icing|icon|icy|igloo|image|ion|iron|islam|issue|item|ivory|ivy|jab|jam|jaws|jazz|jeep|jelly|jet|jiffy|job|jog|jolly|jolt|jot|joy|judge|juice|juicy|july|jumbo|jump|junky|juror|jury|keep|keg|kept|kick|kilt|king|kite|kitty|kiwi|knee|knelt|koala|kung|ladle|lady|lair|lake|lance|land|lapel|large|lash|lasso|last|latch|late|lazy|left|legal|lemon|lend|lens|lent|level|lever|lid|life|lift|lilac|lily|limb|limes|line|lint|lion|lip|list|lived|liver|lunar|lunch|lung|lurch|lure|lurk|lying|lyric|mace|maker|malt|mama|mango|manor|many|map|march|mardi|marry|mash|match|mate|math|moan|mocha|moist|mold|mom|moody|mop|morse|most|motor|motto|mount|mouse|mousy|mouth|move|movie|mower|mud|mug|mulch|mule|mull|mumbo|mummy|mural|muse|music|musky|mute|nacho|nag|nail|name|nanny|nap|navy|near|neat|neon|nerd|nest|net|next|niece|ninth|nutty|oak|oasis|oat|ocean|oil|old|olive|omen|onion|only|ooze|opal|open|opera|opt|otter|ouch|ounce|outer|oval|oven|owl|ozone|pace|pagan|pager|palm|panda|panic|pants|panty|paper|park|party|pasta|patch|path|patio|payer|pecan|penny|pep|perch|perky|perm|pest|petal|petri|petty|photo|plank|plant|plaza|plead|plot|plow|pluck|plug|plus|poach|pod|poem|poet|pogo|point|poise|poker|polar|polio|polka|polo|pond|pony|poppy|pork|poser|pouch|pound|pout|power|prank|press|print|prior|prism|prize|probe|prong|proof|props|prude|prune|pry|pug|pull|pulp|pulse|puma|punch|punk|pupil|puppy|purr|purse|push|putt|quack|quake|query|quiet|quill|quilt|quit|quota|quote|rabid|race|rack|radar|radio|raft|rage|raid|rail|rake|rally|ramp|ranch|range|rank|rant|rash|raven|reach|react|ream|rebel|recap|relax|relay|relic|remix|repay|repel|reply|rerun|reset|rhyme|rice|rich|ride|rigid|rigor|rinse|riot|ripen|rise|risk|ritzy|rival|river|roast|robe|robin|rock|rogue|roman|romp|rope|rover|royal|ruby|rug|ruin|rule|runny|rush|rust|rut|sadly|sage|said|saint|salad|salon|salsa|salt|same|sandy|santa|satin|sauna|saved|savor|sax|say|scale|scam|scan|scare|scarf|scary|scoff|scold|scoop|scoot|scope|score|scorn|scout|scowl|scrap|scrub|scuba|scuff|sect|sedan|self|send|sepia|serve|set|seven|shack|shade|shady|shaft|shaky|sham|shape|share|sharp|shed|sheep|sheet|shelf|shell|shine|shiny|ship|shirt|shock|shop|shore|shout|shove|shown|showy|shred|shrug|shun|shush|shut|shy|sift|silk|silly|silo|sip|siren|sixth|size|skate|skew|skid|skier|skies|skip|skirt|skit|sky|slab|slack|slain|slam|slang|slash|slate|slaw|sled|sleek|sleep|sleet|slept|slice|slick|slimy|sling|slip|slit|slob|slot|slug|slum|slurp|slush|small|smash|smell|smile|smirk|smog|snack|snap|snare|snarl|sneak|sneer|sniff|snore|snort|snout|snowy|snub|snuff|speak|speed|spend|spent|spew|spied|spill|spiny|spoil|spoke|spoof|spool|spoon|sport|spot|spout|spray|spree|spur|squad|squat|squid|stack|staff|stage|stain|stall|stamp|stand|stank|stark|start|stash|state|stays|steam|steep|stem|step|stew|stick|sting|stir|stock|stole|stomp|stony|stood|stool|stoop|stop|storm|stout|stove|straw|stray|strut|stuck|stud|stuff|stump|stung|stunt|suds|sugar|sulk|surf|sushi|swab|swan|swarm|sway|swear|sweat|sweep|swell|swept|swim|swing|swipe|swirl|swoop|swore|syrup|tacky|taco|tag|take|tall|talon|tamer|tank|taper|taps|tarot|tart|task|taste|tasty|taunt|thank|thaw|theft|theme|thigh|thing|think|thong|thorn|those|throb|thud|thumb|thump|thus|tiara|tidal|tidy|tiger|tile|tilt|tint|tiny|trace|track|trade|train|trait|trap|trash|tray|treat|tree|trek|trend|trial|tribe|trick|trio|trout|truce|truck|trump|trunk|try|tug|tulip|tummy|turf|tusk|tutor|tutu|tux|tweak|tweet|twice|twine|twins|twirl|twist|uncle|uncut|undo|unify|union|unit|untie|upon|upper|urban|used|user|usher|utter|value|vapor|vegan|venue|verse|vest|veto|vice|video|view|viral|virus|visa|visor|vixen|vocal|voice|void|volt|voter|vowel|wad|wafer|wager|wages|wagon|wake|walk|wand|wasp|watch|water|wavy|wheat|whiff|whole|whoop|wick|widen|widow|width|wife|wifi|wilt|wimp|wind|wing|wink|wipe|wired|wiry|wise|wish|wispy|wok|wolf|womb|wool|woozy|word|work|worry|wound|woven|wrath|wreck|wrist|xerox|yahoo|yam|yard|year|yeast|yelp|yield|yo-yo|yodel|yoga|yoyo|yummy|zebra|zero|zesty|zippy|zone|zoom';
+
+        var list_eff_short_2 =
+            'aardvark|abandoned|abbreviate|abdomen|abhorrence|abiding|abnormal|abrasion|absorbing|abundant|abyss|academy|accountant|acetone|achiness|acid|acoustics|acquire|acrobat|actress|acuteness|aerosol|aesthetic|affidavit|afloat|afraid|aftershave|again|agency|aggressor|aghast|agitate|agnostic|agonizing|agreeing|aidless|aimlessly|ajar|alarmclock|albatross|alchemy|alfalfa|algae|aliens|alkaline|almanac|alongside|alphabet|already|also|altitude|aluminum|always|amazingly|ambulance|amendment|amiable|ammunition|amnesty|amoeba|amplifier|amuser|anagram|anchor|android|anesthesia|angelfish|animal|anklet|announcer|anonymous|answer|antelope|anxiety|anyplace|aorta|apartment|apnea|apostrophe|apple|apricot|aquamarine|arachnid|arbitrate|ardently|arena|argument|aristocrat|armchair|aromatic|arrowhead|arsonist|artichoke|asbestos|ascend|aseptic|ashamed|asinine|asleep|asocial|asparagus|astronaut|asymmetric|atlas|atmosphere|atom|atrocious|attic|atypical|auctioneer|auditorium|augmented|auspicious|automobile|auxiliary|avalanche|avenue|aviator|avocado|awareness|awhile|awkward|awning|awoke|axially|azalea|babbling|backpack|badass|bagpipe|bakery|balancing|bamboo|banana|barracuda|basket|bathrobe|bazooka|blade|blender|blimp|blouse|blurred|boatyard|bobcat|body|bogusness|bohemian|boiler|bonnet|boots|borough|bossiness|bottle|bouquet|boxlike|breath|briefcase|broom|brushes|bubblegum|buckle|buddhist|buffalo|bullfrog|bunny|busboy|buzzard|cabin|cactus|cadillac|cafeteria|cage|cahoots|cajoling|cakewalk|calculator|camera|canister|capsule|carrot|cashew|cathedral|caucasian|caviar|ceasefire|cedar|celery|cement|census|ceramics|cesspool|chalkboard|cheesecake|chimney|chlorine|chopsticks|chrome|chute|cilantro|cinnamon|circle|cityscape|civilian|clay|clergyman|clipboard|clock|clubhouse|coathanger|cobweb|coconut|codeword|coexistent|coffeecake|cognitive|cohabitate|collarbone|computer|confetti|copier|cornea|cosmetics|cotton|couch|coverless|coyote|coziness|crawfish|crewmember|crib|croissant|crumble|crystal|cubical|cucumber|cuddly|cufflink|cuisine|culprit|cup|curry|cushion|cuticle|cybernetic|cyclist|cylinder|cymbal|cynicism|cypress|cytoplasm|dachshund|daffodil|dagger|dairy|dalmatian|dandelion|dartboard|dastardly|datebook|daughter|dawn|daytime|dazzler|dealer|debris|decal|dedicate|deepness|defrost|degree|dehydrator|deliverer|democrat|dentist|deodorant|depot|deranged|desktop|detergent|device|dexterity|diamond|dibs|dictionary|diffuser|digit|dilated|dimple|dinnerware|dioxide|diploma|directory|dishcloth|ditto|dividers|dizziness|doctor|dodge|doll|dominoes|donut|doorstep|dorsal|double|downstairs|dozed|drainpipe|dresser|driftwood|droppings|drum|dryer|dubiously|duckling|duffel|dugout|dumpster|duplex|durable|dustpan|dutiful|duvet|dwarfism|dwelling|dwindling|dynamite|dyslexia|eagerness|earlobe|easel|eavesdrop|ebook|eccentric|echoless|eclipse|ecosystem|ecstasy|edged|editor|educator|eelworm|eerie|effects|eggnog|egomaniac|ejection|elastic|elbow|elderly|elephant|elfishly|eliminator|elk|elliptical|elongated|elsewhere|elusive|elves|emancipate|embroidery|emcee|emerald|emission|emoticon|emperor|emulate|enactment|enchilada|endorphin|energy|enforcer|engine|enhance|enigmatic|enjoyably|enlarged|enormous|enquirer|enrollment|ensemble|entryway|enunciate|envoy|enzyme|epidemic|equipment|erasable|ergonomic|erratic|eruption|escalator|eskimo|esophagus|espresso|essay|estrogen|etching|eternal|ethics|etiquette|eucalyptus|eulogy|euphemism|euthanize|evacuation|evergreen|evidence|evolution|exam|excerpt|exerciser|exfoliate|exhale|exist|exorcist|explode|exquisite|exterior|exuberant|fabric|factory|faded|failsafe|falcon|family|fanfare|fasten|faucet|favorite|feasibly|february|federal|feedback|feigned|feline|femur|fence|ferret|festival|fettuccine|feudalist|feverish|fiberglass|fictitious|fiddle|figurine|fillet|finalist|fiscally|fixture|flashlight|fleshiness|flight|florist|flypaper|foamless|focus|foggy|folksong|fondue|footpath|fossil|fountain|fox|fragment|freeway|fridge|frosting|fruit|fryingpan|gadget|gainfully|gallstone|gamekeeper|gangway|garlic|gaslight|gathering|gauntlet|gearbox|gecko|gem|generator|geographer|gerbil|gesture|getaway|geyser|ghoulishly|gibberish|giddiness|giftshop|gigabyte|gimmick|giraffe|giveaway|gizmo|glasses|gleeful|glisten|glove|glucose|glycerin|gnarly|gnomish|goatskin|goggles|goldfish|gong|gooey|gorgeous|gosling|gothic|gourmet|governor|grape|greyhound|grill|groundhog|grumbling|guacamole|guerrilla|guitar|gullible|gumdrop|gurgling|gusto|gutless|gymnast|gynecology|gyration|habitat|hacking|haggard|haiku|halogen|hamburger|handgun|happiness|hardhat|hastily|hatchling|haughty|hazelnut|headband|hedgehog|hefty|heinously|helmet|hemoglobin|henceforth|herbs|hesitation|hexagon|hubcap|huddling|huff|hugeness|hullabaloo|human|hunter|hurricane|hushing|hyacinth|hybrid|hydrant|hygienist|hypnotist|ibuprofen|icepack|icing|iconic|identical|idiocy|idly|igloo|ignition|iguana|illuminate|imaging|imbecile|imitator|immigrant|imprint|iodine|ionosphere|ipad|iphone|iridescent|irksome|iron|irrigation|island|isotope|issueless|italicize|itemizer|itinerary|itunes|ivory|jabbering|jackrabbit|jaguar|jailhouse|jalapeno|jamboree|janitor|jarring|jasmine|jaundice|jawbreaker|jaywalker|jazz|jealous|jeep|jelly|jeopardize|jersey|jetski|jezebel|jiffy|jigsaw|jingling|jobholder|jockstrap|jogging|john|joinable|jokingly|journal|jovial|joystick|jubilant|judiciary|juggle|juice|jujitsu|jukebox|jumpiness|junkyard|juror|justifying|juvenile|kabob|kamikaze|kangaroo|karate|kayak|keepsake|kennel|kerosene|ketchup|khaki|kickstand|kilogram|kimono|kingdom|kiosk|kissing|kite|kleenex|knapsack|kneecap|knickers|koala|krypton|laboratory|ladder|lakefront|lantern|laptop|laryngitis|lasagna|latch|laundry|lavender|laxative|lazybones|lecturer|leftover|leggings|leisure|lemon|length|leopard|leprechaun|lettuce|leukemia|levers|lewdness|liability|library|licorice|lifeboat|lightbulb|likewise|lilac|limousine|lint|lioness|lipstick|liquid|listless|litter|liverwurst|lizard|llama|luau|lubricant|lucidity|ludicrous|luggage|lukewarm|lullaby|lumberjack|lunchbox|luridness|luscious|luxurious|lyrics|macaroni|maestro|magazine|mahogany|maimed|majority|makeover|malformed|mammal|mango|mapmaker|marbles|massager|matchstick|maverick|maximum|mayonnaise|moaning|mobilize|moccasin|modify|moisture|molecule|momentum|monastery|moonshine|mortuary|mosquito|motorcycle|mousetrap|movie|mower|mozzarella|muckiness|mudflow|mugshot|mule|mummy|mundane|muppet|mural|mustard|mutation|myriad|myspace|myth|nail|namesake|nanosecond|napkin|narrator|nastiness|natives|nautically|navigate|nearest|nebula|nectar|nefarious|negotiator|neither|nemesis|neoliberal|nephew|nervously|nest|netting|neuron|nevermore|nextdoor|nicotine|niece|nimbleness|nintendo|nirvana|nuclear|nugget|nuisance|nullify|numbing|nuptials|nursery|nutcracker|nylon|oasis|oat|obediently|obituary|object|obliterate|obnoxious|observer|obtain|obvious|occupation|oceanic|octopus|ocular|office|oftentimes|oiliness|ointment|older|olympics|omissible|omnivorous|oncoming|onion|onlooker|onstage|onward|onyx|oomph|opaquely|opera|opium|opossum|opponent|optical|opulently|oscillator|osmosis|ostrich|otherwise|ought|outhouse|ovation|oven|owlish|oxford|oxidize|oxygen|oyster|ozone|pacemaker|padlock|pageant|pajamas|palm|pamphlet|pantyhose|paprika|parakeet|passport|patio|pauper|pavement|payphone|pebble|peculiarly|pedometer|pegboard|pelican|penguin|peony|pepperoni|peroxide|pesticide|petroleum|pewter|pharmacy|pheasant|phonebook|phrasing|physician|plank|pledge|plotted|plug|plywood|pneumonia|podiatrist|poetic|pogo|poison|poking|policeman|poncho|popcorn|porcupine|postcard|poultry|powerboat|prairie|pretzel|princess|propeller|prune|pry|pseudo|psychopath|publisher|pucker|pueblo|pulley|pumpkin|punchbowl|puppy|purse|pushup|putt|puzzle|pyramid|python|quarters|quesadilla|quilt|quote|racoon|radish|ragweed|railroad|rampantly|rancidity|rarity|raspberry|ravishing|rearrange|rebuilt|receipt|reentry|refinery|register|rehydrate|reimburse|rejoicing|rekindle|relic|remote|renovator|reopen|reporter|request|rerun|reservoir|retriever|reunion|revolver|rewrite|rhapsody|rhetoric|rhino|rhubarb|rhyme|ribbon|riches|ridden|rigidness|rimmed|riptide|riskily|ritzy|riverboat|roamer|robe|rocket|romancer|ropelike|rotisserie|roundtable|royal|rubber|rudderless|rugby|ruined|rulebook|rummage|running|rupture|rustproof|sabotage|sacrifice|saddlebag|saffron|sainthood|saltshaker|samurai|sandworm|sapphire|sardine|sassy|satchel|sauna|savage|saxophone|scarf|scenario|schoolbook|scientist|scooter|scrapbook|sculpture|scythe|secretary|sedative|segregator|seismology|selected|semicolon|senator|septum|sequence|serpent|sesame|settler|severely|shack|shelf|shirt|shovel|shrimp|shuttle|shyness|siamese|sibling|siesta|silicon|simmering|singles|sisterhood|sitcom|sixfold|sizable|skateboard|skeleton|skies|skulk|skylight|slapping|sled|slingshot|sloth|slumbering|smartphone|smelliness|smitten|smokestack|smudge|snapshot|sneezing|sniff|snowsuit|snugness|speakers|sphinx|spider|splashing|sponge|sprout|spur|spyglass|squirrel|statue|steamboat|stingray|stopwatch|strawberry|student|stylus|suave|subway|suction|suds|suffocate|sugar|suitcase|sulphur|superstore|surfer|sushi|swan|sweatshirt|swimwear|sword|sycamore|syllable|symphony|synagogue|syringes|systemize|tablespoon|taco|tadpole|taekwondo|tagalong|takeout|tallness|tamale|tanned|tapestry|tarantula|tastebud|tattoo|tavern|thaw|theater|thimble|thorn|throat|thumb|thwarting|tiara|tidbit|tiebreaker|tiger|timid|tinsel|tiptoeing|tirade|tissue|tractor|tree|tripod|trousers|trucks|tryout|tubeless|tuesday|tugboat|tulip|tumbleweed|tupperware|turtle|tusk|tutorial|tuxedo|tweezers|twins|tyrannical|ultrasound|umbrella|umpire|unarmored|unbuttoned|uncle|underwear|unevenness|unflavored|ungloved|unhinge|unicycle|unjustly|unknown|unlocking|unmarked|unnoticed|unopened|unpaved|unquenched|unroll|unscrewing|untied|unusual|unveiled|unwrinkled|unyielding|unzip|upbeat|upcountry|update|upfront|upgrade|upholstery|upkeep|upload|uppercut|upright|upstairs|uptown|upwind|uranium|urban|urchin|urethane|urgent|urologist|username|usher|utensil|utility|utmost|utopia|utterance|vacuum|vagrancy|valuables|vanquished|vaporizer|varied|vaseline|vegetable|vehicle|velcro|vendor|vertebrae|vestibule|veteran|vexingly|vicinity|videogame|viewfinder|vigilante|village|vinegar|violin|viperfish|virus|visor|vitamins|vivacious|vixen|vocalist|vogue|voicemail|volleyball|voucher|voyage|vulnerable|waffle|wagon|wakeup|walrus|wanderer|wasp|water|waving|wheat|whisper|wholesaler|wick|widow|wielder|wifeless|wikipedia|wildcat|windmill|wipeout|wired|wishbone|wizardry|wobbliness|wolverine|womb|woolworker|workbasket|wound|wrangle|wreckage|wristwatch|wrongdoing|xerox|xylophone|yacht|yahoo|yard|yearbook|yesterday|yiddish|yield|yo-yo|yodel|yogurt|yuppie|zealot|zebra|zeppelin|zestfully|zigzagged|zillion|zipping|zirconium|zodiac|zombie|zookeeper|zucchini';
+
+        // generate cryptographically secure random number between min and max inclusive
+        function random(min, max) {
+            var randomBuffer = new Uint32Array(1);
+            window.crypto.getRandomValues(randomBuffer);
+            var randomNumber = randomBuffer[0] / (0xffffffff + 1);
+            min = Math.ceil(min);
+            max = Math.floor(max);
+            return Math.floor(randomNumber * (max - min + 1)) + min;
+        }
+
+        function generate() {
+            var listSelected = document.querySelector('input[name="wordlist"]:checked').value;
+
+            // obtain word list
+            var words = [];
+            if (listSelected === "eff-long") {
+                words = list_eff_long.split("|");
+            } else if (listSelected === "eff-short-1") {
+                words = list_eff_short.split("|");
+            } else if (listSelected === "eff-short-2") {
+                words = list_eff_short_2.split("|");
+            } else {
+                alert("Word list missing");
+                return;
+            }
+
+            var numberOfWords = document.getElementById('numberOfWords').value;
+            var numberOfPassphrases = document.getElementById('numberOfPassphrases').value;
+            var entropyBits = Math.floor(Math.log(Math.pow(words.length, numberOfWords)) / Math.log(2));
+
+            // generate a set of passphrases
+            var passList = [];
+            for (var i = 0; i < numberOfPassphrases; i++) {
+                // generate a passphrase
+                var pass = "";
+                for (var j = 0; j < numberOfWords; j++) {
+                    // generate a word
+                    var randomIndex = random(0, words.length - 1);
+                    var word = words[randomIndex];
+                    pass += ' ' + word;
+                }
+                passList.push(pass.trim())
+            }
+
+            document.getElementById('output').innerHTML = passList.join("\n");
+            document.getElementById('message').innerHTML = "<p>These passwords have " + entropyBits +
+                " bits of entropy each.";
+        }
+    </script>
+</body>
+
+</html>
