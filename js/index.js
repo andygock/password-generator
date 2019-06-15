@@ -19,20 +19,20 @@ const generate = () => {
   let words = [];
   switch (listSelected) {
     case 'eff-long':
-      words = list.eff.long.split('|');
+      words = list.eff.long;
       break;
 
     case 'eff-short-1':
-      words = list.eff.short.split('|');
+      words = list.eff.short;
       break;
 
     case 'eff-short-2':
-      words = list.eff.short2.split('|');
+      words = list.eff.short2;
       break;
 
     default:
       // use 'eff-long' equivalent
-      words = list.eff.long.split('|');
+      words = list.eff.long;
       break;
   }
 
