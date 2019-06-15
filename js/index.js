@@ -19,20 +19,36 @@ const generate = () => {
   let words = [];
   switch (listSelected) {
     case 'eff-long':
-      words = list.eff.long.split('|');
+      words = list.long.split('|');
       break;
 
-    case 'eff-short-1':
-      words = list.eff.short1.split('|');
+    case 'eff-short1':
+      words = list.short1.split('|');
       break;
 
-    case 'eff-short-2':
-      words = list.eff.short2.split('|');
+    case 'eff-short2':
+      words = list.short2.split('|');
+      break;
+
+    case 'eff-startrek':
+      words = list.startrek.split('|');
+      break;
+
+    case 'eff-starwars':
+      words = list.starwars.split('|');
+      break;
+
+    case 'eff-harrypotter':
+      words = list.harrypotter.split('|');
+      break;
+
+    case 'eff-gameofthrones':
+      words = list.gameofthrones.split('|');
       break;
 
     default:
       // use 'eff-long' equivalent
-      words = list.eff.long.split('|');
+      words = list.long.split('|');
       break;
   }
 
@@ -62,7 +78,9 @@ const generate = () => {
   document.getElementById('output').innerHTML = passList.join('\n');
   document.getElementById(
     'message'
-  ).innerHTML = `<p>These passwords have ${entropyBits} <a href='https://en.wikipedia.org/wiki/Password_strength#Entropy_as_a_measure_of_password_strength'>bits of entropy</a> each.`;
+  ).innerHTML = `<p>These passwords have ${entropyBits} <a href='https://en.wikipedia.org/wiki/Password_strength#Entropy_as_a_measure_of_password_strength'>bits of entropy</a> each. Dictionary size of ${
+    words.length
+  } words.</p>`;
 };
 
 document.addEventListener('DOMContentLoaded', () => {

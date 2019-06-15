@@ -8,7 +8,7 @@ Demo available at <https://gock.net/pass>
 
 - [Parcel](https://parceljs.org/)
 - [mini.css](https://minicss.org/docs/)
-- [EFF word lists](https://www.eff.org/deeplinks/2016/07/new-wordlists-random-passphrases)
+- [EFF word lists](https://www.eff.org/deeplinks/2016/07/new-wordlists-random-passphrases) and [Dragon Con inspired](https://www.eff.org/deeplinks/2018/08/dragon-con-diceware) lists.
 
 ## Development process
 
