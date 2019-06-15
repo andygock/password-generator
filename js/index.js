@@ -1,4 +1,4 @@
-import list from './words';
+import list from './words/index';
 
 // generate cryptographically secure random number between min and max inclusive
 const random = (min, max) => {
@@ -23,7 +23,7 @@ const generate = () => {
       break;
 
     case 'eff-short-1':
-      words = list.eff.short.split('|');
+      words = list.eff.short1.split('|');
       break;
 
     case 'eff-short-2':
