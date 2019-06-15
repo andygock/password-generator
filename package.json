@@ -1,0 +1,26 @@
+{
+  "name": "password-generator",
+  "version": "1.0.0",
+  "description": "Browser based *secure-enough* passphrase generator. Runs entirely in the web browser and uses the [EFF word lists](https://www.eff.org/deeplinks/2016/07/new-wordlists-random-passphrases).",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "parcel index.html --open",
+    "build": "rm -rf dist && parcel build index.html --no-minify",
+    "prod": "rm -rf dist && parcel build index.html --public-url /pass/ --no-minify"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andygock/password-generator.git"
+  },
+  "author": "Andy Gock <andy.gock@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/andygock/password-generator/issues"
+  },
+  "homepage": "https://github.com/andygock/password-generator#readme",
+  "devDependencies": {},
+  "dependencies": {
+    "mini.css": "^3.0.1"
+  }
+}
