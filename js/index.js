@@ -30,21 +30,21 @@ const generate = () => {
       words = list.short2.split('|');
       break;
 
-    case 'eff-startrek':
-      words = list.startrek.split('|');
-      break;
+    // case 'eff-startrek':
+    //   words = list.startrek.split('|');
+    //   break;
 
-    case 'eff-starwars':
-      words = list.starwars.split('|');
-      break;
+    // case 'eff-starwars':
+    //   words = list.starwars.split('|');
+    //   break;
 
-    case 'eff-harrypotter':
-      words = list.harrypotter.split('|');
-      break;
+    // case 'eff-harrypotter':
+    //   words = list.harrypotter.split('|');
+    //   break;
 
-    case 'eff-gameofthrones':
-      words = list.gameofthrones.split('|');
-      break;
+    // case 'eff-gameofthrones':
+    //   words = list.gameofthrones.split('|');
+    //   break;
 
     default:
       // use 'eff-long' equivalent
