@@ -208,4 +208,31 @@ document.addEventListener('DOMContentLoaded', () => {
     // remove existing hash
     history.pushState(null, '', ' ');
   });
+
+  // handler of  -/+ button clicks
+  const buttonsDec = document.querySelectorAll('.spin');
+  buttonsDec.forEach((button) => {
+    button.addEventListener('click', (e) => {
+      // remove focus after clicking
+      e.target.blur();
+
+      // get target <input> element and value, this is the value we want to decrease or increase
+      const targetInput = document.getElementById(e.target.dataset.target);
+      const currentNumber = parseInt(targetInput.value, 10);
+
+      // don't continue if there is no number
+      if (Number.isNaN(currentNumber)) return;
+
+      // increase or decrease number
+      if (e.target.dataset.action === 'dec') {
+        targetInput.value = currentNumber - 1;
+      }
+      if (e.target.dataset.action === 'inc') {
+        targetInput.value = currentNumber + 1;
+      }
+
+      // regenerate passphrases
+      generate();
+    });
+  });
 });

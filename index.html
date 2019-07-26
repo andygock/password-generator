@@ -8,6 +8,7 @@
       rel="stylesheet"
       href="node_modules/mini.css/dist/mini-dark.min.css"
     />
+    <link rel="stylesheet" href="css/style.scss" />
   </head>
 
   <body>
@@ -29,6 +30,22 @@
               value="6"
               required
             />
+            <span>
+              <button
+                class="small spin"
+                data-target="numberOfWords"
+                data-action="dec"
+              >
+                -
+              </button>
+              <button
+                class="small spin"
+                data-target="numberOfWords"
+                data-action="inc"
+              >
+                +
+              </button>
+            </span>
             <label for="numberOfWords">Number of words per passphrase</label>
           </div>
 
@@ -42,6 +59,22 @@
               value="20"
               required
             />
+            <span>
+              <button
+                class="small spin"
+                data-target="numberOfPassphrases"
+                data-action="dec"
+              >
+                -
+              </button>
+              <button
+                class="small spin"
+                data-target="numberOfPassphrases"
+                data-action="inc"
+              >
+                +
+              </button>
+            </span>
             <label for="numberOfPassphrases">Number of passphrases</label>
           </div>
 
