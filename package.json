@@ -19,7 +19,9 @@
     "url": "https://github.com/andygock/password-generator/issues"
   },
   "homepage": "https://github.com/andygock/password-generator#readme",
-  "devDependencies": {},
+  "devDependencies": {
+    "sass": "^1.22.7"
+  },
   "dependencies": {
     "mini.css": "^3.0.1"
   }
