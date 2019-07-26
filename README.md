@@ -31,3 +31,17 @@ This will perform a `rm -rf dist && parcel build index.html --no-minify`. To use
 Static files are available in `dist/`
 
 Do not view `/index.html` in the browser, it will not work. Use packaged files in the `dist/` directory.
+
+## Use of location.hash
+
+This makes it bookmark friendly with user-selected parameters recallable. The formats supported are:
+
+    #/:words
+    #/:words/:passphrases
+    #/:words/:passphrases/:wordlist
+
+e.g
+
+    http://localhost:1234/#/4/10/eff-short1
+
+If no hash is present, default parameters are used.
