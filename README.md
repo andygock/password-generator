@@ -6,9 +6,9 @@ Demo available at <https://gock.net/pass>
 
 ## Tools used
 
-- [Parcel](https://parceljs.org/)
-- [mini.css](https://minicss.org/docs/)
-- [EFF word lists](https://www.eff.org/deeplinks/2016/07/new-wordlists-random-passphrases).
+- [Parcel](https://parceljs.org/) / [github](https://github.com/parcel-bundler/parcel) + [docs](https://parceljs.org/getting_started.html)
+- [mini.css](https://minicss.org/) / [github](https://github.com/Chalarangelo/mini.css) + [docs](https://minicss.org/docs)
+- [EFF word lists](https://www.eff.org/deeplinks/2016/07/new-wordlists-random-passphrases)
 
 ## Development process
 
