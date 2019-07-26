@@ -206,6 +206,6 @@ document.addEventListener('DOMContentLoaded', () => {
     generate();
 
     // remove existing hash
-    history.replaceState(null, '', ' ');
+    history.pushState(null, '', ' ');
   });
 });
