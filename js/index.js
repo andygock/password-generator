@@ -201,6 +201,9 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('reset').addEventListener('click', (e) => {
     e.preventDefault();
 
+    // unfocus the anchor
+    e.target.blur();
+
     // set default parameters and regenerate passphrases
     setDefaultParameters();
     generate();
