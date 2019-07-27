@@ -37,6 +37,11 @@ button.spin {
     background: #666;
     cursor: pointer;
   }
+
+  .copied,
+  .copied:hover {
+    background-color: green;
+  }
 }
 
 /* used for clipboard copying, make this near-invisible, don't use "display: none", that will not work */

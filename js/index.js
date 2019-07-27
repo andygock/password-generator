@@ -135,6 +135,7 @@ const generate = ({ initial } = {}) => {
   // document.getElementById('output').innerHTML = passList.join('\n');
 
   // clear current output contents
+  clearTimeout();
   document.getElementById('output').innerHTML = '';
 
   passList.forEach((pass) => {
@@ -149,6 +150,22 @@ const generate = ({ initial } = {}) => {
       target.value = pass;
       target.select();
       document.execCommand('copy');
+
+      // highlight line
+      line.className += ' copied';
+
+      // inform user that the line was copied (this perhaps is better done using a snackbar or something)
+      line.innerHTML = `${pass} *COPIED!*`;
+
+      // after prescribed time, clear the 'copied' notice
+      setTimeout(() => {
+        line.innerHTML = pass;
+      }, 400);
+
+      // after prescribed time, remove the highlight styling
+      setTimeout(() => {
+        line.className = 'cleared';
+      }, 2000);
     });
   });
 
