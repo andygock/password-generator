@@ -15,11 +15,11 @@
     <h2>Password Generator</h2>
     <p>
       Web application to generate a list of <em>secure-enough</em> random
-      passphrases in the browser.
+      passphrases in the browser. Click line to copy passphrase to clipboard.
     </p>
     <div class="container">
       <div class="row">
-        <div class="col-sm-4">
+        <div class="col-md-4">
           <div>
             <input
               type="number"
@@ -154,8 +154,10 @@
           <input type="submit" value="Generate" id="generate" />
           <div><a id="reset" href="#">Reset to defaults</a></div>
         </div>
-        <div class="col-sm-8">
-          <pre id="output"></pre>
+        <div class="col-md-8">
+          <!-- <pre id="output"></pre> -->
+          <!-- <p>Click line to copy passphrase to clipboard.</p> -->
+          <div id="output"></div>
           <div id="message"></div>
         </div>
       </div>
@@ -170,6 +172,9 @@
       >. Source code is available on
       <a href="https://github.com/andygock/password-generator">GitHub</a>.
     </p>
+
+    <!-- textarea required for copying passphrase to clipboard with document.execCommand('copy') -->
+    <textarea id="clipboard">&nbsp;</textarea>
 
     <script type="text/javascript" src="js/index.js"></script>
   </body>

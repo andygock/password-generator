@@ -17,3 +17,39 @@ input[type='number'] {
 button.spin {
   margin: 0;
 }
+
+#output {
+  /* this taken from mini.css for 'pre' */
+  overflow: auto;
+  background: var(--secondary-back-color);
+  padding: calc(1.5 * var(--universal-padding));
+  margin: var(--universal-margin);
+  border: 0.0625rem solid var(--secondary-border-color);
+  border-left: 0.25rem solid var(--pre-color);
+  border-radius: 0 var(--universal-border-radius) var(--universal-border-radius)
+    0;
+
+  div {
+    font-family: Menlo, Consolas, monospace;
+    font-size: 0.85em;
+  }
+  div:hover {
+    background: #666;
+    cursor: pointer;
+  }
+}
+
+/* used for clipboard copying, make this near-invisible, don't use "display: none", that will not work */
+#clipboard {
+  // make as small and hidden as possible
+  width: 0px;
+  height: 0px;
+  opacity: 0.01;
+  z-index: -1;
+
+  // position in middle of viewport
+  // if we don't, after .select(), browser may scroll to textarea position
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}

@@ -132,7 +132,26 @@ const generate = ({ initial } = {}) => {
   }
 
   // write the output to DOM
-  document.getElementById('output').innerHTML = passList.join('\n');
+  // document.getElementById('output').innerHTML = passList.join('\n');
+
+  // clear current output contents
+  document.getElementById('output').innerHTML = '';
+
+  passList.forEach((pass) => {
+    // add password as new output line
+    const line = document.createElement('div');
+    document.getElementById('output').appendChild(line).innerHTML = pass;
+
+    // user clicking on a passphrase line, will copy the passphrase to clipboard
+    line.addEventListener('click', () => {
+      // copy passphrase to textarea so we can copy to clipboard
+      const target = document.getElementById('clipboard');
+      target.value = pass;
+      target.select();
+      document.execCommand('copy');
+    });
+  });
+
   document.getElementById(
     'message'
   ).innerHTML = `<p>These passwords have ${entropyBits} <a href='https://en.wikipedia.org/wiki/Password_strength#Entropy_as_a_measure_of_password_strength'>bits of entropy</a> each. Dictionary size of ${
