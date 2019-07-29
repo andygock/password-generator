@@ -23,6 +23,7 @@
     "sass": "^1.22.7"
   },
   "dependencies": {
-    "mini.css": "^3.0.1"
+    "mini.css": "^3.0.1",
+    "string.prototype.matchall": "^3.0.1"
   }
 }

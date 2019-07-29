@@ -1,16 +1,16 @@
+import matchAll from 'string.prototype.matchall';
 import list from './words/index';
 
 // read has string from location.hash and apply parameters to input elements
 const getParamsFromHash = () => {
   const hash = location.hash;
-  // console.log(hash);
 
   let words;
   let passphrases;
   let wordlist;
 
   // 1x hash parameter
-  [[, words] = []] = [...hash.matchAll(/^#\/([0-9]+)$/g)];
+  [[, words] = []] = [...matchAll(hash, /^#\/([0-9]+)$/g)];
   if (words !== undefined) {
     // set numeric input elements
     document.getElementById('numberOfWords').value = parseInt(words, 10);
@@ -18,7 +18,7 @@ const getParamsFromHash = () => {
 
   // 2x hash parameters
   [[, words, passphrases] = []] = [
-    ...hash.matchAll(/^#\/([0-9]+)\/([0-9]+)$/g),
+    ...matchAll(hash, /^#\/([0-9]+)\/([0-9]+)$/g),
   ];
   if (words !== undefined && passphrases !== undefined) {
     // set numeric input elements
@@ -31,7 +31,7 @@ const getParamsFromHash = () => {
 
   // 3x hash parameters
   [[, words, passphrases, wordlist] = []] = [
-    ...hash.matchAll(/^#\/([0-9]+)\/([0-9]+)\/([a-zA-Z\-]+)$/g),
+    ...matchAll(hash, /^#\/([0-9]+)\/([0-9]+)\/([a-zA-Z\-]+)$/g),
   ];
   if (
     words !== undefined &&
