@@ -107,22 +107,6 @@ const generate = ({ initial } = {}) => {
       words = list.short2.split('|');
       break;
 
-    // case 'eff-startrek':
-    //   words = list.startrek.split('|');
-    //   break;
-
-    // case 'eff-starwars':
-    //   words = list.starwars.split('|');
-    //   break;
-
-    // case 'eff-harrypotter':
-    //   words = list.harrypotter.split('|');
-    //   break;
-
-    // case 'eff-gameofthrones':
-    //   words = list.gameofthrones.split('|');
-    //   break;
-
     default:
       // use 'eff-long' equivalent
       words = list.long.split('|');
@@ -152,7 +136,6 @@ const generate = ({ initial } = {}) => {
   }
 
   // write the output to DOM
-  // document.getElementById('output').innerHTML = passList.join('\n');
 
   // clear current output contents
   document.getElementById('output').innerHTML = '';
