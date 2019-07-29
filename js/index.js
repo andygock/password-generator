@@ -4,6 +4,9 @@ import 'core-js/es/number/is-nan';
 import 'core-js/es/symbol';
 import list from './words/index';
 
+// check if browser supports clipboard interaction
+const copyAvailable = () => document.queryCommandSupported('copy');
+
 // read has string from location.hash and apply parameters to input elements
 const getParamsFromHash = () => {
   const { hash } = window.location;
@@ -136,31 +139,37 @@ const generate = ({ initial } = {}) => {
     const line = document.createElement('div');
     document.getElementById('output').appendChild(line).innerHTML = pass;
 
-    // user clicking on a passphrase line, will copy the passphrase to clipboard
-    line.addEventListener('click', () => {
-      // copy passphrase to textarea so we can copy to clipboard
-      const target = document.getElementById('clipboard');
-      target.value = pass;
-      target.select();
-      document.execCommand('copy');
+    // user clicking on a passphrase line, will copy the passphrase to clipboard - but only if browser supports clipboard interaction with document.execCommand()
+    if (copyAvailable()) {
+      line.addEventListener('click', () => {
+        // copy passphrase to hidden textarea so we can copy to clipboard
+        const target = document.getElementById('clipboard');
+        target.value = pass;
 
-      // highlight line
-      line.className += ' copied';
+        // select the text
+        target.select();
 
-      // inform user that the line was copied (this perhaps is better done using a snackbar or something)
-      line.innerHTML = `${pass} *COPIED!*`;
+        // copy selection to clipboard
+        document.execCommand('copy');
 
-      // after prescribed time, clear the 'copied' notice
-      setTimeout(() => {
-        line.innerHTML = pass;
-      }, 400);
+        // highlight line
+        line.className += ' copied';
 
-      // after prescribed time, remove the highlight styling
-      setTimeout(() => {
-        line.className = 'cleared';
-      }, 2000);
-    });
-  });
+        // inform user that the line was copied (this perhaps is better done using a snackbar or something)
+        line.innerHTML = `${pass} *COPIED!*`;
+
+        // after prescribed time, clear the 'copied' notice
+        setTimeout(() => {
+          line.innerHTML = pass;
+        }, 400);
+
+        // after prescribed time, remove the highlight styling
+        setTimeout(() => {
+          line.className = 'cleared';
+        }, 2000);
+      });
+    }
+  }); // passList.forEach
 
   document.getElementById(
     'message'
@@ -191,7 +200,7 @@ const setDefaultParameters = () => {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-  // check for web cryptography API
+  // check for web cryptography API, stop if not available
   const crypto = window.crypto || window.msCrypto;
   if (!crypto) {
     console.error('Web Cryptography API not available');
@@ -199,6 +208,20 @@ document.addEventListener('DOMContentLoaded', () => {
       'output'
     ).innerHTML = `<p>Your web browser does not support Web Cryptography API. Please use a secure modern browser such as <a href="https://www.mozilla.org/en-US/firefox/new/">Firefox</a></p>`;
     return;
+  }
+
+  // check whether docuument.execCommand('copy') is supported
+  if (!copyAvailable()) {
+    // copy is not available
+    console.error(`document.execCommand('copy') not supported`);
+    document.getElementById('msg-copy-clipboard').innerHTML = '';
+  } else {
+    // copy available
+    // add :hover style
+    const style = document.createElement('style');
+    const css = `#output div:hover { background-color: #666; cursor: pointer }`;
+    style.appendChild(document.createTextNode(css));
+    document.getElementsByTagName('head')[0].appendChild(style);
   }
 
   // set default parameters if there is no hash
@@ -236,7 +259,7 @@ document.addEventListener('DOMContentLoaded', () => {
     e.addEventListener('change', generate);
   });
 
-  // hand clicking of 'reset to defaults' button
+  // handle clicking of 'reset to defaults' button
   document.getElementById('reset').addEventListener('click', (e) => {
     e.preventDefault();
 
