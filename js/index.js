@@ -1,17 +1,8 @@
 import 'core-js/es/array/from';
+import 'core-js/es/string/match-all';
 import 'core-js/es/number/is-nan';
+import 'core-js/es/symbol';
 import list from './words/index';
-
-// very crude matchAll() implementation which works only for this use-case
-const matchAll = (s, pattern) => {
-  const matches = s.match(pattern);
-
-  if (matches !== null && typeof matches === 'array') {
-    return matches.slice(0, 3);
-  } else {
-    return [undefined, undefined, undefined];
-  }
-};
 
 // read has string from location.hash and apply parameters to input elements
 const getParamsFromHash = () => {
@@ -22,7 +13,7 @@ const getParamsFromHash = () => {
   let wordlist;
 
   // 1x hash parameter
-  [[, words] = []] = [...matchAll(hash, /^#\/([0-9]+)$/g)];
+  [[, words] = []] = [...hash.matchAll(/^#\/([0-9]+)$/g)];
   if (words !== undefined) {
     // set numeric input elements
     document.getElementById('numberOfWords').value = parseInt(words, 10);
@@ -30,7 +21,7 @@ const getParamsFromHash = () => {
 
   // 2x hash parameters
   [[, words, passphrases] = []] = [
-    ...matchAll(hash, /^#\/([0-9]+)\/([0-9]+)$/g),
+    ...hash.matchAll(/^#\/([0-9]+)\/([0-9]+)$/g),
   ];
   if (words !== undefined && passphrases !== undefined) {
     // set numeric input elements
@@ -43,7 +34,7 @@ const getParamsFromHash = () => {
 
   // 3x hash parameters
   [[, words, passphrases, wordlist] = []] = [
-    ...matchAll(hash, /^#\/([0-9]+)\/([0-9]+)\/([a-zA-Z\-]+)$/g),
+    ...hash.matchAll(/^#\/([0-9]+)\/([0-9]+)\/([a-zA-Z\-]+)$/g),
   ];
   if (
     words !== undefined &&
