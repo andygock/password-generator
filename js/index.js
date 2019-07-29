@@ -1,9 +1,21 @@
-import matchAll from 'string.prototype.matchall';
+import 'core-js/es/array/from';
+import 'core-js/es/number/is-nan';
 import list from './words/index';
+
+// very crude matchAll() implementation which works only for this use-case
+const matchAll = (s, pattern) => {
+  const matches = s.match(pattern);
+
+  if (matches !== null && typeof matches === 'array') {
+    return matches.slice(0, 3);
+  } else {
+    return [undefined, undefined, undefined];
+  }
+};
 
 // read has string from location.hash and apply parameters to input elements
 const getParamsFromHash = () => {
-  const hash = location.hash;
+  const { hash } = window.location;
 
   let words;
   let passphrases;
@@ -60,6 +72,14 @@ const getParamsFromHash = () => {
 // generate cryptographically secure random number between min and max inclusive
 const random = (min, max) => {
   const randomBuffer = new Uint32Array(1);
+
+  // note: msCrypto is for IE11
+  const crypto = window.crypto || window.msCrypto;
+  if (!crypto) {
+    console.error('Web Cryptography API not available');
+    return;
+  }
+
   crypto.getRandomValues(randomBuffer);
   const randomNumber = randomBuffer[0] / (0xffffffff + 1);
   const minInt = Math.ceil(min);
@@ -135,7 +155,6 @@ const generate = ({ initial } = {}) => {
   // document.getElementById('output').innerHTML = passList.join('\n');
 
   // clear current output contents
-  clearTimeout();
   document.getElementById('output').innerHTML = '';
 
   passList.forEach((pass) => {
@@ -175,17 +194,17 @@ const generate = ({ initial } = {}) => {
     words.length
   } words.</p>`;
 
-  // update location.hash - but not when generate() runs on initial page load
+  // update window.location.hash - but not when generate() runs on initial page load
   if (!initial) {
     const hash = `#/${numberOfWords}/${numberOfPassphrases}/${listSelected}`;
-    // location.hash = `#/${numberOfWords}/${numberOfPassphrases}/${listSelected}`;
-    if (location.hash !== hash) {
+    // window.location.hash = `#/${numberOfWords}/${numberOfPassphrases}/${listSelected}`;
+    if (window.location.hash !== hash) {
       history.replaceState(null, '', hash);
     }
   }
 };
 
-// set default params, only if there is no location.hash
+// set default params, only if there is no window.location.hash
 const setDefaultParameters = () => {
   // number of words = 6
   document.getElementById('numberOfWords').value = 6;
@@ -198,8 +217,18 @@ const setDefaultParameters = () => {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
+  // check for web cryptography API
+  const crypto = window.crypto || window.msCrypto;
+  if (!crypto) {
+    console.error('Web Cryptography API not available');
+    document.getElementById(
+      'output'
+    ).innerHTML = `<p>Your web browser does not support Web Cryptography API. Please use a secure modern browser such as <a href="https://www.mozilla.org/en-US/firefox/new/">Firefox</a></p>`;
+    return;
+  }
+
   // set default parameters if there is no hash
-  if (location.hash === '') {
+  if (window.location.hash === '') {
     setDefaultParameters();
   }
 
@@ -214,7 +243,7 @@ document.addEventListener('DOMContentLoaded', () => {
     generate();
   };
 
-  // get and apply paramters from location.hash, if any
+  // get and apply paramters from window.location.hash, if any
   getParamsFromHash();
 
   // generate passwords on initial page load
@@ -224,12 +253,12 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('generate').addEventListener('click', generate);
 
   // changing the word list will also regenerate
-  document.querySelectorAll("input[type='radio']").forEach((e) => {
+  Array.from(document.querySelectorAll("input[type='radio']")).forEach((e) => {
     e.addEventListener('change', generate);
   });
 
   // changing number of words or passphrases will also regenerate
-  document.querySelectorAll("input[type='number']").forEach((e) => {
+  Array.from(document.querySelectorAll("input[type='number']")).forEach((e) => {
     e.addEventListener('change', generate);
   });
 
@@ -249,8 +278,8 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // handler of  -/+ button clicks
-  const buttonsDec = document.querySelectorAll('.spin');
-  buttonsDec.forEach((button) => {
+  const buttonsSpinner = Array.from(document.querySelectorAll('.spin'));
+  buttonsSpinner.forEach((button) => {
     button.addEventListener('click', (e) => {
       // remove focus after clicking
       e.target.blur();
