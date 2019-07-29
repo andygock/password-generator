@@ -20,8 +20,6 @@
   },
   "homepage": "https://github.com/andygock/password-generator#readme",
   "devDependencies": {
-    "@babel/core": "^7.5.5",
-    "@babel/preset-env": "^7.5.5",
     "sass": "^1.22.7"
   },
   "dependencies": {
