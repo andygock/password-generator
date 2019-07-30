@@ -5,7 +5,13 @@ import 'core-js/es/symbol';
 import list from './words/index';
 
 // check if browser supports clipboard interaction
-const copyAvailable = () => document.queryCommandSupported('copy');
+const copyAvailable = () => {
+  if (window.navigator.userAgent.match(/ipad|ipod|iphone/i)) {
+    // iOS not supported for clipboard copying by JS
+    return false;
+  }
+  return document.queryCommandSupported('copy');
+};
 
 // read has string from location.hash and apply parameters to input elements
 const getParamsFromHash = () => {
@@ -83,6 +89,9 @@ const random = (min, max) => {
 
 // generate passwords and render in DOM
 const generate = ({ initial } = {}) => {
+  // check if document.execCommand('copy) is available
+  const copyIsAvailable = copyAvailable();
+
   const listSelected = document.querySelector('input[name="wordlist"]:checked')
     .value;
 
@@ -137,10 +146,17 @@ const generate = ({ initial } = {}) => {
   passList.forEach((pass) => {
     // add password as new output line
     const line = document.createElement('div');
+
+    // add class, used for :hover - but only if copy is available
+    if (copyIsAvailable) {
+      line.className = 'line';
+    }
+
+    // add line to output box
     document.getElementById('output').appendChild(line).innerHTML = pass;
 
     // user clicking on a passphrase line, will copy the passphrase to clipboard - but only if browser supports clipboard interaction with document.execCommand()
-    if (copyAvailable()) {
+    if (copyIsAvailable) {
       line.addEventListener('click', () => {
         // copy passphrase to hidden textarea so we can copy to clipboard
         const target = document.getElementById('clipboard');
@@ -152,7 +168,12 @@ const generate = ({ initial } = {}) => {
         // copy selection to clipboard
         document.execCommand('copy');
 
-        // highlight line
+        // remove class 'copied' from all lines
+        Array.from(document.querySelectorAll('.line')).map(
+          (line) => (line.className = 'line')
+        );
+
+        // highlight current clicked line
         line.className += ' copied';
 
         // inform user that the line was copied (this perhaps is better done using a snackbar or something)
@@ -163,9 +184,9 @@ const generate = ({ initial } = {}) => {
           line.innerHTML = pass;
         }, 400);
 
-        // after prescribed time, remove the highlight styling
+        // after prescribed time, remove the highlight styling 'copied' on current clicked line
         setTimeout(() => {
-          line.className = 'cleared';
+          line.className = 'line';
         }, 2000);
       });
     }
@@ -212,16 +233,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // check whether docuument.execCommand('copy') is supported
   if (!copyAvailable()) {
-    // copy is not available
+    // copy is not available, remove the 'click to copy' text
     console.error(`document.execCommand('copy') not supported`);
     document.getElementById('msg-copy-clipboard').innerHTML = '';
-  } else {
-    // copy available
-    // add :hover style
-    const style = document.createElement('style');
-    const css = `#output div:hover { background-color: #666; cursor: pointer }`;
-    style.appendChild(document.createTextNode(css));
-    document.getElementsByTagName('head')[0].appendChild(style);
   }
 
   // set default parameters if there is no hash

@@ -4,55 +4,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta charset="UTF-8" />
     <title>Password generator in the web browser</title>
-    <link
-      rel="stylesheet"
-      href="node_modules/mini.css/dist/mini-dark.min.css"
-    />
     <link rel="stylesheet" href="css/style.scss" />
   </head>
 
   <body>
-    <h2>Password Generator</h2>
+    <h1>Password Generator</h1>
     <p>
-      Web application to generate random passphrases in the browser.<span
-        id="msg-copy-clipboard"
-      >
+      Generate random passphrases in the browser.<span id="msg-copy-clipboard">
         Click line to copy passphrase to clipboard.</span
       >
     </p>
-    <div class="container">
+    <main>
       <div class="row">
-        <div class="col-md-4">
-          <div>
-            <input
-              type="number"
-              id="numberOfWords"
-              name="numberOfWords"
-              min="1"
-              max="20"
-              value="6"
-              required
-            />
-            <span>
-              <button
-                class="small spin"
-                data-target="numberOfWords"
-                data-action="dec"
-              >
-                -
-              </button>
-              <button
-                class="small spin"
-                data-target="numberOfWords"
-                data-action="inc"
-              >
-                +
-              </button>
-            </span>
-            <label for="numberOfWords">Number of words per passphrase</label>
+        <div class="user-input">
+          <!-- words per passphrase -->
+          <div class="input-group">
+            <div>
+              <label for="numberOfWords">Number of words per passphrase</label>
+            </div>
+            <div>
+              <input
+                type="number"
+                id="numberOfWords"
+                name="numberOfWords"
+                min="1"
+                max="20"
+                value="6"
+                required
+              />
+              <span>
+                <button
+                  class="small spin"
+                  data-target="numberOfWords"
+                  data-action="dec"
+                >
+                  &minus;
+                </button>
+                <button
+                  class="small spin"
+                  data-target="numberOfWords"
+                  data-action="inc"
+                >
+                  +
+                </button>
+              </span>
+            </div>
           </div>
 
-          <div>
+          <!-- number of passphrases -->
+
+          <div class="input-group">
+            <div>
+              <label for="numberOfPassphrases">Number of passphrases</label>
+            </div>
             <input
               type="number"
               id="numberOfPassphrases"
@@ -68,7 +72,7 @@
                 data-target="numberOfPassphrases"
                 data-action="dec"
               >
-                -
+                &minus;
               </button>
               <button
                 class="small spin"
@@ -78,64 +82,76 @@
                 +
               </button>
             </span>
-            <label for="numberOfPassphrases">Number of passphrases</label>
           </div>
 
-          <div id="word-list-radio"></div>
+          <div class="input-group">
+            <div>
+              <input
+                type="radio"
+                id="eff-long"
+                name="wordlist"
+                value="eff-long"
+                checked
+              />
+              <label for="eff-long">EFF long word list</label>
+            </div>
 
-          <div>
-            <input
-              type="radio"
-              id="eff-long"
-              name="wordlist"
-              value="eff-long"
-              checked
-            />
-            <label for="eff-long">EFF long word list</label>
+            <div>
+              <input
+                type="radio"
+                id="eff-short1"
+                name="wordlist"
+                value="eff-short1"
+              />
+              <label for="eff-short1">EFF short word list v1</label>
+            </div>
+
+            <div>
+              <input
+                type="radio"
+                id="eff-short2"
+                name="wordlist"
+                value="eff-short2"
+              />
+              <label for="eff-short2">EFF short word list v2</label>
+            </div>
           </div>
 
-          <div>
-            <input
-              type="radio"
-              id="eff-short1"
-              name="wordlist"
-              value="eff-short1"
-            />
-            <label for="eff-short1">EFF short word list v1</label>
-          </div>
+          <button id="generate">Generate</button>
 
-          <div>
-            <input
-              type="radio"
-              id="eff-short2"
-              name="wordlist"
-              value="eff-short2"
-            />
-            <label for="eff-short2">EFF short word list v2</label>
-          </div>
-
-          <input type="submit" value="Generate" id="generate" />
           <div><a id="reset" href="#">Reset to defaults</a></div>
         </div>
-        <div class="col-md-8">
+        <div class="user-output">
           <div id="output"></div>
           <div id="message"></div>
         </div>
       </div>
-    </div>
+    </main>
 
-    <p>
-      Runs entirely in the web browser. No data is recorded or sent outside by
-      this web application. Word lists are from
-      <a
-        href="https://www.eff.org/deeplinks/2016/07/new-wordlists-random-passphrases"
-        >EFF</a
-      >. Source code is available on
-      <a href="https://github.com/andygock/password-generator">GitHub</a>.
-    </p>
+    <footer>
+      <p>
+        Runs entirely in the web browser using
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Crypto_API"
+          >Web Crypto API</a
+        >
+        and
+        <a
+          href="https://www.eff.org/deeplinks/2016/07/new-wordlists-random-passphrases"
+          >EFF word lists</a
+        >. Passphrases are not stored or transmitted. Source code is available
+        on
+        <a href="https://github.com/andygock/password-generator">GitHub</a> with
+        <a
+          href="https://github.com/andygock/password-generator/blob/master/LICENSE"
+          >MIT License</a
+        >.
+      </p>
+      <p>&copy; <a href="https://github.com/andygock">Andy Gock</a></p>
+    </footer>
 
     <!-- textarea required for copying passphrase to clipboard with document.execCommand('copy') -->
-    <textarea id="clipboard">&nbsp;</textarea>
+    <form><textarea id="clipboard" readonly>&nbsp;</textarea></form>
 
     <script type="text/javascript" src="js/index.js"></script>
   </body>

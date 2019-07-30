@@ -7,14 +7,13 @@ Demo available at <https://gock.net/pass>
 ## Tools used
 
 - [Parcel](https://parceljs.org/) / [github](https://github.com/parcel-bundler/parcel) + [docs](https://parceljs.org/getting_started.html)
-- [mini.css](https://minicss.org/) / [github](https://github.com/Chalarangelo/mini.css) + [docs](https://minicss.org/docs)
 - [EFF word lists](https://www.eff.org/deeplinks/2016/07/new-wordlists-random-passphrases)
 
 ## Development process
 
 Requires global install of parceljs, you can do this with `npm install -g parcel-bundler`
 
-Install depedencies (only `mini.css`)
+Install depedencies
 
     npm install
 
@@ -32,9 +31,9 @@ Static files are available in `dist/`
 
 Do not view `/index.html` in the browser, it will not work. Use packaged files in the `dist/` directory.
 
-## Use of location.hash
+## Use of `window.location.hash`
 
-This makes it bookmark friendly with user-selected parameters recallable. The formats supported are:
+This makes it bookmark-friendly with user-selected parameters recallable. The formats supported are:
 
     #/:words
     #/:words/:passphrases
