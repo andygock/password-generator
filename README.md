@@ -2,7 +2,7 @@
 
 Browser based passphrase generator. Runs entirely in the web browser and uses the [EFF word lists](https://www.eff.org/deeplinks/2016/07/new-wordlists-random-passphrases).
 
-Demo available at <https://gock.net/pass>
+[Live demo hosted by Netlify](https://psw.netlify.app)
 
 ## Tools used
 
@@ -10,8 +10,6 @@ Demo available at <https://gock.net/pass>
 - [EFF word lists](https://www.eff.org/deeplinks/2016/07/new-wordlists-random-passphrases)
 
 ## Development process
-
-Requires global install of parceljs, you can do this with `npm install -g parcel-bundler`
 
 Install depedencies
 
@@ -21,11 +19,11 @@ Development build and serve:
 
     npm run start
 
-Production build:
+Production build (files saved in `dist/`):
 
     npm run build
 
-This will perform a `rm -rf dist && parcel build index.html --no-minify`. To use relative paths or a different absolute path to your assets other than `/`, you may want to use `---public-url /your-path/`
+This will perform a `rm -rf dist && ./node_modules/.bin/parcel build index.html --no-minify`. To use relative paths or a different absolute path to your assets other than `/`, you may want to use `---public-url /your-path/`
 
 Static files are available in `dist/`
 
