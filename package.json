@@ -20,12 +20,12 @@
   },
   "homepage": "https://github.com/andygock/password-generator#readme",
   "devDependencies": {
-    "sass": "^1.22.7"
+    "sass": "^1.26.5"
   },
   "dependencies": {
-    "core-js": "^3.1.4",
+    "core-js": "^3.6.5",
     "normalize.css": "^8.0.1",
     "parcel-bundler": "^1.12.4",
-    "regenerator-runtime": "^0.13.3"
+    "regenerator-runtime": "^0.13.5"
   }
 }
