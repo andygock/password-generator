@@ -1,6 +1,6 @@
 # Password generator
 
-Browser based passphrase generator. Runs entirely in the web browser and uses the [EFF word lists](https://www.eff.org/deeplinks/2016/07/new-wordlists-random-passphrases).
+A passphrase / password generator running in the web browser using the [EFF word lists](https://www.eff.org/deeplinks/2016/07/new-wordlists-random-passphrases). Written in Vanilla ES6 JavaScript, transformed and bundled with [Parcel](https://parceljs.org/).
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/7eecd76e-39df-47db-84a1-26abaa5c93dd/deploy-status)](https://app.netlify.com/sites/p4ss/deploys)
 
