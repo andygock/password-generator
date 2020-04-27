@@ -2,7 +2,7 @@
 
 Browser based passphrase generator. Runs entirely in the web browser and uses the [EFF word lists](https://www.eff.org/deeplinks/2016/07/new-wordlists-random-passphrases).
 
-[Live demo hosted by Netlify](https://psw.netlify.app)
+[Live demo hosted by Netlify](https://p4ss.netlify.app)
 
 ## Tools used
 
